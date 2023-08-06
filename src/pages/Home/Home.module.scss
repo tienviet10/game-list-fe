@@ -1,0 +1,31 @@
+@use '../../styles/variables.scss' as variables;
+@use '../../styles/mixin.scss' as mixin;
+
+.homeContainer {
+  min-height: 100vh;
+  background: variables.$color-background;
+
+  .gamesContainer {
+    margin: 0 auto;
+    min-width: 320px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @include mixin.phone {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    @include mixin.desktopLarge;
+    @include mixin.desktop {
+      padding-left: 30px;
+      padding-right: 30px;
+      max-width: 1300px;
+    }
+    @include mixin.desktopUltroLarge {
+      max-width: 1520px;
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  }
+}
