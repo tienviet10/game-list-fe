@@ -8,6 +8,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:@tanstack/eslint-plugin-query/recommended'
   ],
   overrides: [
     {
@@ -24,7 +25,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['react-refresh', 'prettier'],
+  plugins: ['react-refresh', 'prettier', '@tanstack/query'],
   rules: {
     'react/react-in-jsx-scope': 0,
     'import/extensions': [
@@ -57,5 +58,7 @@ module.exports = {
       'error',
       { ignoreFunctionalComponents: true },
     ],
+    "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/prefer-query-object-syntax": "error"
   },
 };

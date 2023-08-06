@@ -3,9 +3,13 @@ import Home from '@pages/Home';
 import useTokenAuth from '@/hooks/useTokenAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { useGetUser } from './services/authentication/useAuth';
 
 function Router() {
   const { loading, userState } = useTokenAuth();
+  const { data } = useGetUser();
+
+  console.log('data', data);
 
   if (loading || userState.loading) {
     return <div>Loading...</div>;
