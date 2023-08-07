@@ -1,38 +1,46 @@
 import { Button, Form, Input } from 'antd';
-// import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import WelcomeImage from '@assets/images/register_welcome.webp';
+import useNotification from '@hooks/useNotification';
+import { useAuth } from '@services/authentication/useAuth';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './Register.module.scss';
-import WelcomeImage from '@/assets/images/register_welcome.webp';
-
-// import useAuth from '@/services/authentication/useAuth';
-// import { setUser } from '@/features/userSlice';
+import { setUser } from '@/features/userSlice';
 import type { RegisterType } from './types';
 
 function Register() {
-  // const navigate = useNavigate();
-  // const { register, contextHolder, info } = useAuth();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { contextHolder, info } = useNotification('auth');
+  const { signUpMutation, signUpResponse, signUpError } = useAuth();
+  const dispatch = useDispatch();
 
-  const onFinish = async (values: RegisterType) => {
-    console.log('Success:', values);
-    // const registerData = await register(
-    //   values.username,
-    //   values.email,
-    //   values.password
-    // );
-
-    // if (registerData.token) {
-    //   localStorage.setItem('token', registerData.token);
-    //   dispatch(setUser(registerData.user));
-    //   navigate('/user-profile/overview');
-    // } else {
-    //   info(registerData.errors[0]);
-    // }
+  const onFinish = (values: RegisterType) => {
+    signUpMutation({
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    });
   };
 
-  // const onFinishFailed = (errorInfo: any) => {
-  //   console.log("Failed:", errorInfo);
-  // };
+  useEffect(() => {
+    if (signUpResponse?.data?.data?.token) {
+      localStorage.setItem('token', signUpResponse?.data.data.token);
+      dispatch(setUser(signUpResponse?.data.data.user));
+      navigate('/user-profile/overview');
+    }
+
+    if (signUpError?.response?.data?.message) {
+      info(signUpError?.response?.data?.message);
+    }
+  }, [
+    dispatch,
+    info,
+    navigate,
+    signUpError?.response?.data?.message,
+    signUpResponse?.data.data.token,
+    signUpResponse?.data.data.user,
+  ]);
 
   return (
     <>
@@ -42,7 +50,6 @@ function Register() {
             name={styles.registerForm}
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
           >
             <p className={styles.formTitle}>Register</p>
             <p>Please fill in the form below</p>
@@ -135,7 +142,7 @@ function Register() {
           </div>
         </div>
       </div>
-      {/* {contextHolder} */}
+      {contextHolder}
     </>
   );
 }

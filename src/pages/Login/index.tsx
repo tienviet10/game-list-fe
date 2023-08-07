@@ -13,34 +13,34 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { contextHolder, info } = useNotification('auth');
-  const { signUpMutation, logInResponse, error } = useAuth();
+  const { signInMutation, signInResponse, signInError } = useAuth();
 
   const onFinish = useCallback(
     (values: LoginType) => {
-      signUpMutation({
+      signInMutation({
         email: values.email,
         password: values.password,
       });
     },
-    [signUpMutation]
+    [signInMutation]
   );
 
   useEffect(() => {
-    if (logInResponse?.data?.data?.token) {
-      localStorage.setItem('token', logInResponse?.data.data.token);
-      dispatch(setUser(logInResponse?.data.data.user));
+    if (signInResponse?.data?.data?.token) {
+      localStorage.setItem('token', signInResponse?.data.data.token);
+      dispatch(setUser(signInResponse?.data.data.user));
       navigate('/user-profile/overview');
     }
 
-    if (error?.response?.data?.message) {
-      info(error?.response?.data?.message);
+    if (signInError?.response?.data?.message) {
+      info(signInError?.response?.data?.message);
     }
   }, [
     dispatch,
-    error?.response?.data?.message,
+    signInError?.response?.data?.message,
     info,
-    logInResponse?.data.data.token,
-    logInResponse?.data.data.user,
+    signInResponse?.data.data.token,
+    signInResponse?.data.data.user,
     navigate,
   ]);
 

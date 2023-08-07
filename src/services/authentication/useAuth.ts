@@ -12,30 +12,57 @@ type LoginResponse = {
   user: UserData;
 };
 
+type SignUpParams = {
+  username: string;
+  email: string;
+  password: string;
+};
+
 export const useAuth = () => {
-  const fetchUser = async (
+  const loginUser = async (
     params: LoginParams
   ): Promise<CustomAxiosResponse<LoginResponse>> => {
     return axios.post(`${import.meta.env.VITE_BACKEND}/auth/login`, params);
   };
 
+  const signUpUser = async (
+    params: SignUpParams
+  ): Promise<CustomAxiosResponse<LoginResponse>> => {
+    return axios.post(`${import.meta.env.VITE_BACKEND}/auth/register`, params);
+  };
+
   const {
-    mutate: signUpMutation,
-    data: logInResponse,
-    error,
-    isError,
+    mutate: signInMutation,
+    data: signInResponse,
+    error: signInError,
+    isError: signInIsError,
   } = useMutation<
     CustomAxiosResponse<LoginResponse>,
     ErrorResponse,
     LoginParams
   >({
-    mutationFn: fetchUser,
+    mutationFn: loginUser,
   });
 
+  const {
+    mutate: signUpMutation,
+    data: signUpResponse,
+    error: signUpError,
+    isError: signUpIsError,
+  } = useMutation<
+    CustomAxiosResponse<LoginResponse>,
+    ErrorResponse,
+    SignUpParams
+  >({ mutationFn: signUpUser });
+
   return {
+    signInMutation,
+    signInResponse,
+    signInError,
+    signInIsError,
     signUpMutation,
-    logInResponse,
-    error,
-    isError,
+    signUpResponse,
+    signUpError,
+    signUpIsError,
   };
 };
