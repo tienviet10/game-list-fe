@@ -1,27 +1,68 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { CustomAxiosResponse, ErrorResponse, UserData } from '@/types/global';
 
-type User = {
-  id: string;
-  name: string;
+type LoginParams = {
   email: string;
+  password: string;
 };
 
-const fetchUser = async (): Promise<User> => {
-  console.log('url', `${import.meta.env.VITE_BACKEND}/auth/login`);
-  const { data } = await axios.post(
-    `${import.meta.env.VITE_BACKEND}/auth/login`,
-    {
-      email: 'v@gmail.com',
-      password: 'test',
-    }
-  );
-  return data;
+type LoginResponse = {
+  token: string;
+  user: UserData;
 };
 
-export const useGetUser = () => {
-  return useQuery<User, Error>({
-    queryKey: ['User'],
-    queryFn: () => fetchUser(),
+type SignUpParams = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export const useAuth = () => {
+  const loginUser = async (
+    params: LoginParams
+  ): Promise<CustomAxiosResponse<LoginResponse>> => {
+    return axios.post(`${import.meta.env.VITE_BACKEND}/auth/login`, params);
+  };
+
+  const signUpUser = async (
+    params: SignUpParams
+  ): Promise<CustomAxiosResponse<LoginResponse>> => {
+    return axios.post(`${import.meta.env.VITE_BACKEND}/auth/register`, params);
+  };
+
+  const {
+    mutate: signInMutation,
+    data: signInResponse,
+    error: signInError,
+    isError: signInIsError,
+  } = useMutation<
+    CustomAxiosResponse<LoginResponse>,
+    ErrorResponse,
+    LoginParams
+  >({
+    mutationFn: loginUser,
   });
+
+  const {
+    mutate: signUpMutation,
+    data: signUpResponse,
+    error: signUpError,
+    isError: signUpIsError,
+  } = useMutation<
+    CustomAxiosResponse<LoginResponse>,
+    ErrorResponse,
+    SignUpParams
+  >({ mutationFn: signUpUser });
+
+  return {
+    signInMutation,
+    signInResponse,
+    signInError,
+    signInIsError,
+    signUpMutation,
+    signUpResponse,
+    signUpError,
+    signUpIsError,
+  };
 };

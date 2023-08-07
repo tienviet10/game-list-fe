@@ -1,0 +1,27 @@
+@use '../../styles/mixin.scss' as mixin;
+@use '../../styles/variables.scss' as variables;
+
+.profileContent {
+  min-width: 320px;
+
+  padding-left: 20px;
+  padding-right: 20px;
+
+  background-color: variables.$color-background;
+  height: 100%;
+
+  @include mixin.phoneLarge {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  @include mixin.desktop {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  @include mixin.desktopUltroLarge {
+    max-width: 1520px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: auto;
+  }
+}

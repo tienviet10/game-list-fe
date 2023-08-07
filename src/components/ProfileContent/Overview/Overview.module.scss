@@ -1,0 +1,12 @@
+@use '../../../styles/mixin.scss' as mixin;
+
+.overview {
+  display: grid;
+  grid-column-gap: 40px;
+  grid-template-columns: calc(45% - 40px) 55%;
+  margin-top: 30px;
+
+  @include mixin.loginTablet {
+    display: block;
+  }
+}
