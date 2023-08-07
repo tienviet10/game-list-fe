@@ -9,11 +9,11 @@ const fetchGameFilters = async (): Promise<GameFilters> => {
 };
 
 export default function useGetFilters() {
-  const { data, status, error } = useQuery('users', fetchGameFilters);
+  const { data, status, error } = useQuery('GameFilters', fetchGameFilters, {});
   const genres: string[] = data?.genres ? data.genres : [];
   const platforms: string[] = data?.platforms ? data.platforms : [];
   const tags: string[] = data?.tags ? data.tags : [];
   const furthestYear: number = data?.furthestYear ? data.furthestYear : NaN;
-
-  return { genres, platforms, tags, furthestYear, error, loading: status };
+  const errors = error || [];
+  return { genres, platforms, tags, furthestYear, errors, loading: status };
 }
