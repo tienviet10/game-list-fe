@@ -1,0 +1,37 @@
+@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/mixin.scss' as mixin;
+
+.navWrap {
+  background: variables.$color-foreground;
+  .navContainer {
+    font-size: 1.4rem;
+    max-width: 1220px;
+    text-align: center;
+    margin: 0 auto;
+    min-width: 320px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @include mixin.phoneSmall {
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    @include mixin.phoneLarge {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    @include mixin.desktop {
+      max-width: 1140px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    @include mixin.desktopUltroLarge {
+      max-width: 1520px;
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  }
+}

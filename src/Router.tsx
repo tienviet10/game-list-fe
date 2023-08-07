@@ -1,15 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from '@pages/Home';
+import UserProfile from '@pages/UserProfile';
 import useTokenAuth from '@/hooks/useTokenAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import { useGetUser } from './services/authentication/useAuth';
 
 function Router() {
   const { loading, userState } = useTokenAuth();
-  const { data } = useGetUser();
-
-  console.log('data', data);
 
   if (loading || userState.loading) {
     return <div>Loading...</div>;
@@ -17,19 +14,41 @@ function Router() {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      {userState?.user?.username ? (
+        <Route path="/user-profile">
+          <Route path="" element={<UserProfile routeName="overview" />} />
+          <Route
+            path="overview"
+            element={<UserProfile routeName="overview" />}
+          />
+          <Route
+            path="favorites"
+            element={<UserProfile routeName="favorites" />}
+          />
+          <Route
+            path="game-list"
+            element={<UserProfile routeName="gameList" />}
+          />
+          <Route path="social" element={<UserProfile routeName="social" />} />
+
+          <Route path="reviews" element={<UserProfile routeName="reviews" />} />
+        </Route>
+      ) : (
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </>
+      )}
       <Route path="/home" element={<Home />} />
       <Route path="/" element={<Navigate to="/home" />} />
       <Route
         path="*"
         element={
-          // userState?.user?.username ? (
-          //   <Navigate to="/user-profile/overview" />
-          // ) : (
-          //   <Navigate to="/home" />
-          // )
-          <Navigate to="/home" />
+          userState?.user?.username ? (
+            <Navigate to="/user-profile/overview" />
+          ) : (
+            <Navigate to="/home" />
+          )
         }
       />
     </Routes>

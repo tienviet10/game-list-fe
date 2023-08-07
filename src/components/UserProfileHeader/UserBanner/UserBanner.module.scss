@@ -1,0 +1,88 @@
+@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/mixin.scss' as mixin;
+
+.bannerContainerNull {
+  display: flex;
+  align-items: flex-end;
+  background-color: #242538;
+  background-position: 50% 35%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 330px;
+  position: relative;
+  justify-content: center;
+
+  @include mixin.phoneSmall {
+    margin: 0;
+    height: 220px;
+  }
+  .bannerShadow {
+    background: linear-gradient(
+      180deg,
+      rgba(6, 13, 34, 0.5) 40%,
+      rgba(6, 13, 34, 0.8)
+    );
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .imageContainer {
+    position: relative;
+    width: 90vw;
+    margin-left: 20px;
+
+    @include mixin.phoneLarge {
+      min-width: 320px;
+    }
+    @include mixin.desktop {
+      max-width: 1140px;
+    }
+    @include mixin.desktopUltroLarge {
+      max-width: 1520px;
+    }
+    .userInfoContainer {
+      align-items: flex-end;
+      display: flex;
+      width: 100%;
+
+      img {
+        border-radius: 4px 4px 0 0;
+        display: inline-block;
+        max-height: 230px;
+        max-width: 160px;
+        width: 100%;
+
+        @include mixin.phoneSmall {
+          max-height: 160px;
+          max-width: 120px;
+        }
+      }
+      .name {
+        padding: 22px 25px;
+
+        @include mixin.phoneSmall {
+          padding: 0;
+        }
+        h1 {
+          color: variables.$color-text-bright;
+          display: inline-block;
+          font-weight: 800;
+          font-size: 1.3rem;
+
+          @include mixin.phoneSmall {
+            font-size: 1rem;
+            padding: 16px 13px;
+          }
+        }
+      }
+      .actions {
+        font-size: 1.4rem;
+        margin-left: auto;
+        padding: 15px 0;
+        user-select: none;
+      }
+    }
+  }
+}

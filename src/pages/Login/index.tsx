@@ -1,28 +1,48 @@
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import LoginImage from '@assets/images/games_login.webp';
+import { useAuth } from '@services/authentication/useAuth';
+import useNotification from '@hooks/useNotification';
+import { setUser } from '@features/userSlice';
+import { useCallback, useEffect } from 'react';
 import styles from './Login.module.scss';
-// import { setUser } from '@/features/userSlice';
-// import useAuth from '@/services/authentication/useAuth';
 import type { LoginType } from './types';
 
 function Login() {
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  // const { login, contextHolder, info } = useAuth();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { contextHolder, info } = useNotification('auth');
+  const { signUpMutation, logInResponse, error } = useAuth();
 
-  const onFinish = async (values: LoginType) => {
-    console.log('Success:', values);
-    // const loginData = await login(values.email, values.password);
-    // if (loginData.token) {
-    //   localStorage.setItem('token', loginData.token);
-    //   dispatch(setUser(loginData.user));
-    //   navigate('/user-profile/overview');
-    // } else {
-    //   info(loginData.errors[0]);
-    // }
-  };
+  const onFinish = useCallback(
+    (values: LoginType) => {
+      signUpMutation({
+        email: values.email,
+        password: values.password,
+      });
+    },
+    [signUpMutation]
+  );
+
+  useEffect(() => {
+    if (logInResponse?.data?.data?.token) {
+      localStorage.setItem('token', logInResponse?.data.data.token);
+      dispatch(setUser(logInResponse?.data.data.user));
+      navigate('/user-profile/overview');
+    }
+
+    if (error?.response?.data?.message) {
+      info(error?.response?.data?.message);
+    }
+  }, [
+    dispatch,
+    error?.response?.data?.message,
+    info,
+    logInResponse?.data.data.token,
+    logInResponse?.data.data.user,
+    navigate,
+  ]);
 
   return (
     <>
@@ -78,7 +98,7 @@ function Login() {
           </Form>
         </div>
       </div>
-      {/* {contextHolder} */}
+      {contextHolder}
     </>
   );
 }

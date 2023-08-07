@@ -1,5 +1,5 @@
-import styles from '@/pages/Home/Home.module.scss';
-import { useAppSelector } from '@/app/hooks';
+import styles from '@pages/Home/Home.module.scss';
+import { useAppSelector } from '@app/hooks';
 
 function Home() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
