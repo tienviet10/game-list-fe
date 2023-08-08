@@ -1,4 +1,4 @@
-import type { InitialStateType } from '@/features/types';
+import type { InitialStateType } from '@features/types';
 
 export type UserProfileHeaderType = {
   userState: InitialStateType;

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { INITIAL_USER_GAME_LISTS } from '@/constants';
+import { INITIAL_USER_GAME_LISTS } from '@constants/constants';
 import type { InitialStateUserGamesListType } from './types';
 
 const initialState: InitialStateUserGamesListType = INITIAL_USER_GAME_LISTS;

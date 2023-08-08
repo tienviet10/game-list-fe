@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from '@pages/Home';
 import UserProfile from '@pages/UserProfile';
-import useTokenAuth from '@/hooks/useTokenAuth';
+import useTokenAuth from '@hooks/useTokenAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
 

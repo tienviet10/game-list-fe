@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import client from '@utils/authApi';
-import { CustomAxiosResponse, ErrorResponse, UserData } from '@/types/global';
+import { CustomAxiosResponse, ErrorResponse, UserData } from '@constants/types';
 
 type LoginParams = {
   email: string;
