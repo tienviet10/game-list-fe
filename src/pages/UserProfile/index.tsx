@@ -3,9 +3,9 @@ import UserProfileHeader from '@components/UserProfileHeader';
 import ProfileContent from '@components/ProfileContent';
 
 function UserProfile({ routeName }: { routeName: string }) {
-  const { loading, userState } = useTokenAuth();
+  const { userDataIsLoading, userState } = useTokenAuth();
 
-  if (loading || !userState.user) {
+  if (userDataIsLoading || !userState.user) {
     return <div>Loading...</div>;
   }
 

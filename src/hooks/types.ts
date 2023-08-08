@@ -1,6 +1,6 @@
 import type { InitialStateType } from '@features/types';
 
 export type UseTokenAuthType = {
-  loading: boolean;
+  userDataIsLoading: boolean;
   userState: InitialStateType;
 };
