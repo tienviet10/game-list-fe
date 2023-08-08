@@ -1,4 +1,4 @@
-import type { LoginType } from '@/pages/Login/types';
+import type { LoginType } from '@pages/Login/types';
 
 export type RegisterType = LoginType & {
   username: string;

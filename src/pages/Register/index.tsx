@@ -5,8 +5,8 @@ import useNotification from '@hooks/useNotification';
 import { useAuth } from '@services/authentication/useAuth';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { setUser } from '@features/userSlice';
 import styles from './Register.module.scss';
-import { setUser } from '@/features/userSlice';
 import type { RegisterType } from './types';
 
 function Register() {

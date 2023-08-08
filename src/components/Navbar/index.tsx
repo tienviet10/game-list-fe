@@ -7,20 +7,19 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAppDispatch } from '@/app/hooks';
-import useTokenAuth from '@/hooks/useTokenAuth';
-import { setUser } from '@/features/userSlice';
-import { setUserGameReducer } from '@/features/userGameSlice';
-import { setClearAddedGames } from '@/features/addedGamesSlice';
-import { INITIAL_USER_STATE } from '@/constants';
+import { useAppDispatch } from '@app/hooks';
+import useTokenAuth from '@hooks/useTokenAuth';
+import { setUser } from '@features/userSlice';
+import { setUserGameReducer } from '@features/userGameSlice';
+import { setClearAddedGames } from '@features/addedGamesSlice';
+import { INITIAL_USER_STATE } from '@constants/constants';
 import styles from './Navbar.module.scss';
-// import { apolloClient } from '@/graphql';
 
 const { useBreakpoint } = Grid;
 
 export default function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
-  const { loading, userState } = useTokenAuth();
+  const { userDataIsLoading, userState } = useTokenAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -136,7 +135,7 @@ export default function Navbar() {
                           Game List
                         </Link>
                       </li>
-                      {!loading && userState?.user?.username ? (
+                      {!userDataIsLoading && userState?.user?.username ? (
                         <li
                           className={styles['mobile-nav__header-drawer-item']}
                         >
@@ -180,7 +179,7 @@ export default function Navbar() {
                   </ul>
 
                   <ul className={styles['desktop-nav__nav-section']}>
-                    {!loading && userState?.user?.username ? (
+                    {!userDataIsLoading && userState?.user?.username ? (
                       <Popover content={memoizedContent}>
                         <img
                           className={styles['desktop-nav__profile-image']}

@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import '@/styles/global.scss';
+import '@styles/global.scss';
 
 const useNotification = (noteType = 'default' as string) => {
   const [messageApi, contextHolder] = notification.useNotification();

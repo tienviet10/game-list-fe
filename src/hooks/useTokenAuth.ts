@@ -3,8 +3,8 @@ import { isExpired } from 'react-jwt';
 import { useDispatch } from 'react-redux';
 import type { UseTokenAuthType } from '@hooks/types';
 import useGetUser from '@services/authentication/useGetUser';
-import { useAppSelector } from '@/app/hooks';
-import { setLoading, setUser } from '@/features/userSlice';
+import { useAppSelector } from '@app/hooks';
+import { setLoading, setUser } from '@features/userSlice';
 
 const useTokenAuth = (): UseTokenAuthType => {
   const dispatch = useDispatch();

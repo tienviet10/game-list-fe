@@ -1,6 +1,6 @@
+import { INITIAL_USER_GAME_BY_ID_STATE } from '@constants/constants';
 import { createSlice } from '@reduxjs/toolkit';
 import { InitialStateUserGameType } from '@features/types';
-import { INITIAL_USER_GAME_BY_ID_STATE } from '@/constants';
 
 const initialState: InitialStateUserGameType = INITIAL_USER_GAME_BY_ID_STATE;
 

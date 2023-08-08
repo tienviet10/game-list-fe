@@ -1,5 +1,5 @@
-import styles from '@/components/UserProfileHeader/UserBanner/UserBanner.module.scss';
-import type { UserProfileHeaderType } from '@/components/UserProfileHeader/types';
+import styles from '@components/UserProfileHeader/UserBanner/UserBanner.module.scss';
+import type { UserProfileHeaderType } from '@components/UserProfileHeader/types';
 
 function UserBanner({ userState }: UserProfileHeaderType) {
   const { user } = userState;

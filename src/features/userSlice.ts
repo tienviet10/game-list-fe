@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { INITIAL_USER_STATE } from '@/constants';
+import { INITIAL_USER_STATE } from '@constants/constants';
 import type { InitialStateType } from './types';
 
 const initialState: InitialStateType = INITIAL_USER_STATE;

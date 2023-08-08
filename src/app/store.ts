@@ -11,7 +11,7 @@ import addedGamesReducer from '@features/addedGamesSlice';
 import homeSearchSlice from '@features/homeSearchSlice';
 import { createGameFiltersSlice } from '@features/gameFiltersSlice';
 import userPostSlice from '@features/userPostSlice';
-import { HomeGameFilters, UserGameFilters } from '@/types/global';
+import { HomeGameFilters, UserGameFilters } from '@constants/types';
 
 const defaultGameFilters: HomeGameFilters = {
   genres: [],
