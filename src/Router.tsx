@@ -6,9 +6,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 function Router() {
-  const { loading, userState } = useTokenAuth();
+  const { userDataIsLoading, userState } = useTokenAuth();
 
-  if (loading || userState.loading) {
+  if (userDataIsLoading || userState.loading) {
     return <div>Loading...</div>;
   }
 

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import client from '@utils/authApi';
 import { CustomAxiosResponse, ErrorResponse, UserData } from '@/types/global';
 
 type LoginParams = {
@@ -22,13 +22,13 @@ export const useAuth = () => {
   const loginUser = async (
     params: LoginParams
   ): Promise<CustomAxiosResponse<LoginResponse>> => {
-    return axios.post(`${import.meta.env.VITE_BACKEND}/auth/login`, params);
+    return client.post(`/auth/login`, params);
   };
 
   const signUpUser = async (
     params: SignUpParams
   ): Promise<CustomAxiosResponse<LoginResponse>> => {
-    return axios.post(`${import.meta.env.VITE_BACKEND}/auth/register`, params);
+    return client.post(`/auth/register`, params);
   };
 
   const {
