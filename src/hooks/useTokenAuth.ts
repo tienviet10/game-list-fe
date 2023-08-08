@@ -26,7 +26,7 @@ const useTokenAuth = (): UseTokenAuthType => {
     const authToken = localStorage.getItem('token');
 
     if (userInfo && authToken) {
-      dispatch(setUser(userInfo));
+      dispatch(setUser(userInfo?.data?.data));
     }
   }, [userInfo, dispatch]);
 

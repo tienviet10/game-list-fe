@@ -1,0 +1,17 @@
+@use '../../styles/mixin' as mixin;
+
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;
+
+  @include mixin.phone {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.userGamesTable {
+  width: 100%;
+}

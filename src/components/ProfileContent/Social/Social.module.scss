@@ -1,0 +1,17 @@
+@use '../../../styles/mixin.scss' as mixin;
+@use '../../../styles/variables.scss' as variables;
+
+.socialContainer {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 160px auto;
+  grid-column-gap: 40px;
+  font-family: 'Josefin Sans', sans-serif;
+
+  color: variables.$color-text;
+
+  @include mixin.phoneSmall {
+    display: block;
+    margin-top: 25px;
+  }
+}
