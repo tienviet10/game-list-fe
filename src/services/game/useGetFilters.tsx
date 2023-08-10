@@ -44,10 +44,6 @@ export default function useGetFilters(): GetFiltersHook {
     refetchOnWindowFocus: false,
   });
 
-  // console.log('DATA: ', data);
-  // console.log('status: ', status);
-  // console.log('error: ', error);
-
   if (status === 'loading') {
     return {
       status: 'loading',
@@ -59,7 +55,7 @@ export default function useGetFilters(): GetFiltersHook {
     };
   }
 
-  if (error) {
+  if (status === 'error') {
     return {
       status: 'error',
       genres: null,
@@ -78,58 +74,4 @@ export default function useGetFilters(): GetFiltersHook {
     furthestYear: data.data.data.gameFilters.furthestYear,
     error: null,
   };
-
-  //   {
-  //     "gameFilters": {
-  //         "genres": [
-  //             "Fighting",
-  //             "Shooter",
-  //             "Music",
-  //             "Visual Novel",
-  //             "Indie",
-  //             "Card & Board Game",
-  //             "MOBA",
-  //             "Point-and-click"
-  //         ],
-  //         "platforms": [
-  //             "Commodore CDTV",
-  //             "Sega Pico",
-  //             "PlayStation 2",,
-  //             "Meta Quest 2",
-  //             "PlayStation VR2",
-  //             "PlayStation VR",
-  //             "Virtual Console",
-  //             "Meta Quest 3"
-  //         ],
-  //         "tags": [
-  //             "Thriller",
-  //             "Science fiction",
-  //             "Action",
-  //             "Horror",
-  //             "Survival",
-  //             "Fantasy",
-  //             "Warfare",
-  //             "4X (explore, expand, exploit, and exterminate)",
-  //             "Educational",
-  //             "Mystery",
-  //             "Party",
-  //             "Romance",
-  //             "Erotic"
-  //         ],
-  //         "furthestYear": 2023
-  //     }
-  // }
-
-  // const genres: string[] = data?.data.data.gameFilters.genres
-  //   ? data.genres
-  //   : [];
-  // const platforms: string[] = data?.platforms ? data.platforms : [];
-  // const tags: string[] = data?.tags ? data.tags : [];
-  // const furthestYear: number = data?.furthestYear ? data.furthestYear : NaN;
-  // return { genres, platforms, tags, furthestYear, error, loading: status };
-
-  // const genres: string[] = data?.genres ? data.genres : [];
-  // const platforms: string[] = data?.platforms ? data.platforms : [];
-  // const tags: string[] = data?.tags ? data.tags : [];
-  // const furthestYear: number = data?.furthestYear ? data.furthestYear : NaN;
 }
