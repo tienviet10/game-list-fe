@@ -6,7 +6,6 @@ import {
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import useNotification from 'antd/es/notification/useNotification';
 import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
 import filterFieldStyles from '@/components/FiltersWrapper/FilterField.module.scss';
 import useGetFilters from '@/services/game/useGetFilters';
@@ -64,14 +63,9 @@ function SelectFilterField<T>({
 }
 
 export default function FiltersWrapper() {
-  const filters = useGetFilters();
-  console.log('Filters: ', filters);
-
   // const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const { genres, platforms, tags, furthestYear, errors, loading } =
-    useGetFilters();
-  const { warning, contextHolder } = useNotification();
+  const { genres, platforms, tags, furthestYear, error } = useGetFilters();
   const dispatch = useDispatch();
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
   const yearOptions = useMemo(() => {
@@ -84,9 +78,9 @@ export default function FiltersWrapper() {
   }, [furthestYear]);
   const screens = useBreakpoint();
 
-  console.log('Filters: ', genres, platforms, tags, furthestYear);
-  console.log('Filters error: ', errors);
-  console.log('Filters loading: ', loading);
+  // console.log('Filters: ', genres, platforms, tags, furthestYear);
+  // console.log('Filters error: ', error);
+  // console.log('Filters status: ', status);
   // const content = (
   //   <div>
   //     {loading ? (
@@ -146,11 +140,11 @@ export default function FiltersWrapper() {
   //     )}
   //   </div>
   // );
-  if (errors.length > 0) {
-    console.log(`Errors: ${errors}`);
+  if (error) {
+    // console.log(`Errors: `, error);
     return (
       <div>
-        <p>Errors while fetching filters: {error[0]}</p>
+        <p>Errors while fetching filters</p>
       </div>
     );
   }
@@ -179,7 +173,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={homeGameFilters.genres.included || []}
-              options={genres}
+              options={genres || []}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'genres', entry: v }));
               }}
@@ -196,7 +190,7 @@ export default function FiltersWrapper() {
             <SelectFilterField<string[]>
               mode="multiple"
               value={homeGameFilters.platforms.included || []}
-              options={platforms}
+              options={platforms || []}
               onSelect={(v) => {
                 dispatch(toggleItem({ category: 'platforms', entry: v }));
               }}
@@ -280,7 +274,6 @@ export default function FiltersWrapper() {
           </Button>
         </Space>
       )}
-      {contextHolder}
     </Layout>
   );
 }
