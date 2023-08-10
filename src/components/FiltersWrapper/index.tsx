@@ -1,8 +1,18 @@
 import { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Grid, Input, Layout, Select, Space } from 'antd';
+import {
+  Button,
+  Grid,
+  Input,
+  Layout,
+  Popover,
+  Select,
+  Skeleton,
+  Space,
+} from 'antd';
 import {
   MenuFoldOutlined,
+  MenuOutlined,
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
@@ -15,7 +25,7 @@ import { range } from '@/utils/utils';
 import { clearCategory, setHomeFilter, toggleItem } from '@/app/store';
 import { SelectFilterFieldType } from './types';
 import { ArrayElementType } from '@/types/global';
-// import { MemoizedExclusionFiltersList } from './ExclusionFiltersList';
+import { MemoizedExclusionFiltersList } from './ExclusionFiltersList';
 
 const { Search } = Input;
 const { useBreakpoint } = Grid;
@@ -63,9 +73,10 @@ function SelectFilterField<T>({
 }
 
 export default function FiltersWrapper() {
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const { genres, platforms, tags, furthestYear, error } = useGetFilters();
+  const { genres, platforms, tags, furthestYear, error, status } =
+    useGetFilters();
   const dispatch = useDispatch();
   const homeGameFilters = useAppSelector((state) => state.homeGameFilters);
   const yearOptions = useMemo(() => {
@@ -78,70 +89,67 @@ export default function FiltersWrapper() {
   }, [furthestYear]);
   const screens = useBreakpoint();
 
-  // console.log('Filters: ', genres, platforms, tags, furthestYear);
-  // console.log('Filters error: ', error);
-  // console.log('Filters status: ', status);
-  // const content = (
-  //   <div>
-  //     {loading ? (
-  //       <div className={styles.advancedSearchPopoverLoading}>
-  //         <Skeleton paragraph={{ rows: 3, width: 600 }} active />
-  //         <Skeleton paragraph={{ rows: 3, width: 600 }} active />
-  //         <Skeleton paragraph={{ rows: 3, width: 600 }} active />
-  //       </div>
-  //     ) : (
-  //       <>
-  //         <MemoizedExclusionFiltersList
-  //           title="Genres"
-  //           entries={genres}
-  //           states={[
-  //             {
-  //               color: 'green',
-  //               values: homeGameFilters.genres.included || [],
-  //             },
-  //             {
-  //               color: 'red',
-  //               values: homeGameFilters.genres.excluded || [],
-  //             },
-  //           ]}
-  //           category="genres"
-  //         />
-  //         <MemoizedExclusionFiltersList
-  //           title="Platforms"
-  //           entries={platforms ?? []}
-  //           states={[
-  //             {
-  //               color: 'green',
-  //               values: homeGameFilters.platforms.included || [],
-  //             },
-  //             {
-  //               color: 'red',
-  //               values: homeGameFilters.platforms.excluded || [],
-  //             },
-  //           ]}
-  //           category="platforms"
-  //         />
-  //         <MemoizedExclusionFiltersList
-  //           title="Tags"
-  //           entries={tags ?? []}
-  //           states={[
-  //             {
-  //               color: 'green',
-  //               values: homeGameFilters.tags.included || [],
-  //             },
-  //             {
-  //               color: 'red',
-  //               values: homeGameFilters.tags.excluded || [],
-  //             },
-  //           ]}
-  //           category="tags"
-  //         />
-  //       </>
-  //     )}
-  //   </div>
-  // );
+  const content = (
+    <div>
+      {status === 'loading' && (
+        <div className={styles.advancedSearchPopoverLoading}>
+          <Skeleton paragraph={{ rows: 3, width: 600 }} active />
+          <Skeleton paragraph={{ rows: 3, width: 600 }} active />
+          <Skeleton paragraph={{ rows: 3, width: 600 }} active />
+        </div>
+      )}
+      {status === 'success' && (
+        <>
+          <MemoizedExclusionFiltersList
+            title="Genres"
+            entries={genres}
+            states={[
+              {
+                color: 'green',
+                values: homeGameFilters.genres.included,
+              },
+              {
+                color: 'red',
+                values: homeGameFilters.genres.excluded,
+              },
+            ]}
+            category="genres"
+          />
+          <MemoizedExclusionFiltersList
+            title="Platforms"
+            entries={platforms}
+            states={[
+              {
+                color: 'green',
+                values: homeGameFilters.platforms.included,
+              },
+              {
+                color: 'red',
+                values: homeGameFilters.platforms.excluded,
+              },
+            ]}
+            category="platforms"
+          />
+          <MemoizedExclusionFiltersList
+            title="Tags"
+            entries={tags}
+            states={[
+              {
+                color: 'green',
+                values: homeGameFilters.tags.included,
+              },
+              {
+                color: 'red',
+                values: homeGameFilters.tags.excluded,
+              },
+            ]}
+            category="tags"
+          />
+        </>
+      )}
+    </div>
+  );
   if (error) {
-    // console.log(`Errors: `, error);
     return (
       <div>
         <p>Errors while fetching filters</p>
@@ -231,7 +239,7 @@ export default function FiltersWrapper() {
             />
           </div>
           <div>
-            {/* <Popover
+            <Popover
               placement="bottomRight"
               arrow={false}
               content={content}
@@ -245,7 +253,7 @@ export default function FiltersWrapper() {
                 icon={<MenuOutlined />}
                 size="middle"
               />
-            </Popover> */}
+            </Popover>
           </div>
         </div>
       ) : (
