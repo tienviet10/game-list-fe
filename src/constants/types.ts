@@ -97,3 +97,5 @@ export interface UserData {
   userPicture: string;
   bannerPicture: string;
 }
+
+export declare type ArrayElementType<T> = T extends (infer E)[] ? E : T;

@@ -1,5 +1,6 @@
-import styles from '@pages/Home/Home.module.scss';
-import { useAppSelector } from '@app/hooks';
+import styles from '@/pages/Home/Home.module.scss';
+import { useAppSelector } from '@/app/hooks';
+import FiltersWrapper from '@/components/FiltersWrapper';
 
 function Home() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
@@ -11,6 +12,7 @@ function Home() {
         }`}
       >
         <div>Hello</div>
+        <FiltersWrapper />
       </div>
     </div>
   );

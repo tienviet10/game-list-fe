@@ -1,3 +1,23 @@
+import { GameFiltersSortType } from '@/types/global';
+
+export type HomeGameFilters = {
+  search: string | undefined;
+  genres: {
+    included: string[];
+    excluded: string[];
+  };
+  platforms: {
+    included: string[];
+    excluded: string[];
+  };
+  tags: {
+    included: string[];
+    excluded: string[];
+  };
+  year: number | undefined;
+  sortBy: GameFiltersSortType | undefined;
+};
+
 export type InitialStateType = {
   loading: boolean;
   user: UserInfo;
