@@ -1,15 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
-  extends: [
-    'airbnb',
-    'airbnb-typescript',
-    'airbnb/hooks',
-    'plugin:react-hooks/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'plugin:@tanstack/eslint-plugin-query/recommended'
-  ],
+  extends: ['airbnb', 'airbnb-typescript', 'airbnb/hooks', 'plugin:react-hooks/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'plugin:@tanstack/eslint-plugin-query/recommended', 'plugin:storybook/recommended'],
   overrides: [
     {
       // feel free to replace with your preferred file pattern - eg. 'src/**/*Slice.ts'
