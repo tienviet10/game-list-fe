@@ -1,0 +1,29 @@
+@use '../../styles/variables.scss' as variables;
+
+.primary {
+  background-color: variables.$color-peach;
+  border-color: variables.$color-peach;
+  width: auto;
+  height: auto;
+}
+
+.primaryText{
+  color: variables.$color-text-bright;
+  font-size: large;
+  font-weight: bold;
+}
+
+.secondary {
+  background-color: variables.$color-purple;
+  border-color: variables.$color-purple;
+  width: auto;
+  height: auto;
+  border-radius: 2rem;
+}
+.secondaryText{
+  color: variables.$color-text-bright;
+  font-size: large;
+  font-weight: bold;
+}
+
+

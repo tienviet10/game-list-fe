@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginImage from '@assets/images/games_login.webp';
@@ -6,6 +6,7 @@ import { useAuth } from '@services/authentication/useAuth';
 import useNotification from '@hooks/useNotification';
 import { setUser } from '@features/userSlice';
 import { useCallback, useEffect } from 'react';
+import Button from '@components/Button';
 import styles from './Login.module.scss';
 import type { LoginType } from './types';
 
@@ -47,6 +48,7 @@ function Login() {
   return (
     <>
       <div className={styles.loginPage}>
+        <Button text="hello" preset="secondary" />
         <div className={styles.loginBox}>
           <div className={styles.illustrationWrapper}>
             <img src={LoginImage} alt="Login" />
@@ -87,12 +89,11 @@ function Login() {
 
             <Form.Item>
               <Button
-                type="primary"
-                htmlType="submit"
-                className={styles.loginFormButton}
-              >
-                LOGIN
-              </Button>
+                buttonType="primary"
+                text="LOGIN"
+                buttonStyle={styles.loginFormButton}
+                textStyle={styles.loginFormButtonText}
+              />
             </Form.Item>
             <Link to="/register">Need an account?</Link>
           </Form>
