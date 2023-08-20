@@ -8,6 +8,7 @@ import { setUser } from '@features/userSlice';
 import { useCallback, useEffect } from 'react';
 import styles from './Login.module.scss';
 import type { LoginType } from './types';
+import CustomButton from '@components/CustomButton';
 
 function Login() {
   const navigate = useNavigate();
@@ -86,13 +87,13 @@ function Login() {
             </Form.Item>
 
             <Form.Item>
-              <Button
-                type="primary"
+              <CustomButton
+                text="LOGIN"
+                buttonType="primary"
+                buttonStyle={styles.loginFormButton}
+                textStyle={styles.buttonTextStyle}
                 htmlType="submit"
-                className={styles.loginFormButton}
-              >
-                LOGIN
-              </Button>
+              />
             </Form.Item>
             <Link to="/register">Need an account?</Link>
           </Form>

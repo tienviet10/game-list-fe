@@ -1,0 +1,14 @@
+@use '../../styles/variables.scss' as variables;
+
+.primary {
+  background-color: variables.$color-peach;
+  border-color: variables.$color-peach;
+  width: auto;
+  height: auto;
+}
+
+.primaryText{
+  color: variables.$color-text-bright;
+  font-size: large;
+  font-weight: bold;
+}
