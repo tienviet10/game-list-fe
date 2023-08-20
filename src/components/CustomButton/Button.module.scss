@@ -1,14 +1,78 @@
-@use '../../styles/variables.scss' as variables;
+@use '../../styles/sizeWeight.scss' as size;
 
-.primary {
-  background-color: variables.$color-peach;
-  border-color: variables.$color-peach;
+.defaultButton {
+  height:auto;
   width: auto;
-  height: auto;
 }
 
-.primaryText{
-  color: variables.$color-text-bright;
-  font-size: large;
-  font-weight: bold;
+.bookSm {
+  @include size.smRegular;
+}
+
+.bookMd {
+  @include size.mdRegular;
+}
+
+.bookLg {
+  @include size.lgRegular;
+}
+
+.bookXl {
+  @include size.xlRegular;
+}
+
+.bookXxl {
+  @include size.xxlRegular;
+}
+
+.bookXxxl {
+  @include size.xxxlRegular;
+}
+
+.mediumSm {
+  @include size.smMedium;
+}
+
+.mediumMd {
+  @include size.mdMedium;
+}
+
+.mediumLg {
+  @include size.lgMedium;
+}
+
+.mediumXl {
+  @include size.xlMedium;
+}
+
+.mediumXxl {
+  @include size.xxlMedium;
+}
+
+.mediumXxxl {
+  @include size.xxxlMedium;
+}
+
+.boldSm {
+  @include size.smBold;
+}
+
+.boldMd {
+  @include size.mdBold;
+}
+
+.boldLg {
+  @include size.lgBold;
+}
+
+.boldXl {
+  @include size.xlBold;
+}
+
+.boldXxl {
+  @include size.xxlBold;
+}
+
+.boldXxxl {
+  @include size.xxxlBold;
 }

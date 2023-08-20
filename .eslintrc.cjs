@@ -51,6 +51,7 @@ module.exports = {
       { ignoreFunctionalComponents: true },
     ],
     "@tanstack/query/exhaustive-deps": "error",
-    "@tanstack/query/prefer-query-object-syntax": "error"
+    "@tanstack/query/prefer-query-object-syntax": "error",
+    "react/jsx-props-no-spreading": 0,
   },
 };

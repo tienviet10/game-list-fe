@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import WelcomeImage from '@assets/images/register_welcome.webp';
 import useNotification from '@hooks/useNotification';
@@ -6,6 +6,7 @@ import { useAuth } from '@services/authentication/useAuth';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@features/userSlice';
+import CustomButton from '@components/CustomButton';
 import styles from './Register.module.scss';
 import type { RegisterType } from './types';
 
@@ -127,13 +128,14 @@ function Register() {
             </Form.Item>
 
             <Form.Item>
-              <Button
-                type="primary"
+              <CustomButton
+                text="REGISTER"
+                buttonType="primary"
+                buttonStyle={styles.registerFormButton}
+                textSize="mediumMd"
+                textStyle={styles.buttonTextStyle}
                 htmlType="submit"
-                className={styles.registerFormButton}
-              >
-                REGISTER
-              </Button>
+              />
             </Form.Item>
             <Link to="/login">Already have an account!</Link>
           </Form>
