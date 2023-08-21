@@ -1,4 +1,4 @@
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginImage from '@assets/images/games_login.webp';
@@ -87,6 +87,7 @@ function Login() {
               textStyle={styles.buttonTextStyle}
               htmlType="submit"
             />
+
             <Link to="/register">Need an account?</Link>
           </Form>
         </div>

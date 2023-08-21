@@ -1,8 +1,13 @@
-@use '../../styles/sizeWeight.scss' as size;
+@use '../../styles/sizeWeight' as size;
+@use '../../styles/colors' as colors;
 
 .defaultButton {
   height:auto;
   width: auto;
+}
+
+.defaultTextWhite {
+  color: colors.$color-white;
 }
 
 .bookSm {

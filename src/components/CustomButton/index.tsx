@@ -42,7 +42,7 @@ function CustomButton({
   text,
   textType,
   textStyle,
-  buttonType,
+  buttonType = 'primary',
   buttonStyle,
   htmlType,
   textSize,
@@ -53,7 +53,7 @@ function CustomButton({
     () => ({
       default: {
         button: styles.defaultButton,
-        text: '',
+        text: styles.defaultTextWhite,
       },
     }),
     []

@@ -11,17 +11,24 @@ type Props = {
   placeholder?: string;
   'data-testid'?: string;
   inputStyle?: string;
+  itemContainerStyle?: string;
+  autoComplete?: boolean;
 };
 
 function FormItem(prop: Props) {
-  const { name, rules, inputStyle, ...rest } = prop;
+  const { name, rules, itemContainerStyle, inputStyle, autoComplete, ...rest } =
+    prop;
 
   return (
-    <Item name={name} rules={rules}>
-      {name === 'password' ? (
+    <Item name={name} rules={rules} className={`${itemContainerStyle}`}>
+      {name.includes('password') ? (
         <Password {...rest} className={`${styles.input} ${inputStyle}`} />
       ) : (
-        <Input {...rest} className={`${styles.input} ${inputStyle}`} />
+        <Input
+          {...rest}
+          className={`${styles.input} ${inputStyle}`}
+          autoComplete={autoComplete ? 'on' : 'off'}
+        />
       )}
     </Item>
   );
