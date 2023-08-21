@@ -1,9 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FormItem from '.';
 
+type FieldType = {
+  username?: string;
+  password?: string;
+};
+
+type ChosenName = 'username' | 'password';
+
 const meta = {
   title: 'Login/AntFormInputItem',
-  component: FormItem,
+  component: FormItem<FieldType, ChosenName>,
   parameters: {
     layout: 'centered',
   },

@@ -11,6 +11,11 @@ import FormItem from '@components/FormItem';
 import styles from './Login.module.scss';
 import type { LoginType } from './types';
 
+type FieldType = {
+  email?: string;
+  password?: string;
+};
+
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,7 +66,7 @@ function Login() {
             <p className={styles.formTitle}>Welcome back</p>
             <p>Login to the your profile</p>
 
-            <FormItem
+            <FormItem<FieldType, 'email'>
               name="email"
               rules={[
                 { required: true, message: 'Please input your email!' },
@@ -71,7 +76,7 @@ function Login() {
               data-testid="email-test"
             />
 
-            <FormItem
+            <FormItem<FieldType, 'password'>
               name="password"
               rules={[
                 { required: true, message: 'Please input your password!' },

@@ -11,7 +11,6 @@ function Home() {
           homeSearchState.view === 'grid' ? null : styles.listsContainer
         }`}
       >
-        <div>Hello</div>
         <FiltersWrapper />
       </div>
     </div>
