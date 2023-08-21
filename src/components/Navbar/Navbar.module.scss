@@ -1,4 +1,4 @@
-@use '../../styles/colors.scss' as colors;
+@use '../../styles/colors' as colors;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
 $mobile-nav-width: 640px;
@@ -82,7 +82,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
 
   a:hover {
     text-decoration: none;
-    color: variables.$color-icon-selected;
+    color: colors.$color-icon-selected;
   }
 
   a:active {
@@ -110,7 +110,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
   width: 100%;
 
   &:hover {
-    color: variables.$color-text;
+    color: colors.$color-text;
   }
 
   .desktop-nav__header-popover-icon {
@@ -180,7 +180,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
   }
 
   button:hover {
-    color: variables.$color-navbar-hover;
+    color: colors.$color-navbar-hover;
     cursor: pointer;
   }
 
@@ -200,7 +200,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
 
   a:hover {
     text-decoration: none;
-    color: variables.$color-navbar-hover;
+    color: colors.$color-navbar-hover;
   }
 
   a:active {

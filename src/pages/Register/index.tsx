@@ -11,6 +11,13 @@ import FormItem from '@components/FormItem';
 import styles from './Register.module.scss';
 import type { RegisterType } from './types';
 
+type FieldType = {
+  username?: string;
+  email?: string;
+  password?: string;
+  password_confirmation?: string;
+};
+
 function Register() {
   const navigate = useNavigate();
   const { contextHolder, info } = useNotification('auth');
@@ -56,7 +63,7 @@ function Register() {
             <p className={styles.formTitle}>Register</p>
             <p>Please fill in the form below</p>
 
-            <FormItem
+            <FormItem<FieldType, 'username'>
               name="username"
               rules={[
                 {
@@ -69,7 +76,7 @@ function Register() {
               data-testid="user-test"
             />
 
-            <FormItem
+            <FormItem<FieldType, 'email'>
               name="email"
               rules={[
                 { required: true, message: 'Please input your email!' },
@@ -79,7 +86,7 @@ function Register() {
               data-testid="email-test"
             />
 
-            <FormItem
+            <FormItem<FieldType, 'password'>
               name="password"
               rules={[
                 { required: true, message: 'Please input your password!' },
@@ -92,7 +99,7 @@ function Register() {
               data-testid="password-test"
             />
 
-            <FormItem
+            <FormItem<FieldType, 'password_confirmation'>
               name="password_confirmation"
               rules={[
                 { required: true, message: 'Please confirm your password!' },

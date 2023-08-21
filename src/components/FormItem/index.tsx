@@ -5,8 +5,8 @@ import styles from './FormItem.module.scss';
 const { Item } = Form;
 const { Password } = Input;
 
-type Props = {
-  name: string;
+type Props<T extends object, K extends keyof T> = {
+  name: K;
   rules?: Rule[];
   placeholder?: string;
   'data-testid'?: string;
@@ -16,9 +16,17 @@ type Props = {
 };
 
 /** This is use under \<Form> */
-function FormItem(prop: Props) {
-  const { name, rules, itemContainerStyle, inputStyle, autoComplete, ...rest } =
-    prop;
+function FormItem<T extends object, K extends keyof T>(prop: Props<T, K>) {
+  const {
+    name: itemName,
+    rules,
+    itemContainerStyle,
+    inputStyle,
+    autoComplete,
+    ...rest
+  } = prop;
+
+  const name = itemName as string;
 
   return (
     <Item name={name} rules={rules} className={`${itemContainerStyle}`}>
