@@ -38,6 +38,7 @@ type Props = {
 
 const { Text } = Typography;
 
+/** This button uses \<Button> and \<Text> in \<Typography> from Ant Design */
 function CustomButton({
   text,
   textType,

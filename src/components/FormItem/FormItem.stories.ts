@@ -13,6 +13,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Normal input for all cases
+ */
 export const Default: Story = {
   args: {
     name: 'username',
@@ -27,6 +30,9 @@ export const Default: Story = {
   },
 };
 
+/**
+ * Password input hide characters
+ */
 export const Password: Story = {
   args: {
     name: 'password',

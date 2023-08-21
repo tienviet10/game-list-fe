@@ -15,6 +15,7 @@ type Props = {
   autoComplete?: boolean;
 };
 
+/** This is use under \<Form> */
 function FormItem(prop: Props) {
   const { name, rules, itemContainerStyle, inputStyle, autoComplete, ...rest } =
     prop;

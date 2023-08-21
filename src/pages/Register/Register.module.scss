@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #d9edff;
+  background: colors.$color-background-blue;
 }
 
 .registerBox {
@@ -16,7 +16,7 @@
   flex-direction: row-reverse;
   max-width: 1000px;
   background-color: colors.$color-white;
-  box-shadow: 0 0 40px rgba(0,0,0,0.16);
+  box-shadow: 0 0 40px colors.$color-box-shadow;
   overflow: hidden;
   margin: 0 auto;
   border-radius: 12px;
@@ -40,7 +40,7 @@
     margin-bottom: 30px;
 
     &.formTitle {
-      color: #333333;
+      color: colors.$color-text-title-dark;
       font-family: 'Josefin Sans', sans-serif;
       font-size: 42px;
       font-weight: bold;
@@ -73,7 +73,7 @@
   align-items: flex-end;
   max-width: 800px;
   min-height: 100%;
-  background-color: #f2feff;
+  background-color: colors.$color-illustration-background;
 
   @include mixin.loginTablet {
     max-width: 100%;
