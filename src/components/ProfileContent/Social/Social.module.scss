@@ -1,5 +1,5 @@
 @use '../../../styles/mixin.scss' as mixin;
-@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/colors.scss' as colors;
 
 .socialContainer {
   margin-top: 40px;
@@ -8,7 +8,7 @@
   grid-column-gap: 40px;
   font-family: 'Josefin Sans', sans-serif;
 
-  color: variables.$color-text;
+  color: colors.$color-text;
 
   @include mixin.phoneSmall {
     display: block;

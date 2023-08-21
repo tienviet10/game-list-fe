@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Form } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginImage from '@assets/images/games_login.webp';
@@ -6,6 +6,8 @@ import { useAuth } from '@services/authentication/useAuth';
 import useNotification from '@hooks/useNotification';
 import { setUser } from '@features/userSlice';
 import { useCallback, useEffect } from 'react';
+import CustomButton from '@components/CustomButton';
+import FormItem from '@components/FormItem';
 import styles from './Login.module.scss';
 import type { LoginType } from './types';
 
@@ -58,42 +60,35 @@ function Login() {
           >
             <p className={styles.formTitle}>Welcome back</p>
             <p>Login to the your profile</p>
-            <Form.Item
+
+            <FormItem
               name="email"
               rules={[
                 { required: true, message: 'Please input your email!' },
                 { type: 'email', message: 'Please enter valid email!' },
               ]}
-            >
-              <Input
-                placeholder="Email"
-                data-testid="email-test"
-                className={styles.input}
-              />
-            </Form.Item>
+              placeholder="Email"
+              data-testid="email-test"
+            />
 
-            <Form.Item
+            <FormItem
               name="password"
               rules={[
                 { required: true, message: 'Please input your password!' },
               ]}
-            >
-              <Input.Password
-                placeholder="Password"
-                data-testid="password-test"
-                className={styles.input}
-              />
-            </Form.Item>
+              placeholder="Password"
+              data-testid="password-test"
+            />
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className={styles.loginFormButton}
-              >
-                LOGIN
-              </Button>
-            </Form.Item>
+            <CustomButton
+              text="LOGIN"
+              buttonType="primary"
+              buttonStyle={styles.loginFormButton}
+              textSize="mediumMd"
+              textStyle={styles.buttonTextStyle}
+              htmlType="submit"
+            />
+
             <Link to="/register">Need an account?</Link>
           </Form>
         </div>

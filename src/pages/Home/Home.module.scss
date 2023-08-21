@@ -1,9 +1,9 @@
-@use '../../styles/variables.scss' as variables;
+@use '../../styles/colors.scss' as colors;
 @use '../../styles/mixin.scss' as mixin;
 
 .homeContainer {
   min-height: 100vh;
-  background: variables.$color-background;
+  background: colors.$color-background;
 
   .gamesContainer {
     margin: 0 auto;

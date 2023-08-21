@@ -1,4 +1,4 @@
-@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/colors.scss' as colors;
 @use '../../../styles/mixin.scss' as mixin;
 
 .bannerContainerNull {
@@ -66,7 +66,7 @@
           padding: 0;
         }
         h1 {
-          color: variables.$color-text-bright;
+          color: colors.$color-text-bright;
           display: inline-block;
           font-weight: 800;
           font-size: 1.3rem;

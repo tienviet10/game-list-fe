@@ -1,8 +1,5 @@
 // @import '~antd/dist/antd.less';
 
-$color-primary: #ff4d4f;
-// $color-red: red;
-
 @mixin phoneSmall {
   @media screen and (max-width: 760px) {
     @content;

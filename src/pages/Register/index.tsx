@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Form } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import WelcomeImage from '@assets/images/register_welcome.webp';
 import useNotification from '@hooks/useNotification';
@@ -6,6 +6,8 @@ import { useAuth } from '@services/authentication/useAuth';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@features/userSlice';
+import CustomButton from '@components/CustomButton';
+import FormItem from '@components/FormItem';
 import styles from './Register.module.scss';
 import type { RegisterType } from './types';
 
@@ -53,7 +55,8 @@ function Register() {
           >
             <p className={styles.formTitle}>Register</p>
             <p>Please fill in the form below</p>
-            <Form.Item
+
+            <FormItem
               name="username"
               rules={[
                 {
@@ -62,29 +65,21 @@ function Register() {
                   whitespace: true,
                 },
               ]}
-            >
-              <Input
-                placeholder="Username"
-                data-testid="user-test"
-                className={styles.input}
-              />
-            </Form.Item>
+              placeholder="Username"
+              data-testid="user-test"
+            />
 
-            <Form.Item
+            <FormItem
               name="email"
               rules={[
                 { required: true, message: 'Please input your email!' },
                 { type: 'email', message: 'Please enter valid email!' },
               ]}
-            >
-              <Input
-                placeholder="Email"
-                data-testid="email-test"
-                className={styles.input}
-              />
-            </Form.Item>
+              placeholder="Email"
+              data-testid="email-test"
+            />
 
-            <Form.Item
+            <FormItem
               name="password"
               rules={[
                 { required: true, message: 'Please input your password!' },
@@ -93,15 +88,11 @@ function Register() {
                   message: 'Password must be at least 8 characters long',
                 },
               ]}
-            >
-              <Input.Password
-                placeholder="Password"
-                data-testid="password-test"
-                className={styles.input}
-              />
-            </Form.Item>
+              placeholder="Password"
+              data-testid="password-test"
+            />
 
-            <Form.Item
+            <FormItem
               name="password_confirmation"
               rules={[
                 { required: true, message: 'Please confirm your password!' },
@@ -118,23 +109,19 @@ function Register() {
                   },
                 }),
               ]}
-            >
-              <Input.Password
-                placeholder="Password Confirmation"
-                data-testid="password-confirmation-test"
-                className={styles.input}
-              />
-            </Form.Item>
+              placeholder="Password Confirmation"
+              data-testid="password-confirmation-test"
+            />
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className={styles.registerFormButton}
-              >
-                REGISTER
-              </Button>
-            </Form.Item>
+            <CustomButton
+              text="REGISTER"
+              buttonType="primary"
+              buttonStyle={styles.registerFormButton}
+              textSize="mediumMd"
+              textStyle={styles.buttonTextStyle}
+              htmlType="submit"
+            />
+
             <Link to="/login">Already have an account!</Link>
           </Form>
           <div className={styles.illustrationWrapper}>

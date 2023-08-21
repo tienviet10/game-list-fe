@@ -1,0 +1,156 @@
+$sm: 13px;
+$md: 15px;
+$lg: 16px;
+$xl: 18px;
+$xxl: 20px;
+$xxxl: 24px;
+$xxxxl: 32px;
+
+$light: 300;
+$regular: 400;
+$medium: 500;
+$bold: 700;
+
+@mixin smLight() {
+  font-size: $sm;
+  font-weight: $light;
+}
+
+@mixin smRegular() {
+  font-size: $sm;
+  font-weight: $regular;
+}
+
+@mixin smMedium() {
+  font-size: $sm;
+  font-weight: $medium;
+}
+
+@mixin smBold() {
+  font-size: $sm;
+  font-weight: $bold;
+}
+
+
+
+@mixin mdLight() {
+  font-size: $md;
+  font-weight: $light;
+}
+
+@mixin mdRegular() {
+  font-size: $md;
+  font-weight: $regular;
+}
+
+@mixin mdMedium() {
+  font-size: $md;
+  font-weight: $medium;
+}
+
+@mixin mdBold() {
+  font-size: $md;
+  font-weight: $bold;
+}
+
+
+@mixin lgLight() {
+  font-size: $lg;
+  font-weight: $light;
+}
+
+@mixin lgRegular() {
+  font-size: $lg;
+  font-weight: $regular;
+}
+
+@mixin lgMedium() {
+  font-size: $lg;
+  font-weight: $medium;
+}
+
+@mixin lgBold() {
+  font-size: $lg;
+  font-weight: $bold;
+}
+
+@mixin xlLight() {
+  font-size: $xl;
+  font-weight: $light;
+}
+
+@mixin xlRegular() {
+  font-size: $xl;
+  font-weight: $regular;
+}
+
+@mixin xlMedium() {
+  font-size: $xl;
+  font-weight: $medium;
+}
+
+@mixin xlBold() {
+  font-size: $xl;
+  font-weight: $bold;
+}
+
+
+@mixin xxlLight() {
+  font-size: $xxl;
+  font-weight: $light;
+}
+
+@mixin xxlRegular() {
+  font-size: $xxl;
+  font-weight: $regular;
+}
+
+@mixin xxlMedium() {
+  font-size: $xxl;
+  font-weight: $medium;
+}
+
+@mixin xxlBold() {
+  font-size: $xxl;
+  font-weight: $bold;
+}
+
+@mixin xxxlLight() {
+  font-size: $xxxl;
+  font-weight: $light;
+}
+
+@mixin xxxlRegular() {
+  font-size: $xxxl;
+  font-weight: $regular;
+}
+
+@mixin xxxlMedium() {
+  font-size: $xxxl;
+  font-weight: $medium;
+}
+
+@mixin xxxlBold() {
+  font-size: $xxxl;
+  font-weight: $bold;
+}
+
+@mixin xxxxLight() {
+  font-size: $xxxxl;
+  font-weight: $light;
+}
+
+@mixin xxxxRegular() {
+  font-size: $xxxxl;
+  font-weight: $regular;
+}
+
+@mixin xxxxMedium() {
+  font-size: $xxxxl;
+  font-weight: $medium;
+}
+
+@mixin xxxxBold() {
+  font-size: $xxxxl;
+  font-weight: $bold;
+}
