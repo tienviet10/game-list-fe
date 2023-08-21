@@ -1,4 +1,4 @@
-@use '../../styles/colors.scss' as variables;
+@use '../../styles/colors.scss' as colors;
 
 .layoutFilterFieldContainer {
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  background-color: variables.$color-background;
+  background-color: colors.$color-background;
 }
 
 .h3FilterFieldTitle {
@@ -14,5 +14,5 @@
   font-weight: 500;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
-  color: variables.$color-text-title;
+  color: colors.$color-text-title;
 }

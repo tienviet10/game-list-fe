@@ -1,4 +1,4 @@
-@use '../../styles/colors.scss' as variables;
+@use '../../styles/colors.scss' as colors;
 @use '../../styles/mixin.scss' as mixin;
 
 .layoutFiltersWrapperContainer {
@@ -8,8 +8,8 @@
   justify-content: space-evenly;
   width: 100%;
   height: 110px;
-  background-color: variables.$color-background;
-  color: variables.$color-text;
+  background-color: colors.$color-background;
+  color: colors.$color-text;
   @include mixin.phoneSmall {
     height: 90px;
   }
@@ -25,7 +25,7 @@
   width: 80vw;
   flex-grow: 1;
   :global(.ant-btn) {
-    background-color: variables.$color-navbar;
+    background-color: colors.$color-navbar;
   }
 }
 
@@ -36,7 +36,7 @@
 }
 
 .buttonFiltersWrapperButton {
-  background-color: variables.$color-navbar;
+  background-color: colors.$color-navbar;
 }
 
 .advancedSearchPopoverLoading {
@@ -50,6 +50,6 @@
 }
 
 :global(ul.ant-cascader-menu) {
-  color: variables.$color-text-title;
-  background-color: variables.$color-background;
+  color: colors.$color-text-title;
+  background-color: colors.$color-background;
 }

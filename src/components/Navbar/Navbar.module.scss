@@ -1,4 +1,4 @@
-@use '../../styles/colors.scss' as variables;
+@use '../../styles/colors.scss' as colors;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
 $mobile-nav-width: 640px;
@@ -17,7 +17,7 @@ $mobile-nav-header-drawer-item-color: rgb(167, 168, 184);
 .header {
   width: 100%;
   z-index: 30;
-  background-color: variables.$color-navbar;
+  background-color: colors.$color-navbar;
   overflow: hidden;
   font-family: 'Roboto', sans-serif;
 }

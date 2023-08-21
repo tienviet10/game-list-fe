@@ -1,5 +1,5 @@
 @use '../../styles/mixin.scss' as mixin;
-@use '../../styles/colors.scss' as variables;
+@use '../../styles/colors.scss' as colors;
 
 .profileContent {
   min-width: 320px;
@@ -7,7 +7,7 @@
   padding-left: 20px;
   padding-right: 20px;
 
-  background-color: variables.$color-background;
+  background-color: colors.$color-background;
   height: 100%;
 
   @include mixin.phoneLarge {
