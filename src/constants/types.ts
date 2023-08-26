@@ -99,3 +99,45 @@ export interface UserData {
 }
 
 export declare type ArrayElementType<T> = T extends (infer E)[] ? E : T;
+
+export type Game = {
+  id?: number;
+  name?: string;
+  avgScore?: number;
+  imageURL?: string;
+  releaseDate?: Date;
+  platforms?: string[];
+  genres?: string[];
+  tags?: string[];
+};
+
+export type RequiredGame = Required<Game>;
+
+export type ListsOrderType = keyof Omit<
+  UserGamesByStatus,
+  | 'totalCount'
+  | 'listsOrder'
+  | 'inactiveCount'
+  | 'droppedCount'
+  | 'pausedCount'
+  | 'completedCount'
+  | 'playingCount'
+  | 'planningCount'
+>;
+
+export type UserGamesByStatus = {
+  playing: RequiredGame[];
+  playingCount: number;
+  completed: RequiredGame[];
+  completedCount: number;
+  paused: RequiredGame[];
+  pausedCount: number;
+  planning: RequiredGame[];
+  planningCount: number;
+  dropped: RequiredGame[];
+  droppedCount: number;
+  inactive: RequiredGame[];
+  inactiveCount: number;
+  totalCount: number;
+  listsOrder: string;
+};

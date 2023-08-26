@@ -1,3 +1,5 @@
+import { ListsOrderType } from './types';
+
 export const FIRST_VIDEO_GAME_RELEASED_YEAR = 1958;
 
 export const getTokenFromLocalStorage = () => {
@@ -48,8 +50,20 @@ export const USER_LISTS = [
 ];
 
 export const INITIAL_USER_GAME_LISTS = {
-  listOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
-  localListOrder: ['planning', 'playing', 'paused', 'completed', 'dropped'],
+  listOrder: [
+    'planning',
+    'playing',
+    'paused',
+    'completed',
+    'dropped',
+  ] as ListsOrderType[],
+  localListOrder: [
+    'planning',
+    'playing',
+    'paused',
+    'completed',
+    'dropped',
+  ] as ListsOrderType[],
 };
 
 export const INITIAL_USER_GAME_BY_ID_STATE = {

@@ -1,0 +1,63 @@
+@use '../../../styles/mixin' as mixin;
+
+.Table {
+  width: 100%;
+}
+
+.Image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 10%;
+}
+
+.ImagePop {
+  object-fit: cover;
+  border-radius: 3%;
+  max-width: 230px;
+}
+
+// .ImageSmall {
+//   display: none;
+//   @include mixin.tablet {
+//     display: block;
+//     width: 50px;
+//     height: 50px;
+//     object-fit: cover;
+//     border-radius: 10%;
+//   }
+// }
+
+.TagsContainer {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+}
+
+.PopElement {
+  // @include mixin.tablet {
+  @include mixin.phone {
+    display: none;
+  }
+}
+
+.TagStyle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.nameContainer {
+  text-decoration: none;
+  color: black;
+}
+
+.popButton {
+  padding: 0px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

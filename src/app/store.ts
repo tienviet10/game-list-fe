@@ -18,7 +18,7 @@ const userGameFiltersSlice = createGameFiltersSlice({
     platforms: undefined,
     tags: undefined,
     year: undefined,
-    search: undefined,
+    // search: undefined,
     sortBy: undefined,
     selectedList: 'all',
   },

@@ -25,7 +25,7 @@ type TextSizeWeight =
   | 'boldXxxl';
 
 type Props = {
-  text: string;
+  text?: string;
   textType?: BaseType;
   textSize?: TextSizeWeight;
   textStyle?: string;
@@ -34,6 +34,7 @@ type Props = {
   htmlType?: ButtonHTMLType;
   preset?: 'default';
   onPress?: () => void;
+  children?: React.ReactNode;
 };
 
 const { Text } = Typography;
@@ -49,6 +50,7 @@ function CustomButton({
   textSize,
   preset = 'default',
   onPress = () => {},
+  children,
 }: Props) {
   const presetStyles = useMemo(
     () => ({
@@ -110,12 +112,16 @@ function CustomButton({
       className={`${presetStyles[preset].button} ${buttonStyle}`}
       onClick={onPress}
     >
-      <Text
-        type={textType}
-        className={`${presetStyles[preset].text} ${textSizes} ${textStyle}`}
-      >
-        {text}
-      </Text>
+      {text ? (
+        <Text
+          type={textType}
+          className={`${presetStyles[preset].text} ${textSizes} ${textStyle}`}
+        >
+          {text}
+        </Text>
+      ) : (
+        children
+      )}
     </Button>
   );
 }
