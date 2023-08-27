@@ -38,13 +38,24 @@ export default function useAllGames(
     CustomAxiosResponse<GamesResponse>,
     ErrorResponse
   >({
-    // eslint-disable-next-line @tanstack/query/exhaustive-deps
-    queryKey: ['Games'],
+    queryKey: [
+      'Games',
+      genres.included,
+      tags.included,
+      platforms.included,
+      year,
+      genres.excluded,
+      tags.excluded,
+      platforms.excluded,
+      sortBy,
+      limitParam,
+      offsetParam,
+    ],
     queryFn: () =>
       client.post('/games', {
-        genre: genres.included,
-        tag: tags.included,
-        platform: platforms.included,
+        genres: genres.included,
+        tags: tags.included,
+        platforms: platforms.included,
         year,
         excludedGenres: genres.excluded,
         excludedTags: tags.excluded,
