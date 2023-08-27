@@ -9,7 +9,6 @@ const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    // Read token for anywhere, in this case directly from localStorage
     const token = localStorage.getItem('token');
 
     if (token) {

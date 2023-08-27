@@ -1,18 +1,18 @@
 import { useAppSelector } from '@app/hooks';
-
 import { setInitialState } from '@features/userGamesListSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ListsOrderType, RequiredGame } from '@constants/types';
+import type { ListsOrderType, RequiredGame } from '@constants/types';
 import useGetUserGames from '@services/usergames/useGetUserGames';
 import UserGamesTable from '@components/GamesListTable';
+import FilterColumn from '@components/UserListFilterColumn';
 import styles from './UserGameListStyle.module.scss';
 
 function UserGameList() {
   const dispatch = useDispatch();
-  // const selectedList = useAppSelector(
-  //   (state) => state.userGameFilters.selectedList
-  // );
+  const selectedList = useAppSelector(
+    (state) => state.userGameFilters.selectedList
+  );
   const listOrder: ListsOrderType[] = useAppSelector(
     (state) => state.userGames.listOrder
   );
@@ -40,10 +40,10 @@ function UserGameList() {
 
   return (
     <div className={styles.mainContainer}>
-      {/* <FilterColumn /> */}
+      <FilterColumn />
       <div>
-        {listOrder.length > 0 &&
-          listOrder.map((list: ListsOrderType) => {
+        {selectedList === 'all' ? (
+          listOrder.map((list) => {
             return (
               <UserGamesTable
                 key={list}
@@ -53,7 +53,18 @@ function UserGameList() {
                 title={list[0].toUpperCase() + list.slice(1)}
               />
             );
-          })}
+          })
+        ) : (
+          <UserGamesTable
+            key={selectedList}
+            gamesData={
+              userGames?.data.data.userGamesByStatus[
+                selectedList as ListsOrderType
+              ] as RequiredGame[]
+            }
+            title={selectedList[0].toUpperCase() + selectedList.slice(1)}
+          />
+        )}
       </div>
     </div>
   );

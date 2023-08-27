@@ -1,9 +1,9 @@
 import Overview from '@components/ProfileContent/Overview';
 import Favorites from '@components/ProfileContent/Favorites';
 import styles from '@components/ProfileContent/ProfileContent.module.scss';
+import UserGameList from '@pages/UserGameList';
 import Reviews from './Reviews';
 import Social from './Social/Social';
-import UserGameList from './UserGameList';
 
 function ProfileContent({ routeName }: { routeName: string }) {
   const contentGenerator = (route: string) => {

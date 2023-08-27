@@ -4,7 +4,7 @@ import styles from '@components/GamesListTable/Mobile/UserGameListMobile.module.
 import type {
   GameDataType,
   UserGameListDataType,
-} from '@/components/GamesListTable/types';
+} from '@components/GamesListTable/types';
 
 const columns: ColumnsType<GameDataType> = [
   {

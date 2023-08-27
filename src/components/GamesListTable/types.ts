@@ -1,4 +1,4 @@
-import type { Game } from '@/graphql/__generated__/graphql';
+import type { Game } from '@constants/types';
 
 export type GameDataType = Game & {
   key?: React.Key;

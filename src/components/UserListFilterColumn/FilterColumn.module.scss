@@ -1,0 +1,9 @@
+@use '../../styles/mixin' as mixin;
+
+.mobileDropdown {
+  display: none;
+  padding: 1.5rem;
+  @include mixin.phone {
+    display: block;
+  }
+}

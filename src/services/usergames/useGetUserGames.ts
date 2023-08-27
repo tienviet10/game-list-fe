@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
-import {
+import type {
   CustomAxiosResponse,
   ErrorResponse,
   UserGamesByStatus,

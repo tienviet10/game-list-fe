@@ -2,11 +2,12 @@ import { Popover, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import styles from '@/components/GamesListTable/Desktop/UserGameListDesktop.module.scss';
 import type {
   GameDataType,
   UserGameListDataType,
-} from '@/components/GamesListTable/types';
+} from '@components/GamesListTable/types';
+import styles from '@components/GamesListTable/Desktop/UserGameListDesktop.module.scss';
+import CustomTag from '@components/CustomTag';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
   const [open, setOpen] = useState<boolean>(false);
@@ -25,32 +26,25 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
       dataIndex: 'imageURL',
       width: 80,
       render: (imageURL: string, record) => (
-        <>
-          <Popover
-            placement="left"
-            content={
-              <img
-                className={styles.ImagePop}
-                src={imageURL}
-                alt="game-large"
-              />
-            }
-            className={styles.PopElement}
-            overlayInnerStyle={{
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-            }}
+        <Popover
+          placement="left"
+          content={
+            <img className={styles.ImagePop} src={imageURL} alt="game-large" />
+          }
+          className={styles.PopElement}
+          overlayInnerStyle={{
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          }}
+        >
+          <button
+            type="button"
+            className={styles.popButton}
+            onClick={() => handleClick(record)}
           >
-            <button
-              type="button"
-              className={styles.popButton}
-              onClick={() => handleClick(record)}
-            >
-              <img className={styles.Image} src={imageURL} alt="game" />
-            </button>
-          </Popover>
-          {/* <img className={styles.ImageSmall} src={imageURL} alt="game" /> */}
-        </>
+            <img className={styles.Image} src={imageURL} alt="game" />
+          </button>
+        </Popover>
       ),
     },
     {
@@ -88,9 +82,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
       render: (platforms: string[]) => (
         <div className={styles.TagsContainer}>
           {platforms.map((platform: string) => (
-            <Tag className={styles.TagStyle} key={platform}>
-              {platform}
-            </Tag>
+            <CustomTag text={platform} key={platform} />
           ))}
         </div>
       ),

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
-import { CustomAxiosResponse, ErrorResponse } from '@constants/types';
+import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
 import { GameFilters } from '../types';
 
 type GetFiltersHook =

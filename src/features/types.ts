@@ -1,4 +1,4 @@
-import { GameFiltersSortType, ListsOrderType } from '@constants/types';
+import type { GameFiltersSortType, ListsOrderType } from '@constants/types';
 
 export type HomeGameFilters = {
   search: string | undefined;

@@ -1,8 +1,8 @@
-import { RequiredGame } from '@constants/types';
+import type { RequiredGame } from '@constants/types';
+import { useAppSelector } from '@app/hooks';
 import UserGameListDesktop from './Desktop';
 import UserGameListMobile from './Mobile';
 import styles from './UserGamesTable.module.scss';
-import { useAppSelector } from '@/app/hooks';
 
 type GameDataType = RequiredGame & { key: number };
 
@@ -13,7 +13,7 @@ function UserGamesTable({
   gamesData: RequiredGame[];
   title: string;
 }) {
-  const { platforms, tags, genres } = useAppSelector(
+  const { search, platforms, tags, genres } = useAppSelector(
     (state) => state.userGameFilters
   );
 
@@ -34,19 +34,19 @@ function UserGamesTable({
     games = games.filter((val) => val.genres.includes(genres));
   }
 
-  // if (search) {
-  //   games = games.filter((val) =>
-  //     (
-  //       val.name +
-  //       val.platforms.join(',') +
-  //       val.genres.join(',') +
-  //       val.tags.join(',') +
-  //       val.avgScore
-  //     )
-  //       .toLowerCase()
-  //       .includes(search.toLowerCase())
-  //   );
-  // }
+  if (search) {
+    games = games.filter((val) =>
+      (
+        val.name +
+        val.platforms.join(',') +
+        val.genres.join(',') +
+        val.tags.join(',') +
+        val.avgScore
+      )
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  }
 
   return (
     <div>
