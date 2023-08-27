@@ -64,6 +64,22 @@ export type UserGameFilters = {
   sortBy: UserGameFiltersSortType | undefined;
 };
 
+export type Game = {
+  id: number;
+  name: string;
+  summary: string;
+  screenshots?: string;
+  cover?: string;
+  genres: string[];
+  platforms: string[];
+  tags: string[];
+  total_rating?: number;
+  total_rating_count?: number;
+  first_release_date: Date;
+  isGameLiked: boolean;
+  isGameAdded: boolean;
+};
+
 type ErrorDetails = {
   timestamp: string;
   message: string;
