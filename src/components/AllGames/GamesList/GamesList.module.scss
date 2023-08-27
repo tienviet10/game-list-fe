@@ -1,0 +1,35 @@
+@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/mixin.scss' as mixin;
+
+.allListContainer {
+  border: 1px solid #f0f0f0;
+  .allListTitle {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 56px;
+    margin-bottom: -1px;
+    padding: 0 24px;
+    font-weight: 600;
+    font-size: 16px;
+    background: transparent;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 8px 8px 0 0;
+    color: variables.$color-text-title;
+  }
+
+  .allListDivider {
+    display: grid;
+    grid-gap: 28px 30px;
+    justify-content: space-between;
+    grid-template-columns: 1fr;
+
+    @include mixin.desktop;
+    @include mixin.desktopLarge {
+      grid-gap: 24px;
+    }
+    @include mixin.loginTablet {
+      grid-gap: 16px;
+    }
+  }
+}
