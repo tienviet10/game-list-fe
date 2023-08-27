@@ -1,0 +1,60 @@
+@use '../../styles/mixin' as mixin;
+
+.Title {
+  max-width: 1000px;
+  margin: 2rem auto;
+  font-size: 1.5rem;
+  @include mixin.tablet {
+    max-width: 95%;
+    margin: 1rem auto;
+    font-size: 1.3rem;
+  }
+}
+
+.TableContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  background-color: white;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 12px;
+  width: 66vw;
+  @include mixin.tablet {
+    max-width: 95%;
+  }
+  @include mixin.phone {
+    display: none;
+  }
+}
+
+.placeholderStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  width: 66vw;
+  background-color: white;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 12px;
+  @include mixin.tablet {
+    max-width: 95%;
+  }
+  @include mixin.phone {
+    display: none;
+  }
+}
+
+.TableContainerSmall {
+  width: 100%;
+  display: none;
+  @include mixin.phone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,24 @@
+@use '../../../styles/mixin' as mixin;
+@use '../../../styles/colors' as colors;
+
+.mobileSearchFieldWrapper {
+  display: none;
+  @include mixin.phone {
+    margin: 1.5rem 0 0.5rem 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.mobileSearchField {
+  width: 80vw;
+  flex-grow: 1;
+  :global(.ant-btn) {
+    background-color: colors.$color-navbar;
+  }
+}
+
+.mobileSearchButton {
+  background-color: colors.$color-navbar;
+}

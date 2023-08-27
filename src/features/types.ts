@@ -1,4 +1,4 @@
-import { GameFiltersSortType } from '@/types/global';
+import type { GameFiltersSortType, ListsOrderType } from '@constants/types';
 
 export type HomeGameFilters = {
   search: string | undefined;
@@ -36,8 +36,8 @@ type UserInfo = {
 };
 
 export type InitialStateUserGamesListType = {
-  listOrder: string[];
-  localListOrder: string[];
+  listOrder: ListsOrderType[];
+  localListOrder: ListsOrderType[];
 };
 
 export type InitialStateUserGameType = {

@@ -1,7 +1,7 @@
 import { StateValue, createMachine, interpret } from 'xstate';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { remove } from '@utils/utils';
 import { createGameFiltersSlice } from './gameFiltersSlice';
-import { remove } from '@/utils/utils';
 import { HomeGameFilters } from './types';
 
 export type CorrectFilters = Pick<

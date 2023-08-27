@@ -1,0 +1,11 @@
+@use '../../../styles/mixin' as mixin;
+
+.filterDesktop {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-left: 10px;
+  @include mixin.phone {
+    display: none;
+  }
+}

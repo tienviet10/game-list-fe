@@ -1,0 +1,9 @@
+.statusItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #e6e6e6;
+  }
+}

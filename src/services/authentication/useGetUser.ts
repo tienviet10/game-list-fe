@@ -1,10 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
-import { CustomAxiosResponse, ErrorResponse, UserData } from '@constants/types';
+import type {
+  CustomAxiosResponse,
+  ErrorResponse,
+  UserData,
+} from '@constants/types';
 
 const useGetUser = () => {
   const getUser = async (): Promise<CustomAxiosResponse<UserData>> => {
-    return client.get(`/user/userinfo`);
+    return client.get(`/api/v1/user/userinfo`);
   };
 
   const {

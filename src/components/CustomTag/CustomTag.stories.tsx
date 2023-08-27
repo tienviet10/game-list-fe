@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Button from '.';
+import CustomTag from '.';
 
 const meta = {
-  title: 'Login/AntButton',
-  component: Button,
+  title: 'UserGame/Tag',
+  component: CustomTag,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof CustomTag>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    text: 'Default',
+    text: 'Action',
   },
 };

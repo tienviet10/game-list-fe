@@ -1,0 +1,13 @@
+.listStyle {
+  :global(.ant-list-item) {
+    padding: 5px;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.listName {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

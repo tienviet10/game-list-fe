@@ -3,10 +3,10 @@ import React, { useMemo } from 'react';
 
 import { useDispatch } from 'react-redux';
 import useArrayMemo from '@hooks/useArrayMemo';
-import filterFieldStyles from '@/components/FiltersWrapper/FilterField.module.scss';
+import filterFieldStyles from '@components/FiltersWrapper/FilterField.module.scss';
 
-import { incrementItem } from '@/app/store';
-import { CorrectFiltersKeys } from '@/features/homeGameFiltersSlice';
+import { incrementItem } from '@app/store';
+import { CorrectFiltersKeys } from '@features/homeGameFiltersSlice';
 
 export type StateObject = {
   values: string[];

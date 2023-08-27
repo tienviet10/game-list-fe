@@ -2,7 +2,7 @@ import type {
   ArrayElementType,
   DropDownOption,
   OnChangeCascaderType,
-} from '@/types/global';
+} from '@constants/types';
 
 export interface FilterFieldProps {
   defaultValue?: string | undefined;

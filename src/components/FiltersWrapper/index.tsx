@@ -16,14 +16,14 @@ import {
   MenuUnfoldOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { ArrayElementType } from '@constants/types';
+import type { ArrayElementType } from '@constants/types';
 import { FIRST_VIDEO_GAME_RELEASED_YEAR } from '@constants/constants';
-import styles from '@/components/FiltersWrapper/FiltersWrapper.module.scss';
-import filterFieldStyles from '@/components/FiltersWrapper/FilterField.module.scss';
-import useGetFilters from '@/services/game/useGetFilters';
-import { useAppSelector } from '@/app/hooks';
-import { range } from '@/utils/utils';
-import { clearCategory, setHomeFilter, toggleItem } from '@/app/store';
+import styles from '@components/FiltersWrapper/FiltersWrapper.module.scss';
+import filterFieldStyles from '@components/FiltersWrapper/FilterField.module.scss';
+import useGetFilters from '@services/game/useGetFilters';
+import { useAppSelector } from '@app/hooks';
+import { range } from '@utils/utils';
+import { clearCategory, setHomeFilter, toggleItem } from '@app/store';
 import { SelectFilterFieldType } from './types';
 import { MemoizedExclusionFiltersList } from './ExclusionFiltersList';
 
