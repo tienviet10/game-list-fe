@@ -1,4 +1,4 @@
-import { Popover, Table, Tag } from 'antd';
+import { Popover, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -8,15 +8,19 @@ import type {
 } from '@components/GamesListTable/types';
 import styles from '@components/GamesListTable/Desktop/UserGameListDesktop.module.scss';
 import CustomTag from '@components/CustomTag';
+import ListEditor from '@components/ListEditor';
+import { RequiredGameWithIsAdded } from '@constants/types';
+import useGetUserGameState from '@services/usergames/useGetUserGameState';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
   const [open, setOpen] = useState<boolean>(false);
-
-  const [chosenGame, setChosenGame] = useState<GameDataType>();
+  const [chosenGame, setChosenGame] = useState<
+    RequiredGameWithIsAdded | undefined | GameDataType
+  >();
+  const { userGameDataIsLoading } = useGetUserGameState(chosenGame?.id);
 
   const handleClick = async (game: GameDataType) => {
     setChosenGame(game);
-    // await fetchUserGame({ variables: { gameId: game.id } });
     setOpen(true);
   };
 
@@ -90,12 +94,17 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
   ];
 
   return (
-    <Table
-      className={styles.Table}
-      columns={columns}
-      dataSource={data}
-      // onChange={onChange}
-    />
+    <>
+      <Table className={styles.Table} columns={columns} dataSource={data} />
+      <ListEditor
+        isGameAdded={chosenGame?.isGameAdded}
+        userGameLoading={userGameDataIsLoading}
+        open={open}
+        setOpen={setOpen}
+        game={chosenGame as GameDataType}
+        setSelectedGame={setChosenGame}
+      />
+    </>
   );
 }
 
