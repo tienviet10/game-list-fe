@@ -1,10 +1,10 @@
-@use '../../../../styles/variables.scss' as variables;
+@use '../../../../styles/colors.scss' as colors;
 @use '../../../../styles/mixin.scss' as mixin;
 
 .selectorsContainer {
   display: flex;
   align-items: center;
-  background-color: variables.$color-background;
+  background-color: colors.$color-background;
   .sortSelector {
     border-right: solid 1px rgb(201, 215, 227);
     padding-right: 10px;
@@ -16,20 +16,20 @@
     user-select: none;
     :hover {
       // color: rgb(116, 136, 153);
-      color: variables.$color-icon-hover;
+      color: colors.$color-icon-hover;
 
       transform: scale(1.05);
       transition: transform 0.5s ease;
     }
 
     span {
-      color: variables.$color-text-light;
+      color: colors.$color-text-light;
       font-size: 0.9rem;
       font-weight: 600;
       padding-left: 8px;
       white-space: nowrap;
       transition: color 0.3s ease;
-      background-color: variables.$color-background;
+      background-color: colors.$color-background;
 
       @include mixin.phoneSmall {
         font-size: 0.7rem;
@@ -49,7 +49,7 @@
         transition: color 0.3s ease;
       }
       :hover {
-        color: variables.$color-icon-hover;
+        color: colors.$color-icon-hover;
         // color: rgb(116, 136, 153);
         transform: scale(1.07);
         transition: transform 0.3s ease;
@@ -65,7 +65,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     & .selectorIcon {
       cursor: pointer;
-      color: variables.$color-icon;
+      color: colors.$color-icon;
       transition: color 0.3s ease;
       font-size: 1.8rem;
 
@@ -83,12 +83,12 @@
     }
 
     & .selected {
-      color: variables.$color-icon-selected;
+      color: colors.$color-icon-selected;
       transform: scale(1.05);
       transition: transform 0.3s ease;
     }
     :hover {
-      color: variables.$color-icon-hover;
+      color: colors.$color-icon-hover;
       transform: scale(1.05);
       transition: transform 0.3s ease;
     }

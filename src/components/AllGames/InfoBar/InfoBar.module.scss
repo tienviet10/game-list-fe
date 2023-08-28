@@ -1,5 +1,5 @@
 @use '../../../styles/mixin.scss' as mixin;
-@use '../../../styles/variables.scss' as variables;
+@use '../../../styles/colors.scss' as colors;
 
 .infoBarContainer {
   align-items: center;
@@ -8,7 +8,7 @@
   grid-template-columns: auto min-content;
   margin-bottom: 25px;
   position: relative;
-  background-color: variables.$color-background;
+  background-color: colors.$color-background;
 
   @include mixin.loginTablet {
     padding: 0 20px;

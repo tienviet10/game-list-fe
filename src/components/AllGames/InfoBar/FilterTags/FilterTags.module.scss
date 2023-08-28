@@ -1,4 +1,4 @@
-@use '../../../../styles/variables.scss' as variables;
+@use '../../../../styles/colors.scss' as colors;
 @use '../../../../styles/mixin.scss' as mixin;
 
 .tagsContainer {
@@ -8,7 +8,7 @@
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
-  background-color: variables.$color-background;
+  background-color: colors.$color-background;
 
   :global #tag-search {
     animation: none;
@@ -22,7 +22,7 @@
     font-size: 1.6rem;
     transform: scale(-1) rotate(90deg);
     margin-right: 16px;
-    color: variables.$color-navbar;
+    color: colors.$color-navbar;
     @include mixin.phoneSmall {
       font-size: 1.2rem;
     }
@@ -43,9 +43,9 @@
         transform: none;
       }
     }
-    background: variables.$color-navbar;
+    background: colors.$color-navbar;
     border-radius: 6px;
-    color: variables.$color-white;
+    color: colors.$color-white;
     display: inline-block;
     font-size: 0.7rem;
     font-weight: 600;
@@ -64,7 +64,7 @@
     & span {
       display: none;
       font-size: 0.7rem;
-      color: variables.$color-white;
+      color: colors.$color-white;
     }
 
     &:hover span {
@@ -74,6 +74,6 @@
 
   .clearAll {
     @extend .tagsText;
-    background: variables.$color-text-lighter;
+    background: colors.$color-text-lighter;
   }
 }
