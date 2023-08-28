@@ -4,19 +4,23 @@ import type { TextAreaInputType } from '@/components/TextAreaInput/types';
 function TextAreaInput({
   defaultValue,
   fieldName,
-  customCascaderStyle,
+  customCascaderStyle = '',
   onChange,
+  minRows,
+  maxRows,
+  maxLength = 100,
 }: TextAreaInputType) {
   const { TextArea } = Input;
   return (
     <TextArea
       value={defaultValue}
       showCount
-      maxLength={100}
+      maxLength={maxLength}
       onChange={(e) => onChange(e)}
       placeholder={fieldName}
       className={customCascaderStyle}
       data-testid={`text-area-${fieldName}`}
+      autoSize={{ minRows, maxRows }}
     />
   );
 }

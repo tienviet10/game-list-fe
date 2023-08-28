@@ -35,6 +35,7 @@ type Props = {
   preset?: 'default';
   onPress?: () => void;
   children?: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 const { Text } = Typography;
@@ -51,6 +52,7 @@ function CustomButton({
   preset = 'default',
   onPress = () => {},
   children,
+  icon,
 }: Props) {
   const presetStyles = useMemo(
     () => ({
@@ -111,6 +113,7 @@ function CustomButton({
       htmlType={htmlType}
       className={`${presetStyles[preset].button} ${buttonStyle}`}
       onClick={onPress}
+      icon={icon}
     >
       {text ? (
         <Text

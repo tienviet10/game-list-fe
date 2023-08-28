@@ -1,14 +1,12 @@
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
-
 import type { DatePickerFieldType } from '@/components/DatePickerField/types';
-// import styles from '@/components/DatePickerField/DatePickerField.module.scss';
 
 function DatePickerField({
   defaultValue,
   fieldName,
   onChange,
-  customCascaderStyle,
+  customCascaderStyle = '',
 }: DatePickerFieldType) {
   return (
     <DatePicker

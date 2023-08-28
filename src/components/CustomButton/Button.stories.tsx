@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { HeartOutlined } from '@ant-design/icons';
 import CustomButton from '.';
 
 const meta = {
@@ -19,7 +20,7 @@ export const Default: Story = {
   },
 };
 
-export const Primary: StoryObj<typeof CustomButton> = {
+export const ImageButton: StoryObj<typeof CustomButton> = {
   render: () => (
     <CustomButton buttonType="text">
       <img
@@ -28,4 +29,10 @@ export const Primary: StoryObj<typeof CustomButton> = {
       />
     </CustomButton>
   ),
+};
+
+export const IconButton: Story = {
+  args: {
+    icon: <HeartOutlined />,
+  },
 };
