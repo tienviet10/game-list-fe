@@ -19,8 +19,8 @@ export const userGameSlice = createSlice({
           state.gameNote = '';
           state.rating = 0;
           state.private = false;
-          state.completedDate = null;
-          state.startDate = null;
+          state.completedDate = undefined;
+          state.startDate = undefined;
         } else {
           state.gameStatus = payload;
         }
@@ -31,9 +31,9 @@ export const userGameSlice = createSlice({
       } else if (type === 'private') {
         state.private = payload;
       } else if (type === 'completedDate') {
-        state.completedDate = payload === '' ? null : payload;
+        state.completedDate = payload === '' ? undefined : payload;
       } else if (type === 'startDate') {
-        state.startDate = payload === '' ? null : payload;
+        state.startDate = payload === '' ? undefined : payload;
       } else if (type === 'userGame') {
         const {
           gameStatus,
@@ -51,16 +51,17 @@ export const userGameSlice = createSlice({
           state.gameNote = '';
           state.rating = 0;
           state.private = false;
-          state.completedDate = null;
-          state.startDate = null;
+          state.completedDate = undefined;
+          state.startDate = undefined;
         } else {
           state.id = id;
           state.gameStatus = gameStatus;
           state.gameNote = gameNote;
           state.rating = rating;
           state.private = isPrivate;
-          state.completedDate = completedDate === '' ? null : completedDate;
-          state.startDate = startDate === '' ? null : startDate;
+          state.completedDate =
+            completedDate === '' ? undefined : completedDate;
+          state.startDate = startDate === '' ? undefined : startDate;
         }
       } else if (type === 'reset') {
         Object.assign(state, INITIAL_USER_GAME_BY_ID_STATE);

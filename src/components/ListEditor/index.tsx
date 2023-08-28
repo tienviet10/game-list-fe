@@ -1,6 +1,6 @@
 import { Modal, Checkbox } from 'antd';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import React, { useMemo } from 'react';
+import { HeartOutlined, HeartFilled, CloseOutlined } from '@ant-design/icons';
+import React from 'react';
 
 import type {
   DropDownOption,
@@ -49,6 +49,22 @@ type ChoicesType =
       payload: boolean;
     };
 
+const statusOptions: DropDownOption[] = [
+  { label: 'Playing', value: 'Playing' },
+  { label: 'Completed', value: 'Completed' },
+  { label: 'Paused', value: 'Paused' },
+  { label: 'Dropped', value: 'Dropped' },
+  { label: 'Planning', value: 'Planning' },
+];
+
+const scoreOptions: DropDownOption[] = Array.from(
+  { length: 10 },
+  (_, index) => index + 1
+).map((score) => ({
+  label: score,
+  value: score,
+}));
+
 function ListEditorTemp({
   isGameAdded,
   userGameLoading,
@@ -78,65 +94,50 @@ function ListEditorTemp({
   // const { editUserGame } = useEditUserGame();
   // const { addLike, removeLike } = useAddRemoveLike();
 
-  const statusOptions: DropDownOption[] = [
-    { label: 'Playing', value: 'Playing' },
-    { label: 'Completed', value: 'Completed' },
-    { label: 'Paused', value: 'Paused' },
-    { label: 'Dropped', value: 'Dropped' },
-    { label: 'Planning', value: 'Planning' },
-  ];
-
-  const scoreOptions: DropDownOption[] = useMemo(() => {
-    return Array.from({ length: 10 }, (_, index) => index + 1).map((score) => ({
-      label: score,
-      value: score,
-    }));
-  }, []);
-
   if (userGameLoading) {
     return <div>Loading...</div>;
   }
 
   const onPressFavorite = async () => {
-    // if (userState?.user.id === '') {
-    //   warning('Please login to add or edit your GameList');
-    //   return;
-    // }
-    // if (!game?.isGameLiked) {
-    //   const response = await addLike(
-    //     game.id,
-    //     game.__typename as string
-    //   );
-    //   setSelectedGame(response.like?.likeable as GameType);
-    //   info(`You added ${game?.name} in your favorites list. `);
-    // } else {
-    //   const response = await removeLike(
-    //     game?.id,
-    //     game.__typename as string
-    //   );
-    //   setSelectedGame(response.like?.likeable as GameType);
-    //   warning(`You removed ${game?.name} in your favorites list. `);
-    // }
+    if (userState?.user.id === '') {
+      warning('Please login to add or edit your GameList');
+      return;
+    }
+    if (!game?.isGameLiked) {
+      // const response = await addLike(
+      //   game.id,
+      //   game.__typename as string
+      // );
+      // setSelectedGame(response.like?.likeable as GameType);
+      info(`You added ${game?.name} in your favorites list. `);
+    } else {
+      // const response = await removeLike(
+      //   game?.id,
+      //   game.__typename as string
+      // );
+      // setSelectedGame(response.like?.likeable as GameType);
+      warning(`You removed ${game?.name} in your favorites list. `);
+    }
   };
 
   const onPressSave = async () => {
-    // if (userState?.user.id === '') {
-    //   warning('Please login to add or edit your GameList');
-    //   return;
-    // }
+    if (userState?.user.id === '') {
+      warning('Please login to add or edit your GameList');
+      return;
+    }
     // const { id, ...newUserGame } = userGame;
     // const response = await editUserGame({
     //   ...newUserGame,
     //   gameId: game.id,
     // });
     // setSelectedGame(response.userGame?.game as GameType);
-    // info(`Edit game ${game.name} successfully`);
-    // setOpen(false);
+    info(`Edit game ${game.name} successfully`);
+    setOpen(false);
   };
 
   const onPressDelete = () => {
     // showRemoveConfirm(game, 'game', setOpen);
-    // setSelectedGame({ ...game, isGameAdded: false });
+    setSelectedGame({ ...game, isGameAdded: false });
   };
 
   const handleChoicesChange = <Type extends ChoicesType['type']>(
@@ -178,6 +179,7 @@ function ListEditorTemp({
       onCancel={() => setOpen(false)}
       width={1000}
       footer={null}
+      closeIcon={<CloseOutlined style={{ color: 'white' }} />}
     >
       <div
         className={styles.listEditorHeader}
@@ -239,7 +241,7 @@ function ListEditorTemp({
             title="start"
             field={
               <DatePickerField
-                defaultValue={selectedStart || undefined}
+                defaultValue={selectedStart}
                 fieldName="Start"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeDatePickerType) =>
@@ -252,7 +254,7 @@ function ListEditorTemp({
             title="finish"
             field={
               <DatePickerField
-                defaultValue={selectedCompleted || undefined}
+                defaultValue={selectedCompleted}
                 fieldName="Finish"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeDatePickerType) =>
@@ -268,7 +270,7 @@ function ListEditorTemp({
             title="notes"
             field={
               <TextAreaInput
-                defaultValue={selectedNote || undefined}
+                defaultValue={selectedNote}
                 fieldName="Notes"
                 customCascaderStyle={styles.cascaderStyle}
                 onChange={(value: OnChangeTextAreaType) =>

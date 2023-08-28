@@ -41,10 +41,10 @@ export type InitialStateUserGamesListType = {
 };
 
 export type InitialStateUserGameType = {
-  completedDate: string | null;
+  completedDate: string | undefined;
   gameNote: string;
   gameStatus: string;
-  startDate: string | null;
+  startDate: string | undefined;
   private: boolean;
   rating: number;
   id: string;

@@ -67,11 +67,11 @@ export const INITIAL_USER_GAME_LISTS = {
 };
 
 export const INITIAL_USER_GAME_BY_ID_STATE = {
-  completedDate: null,
+  completedDate: undefined,
   gameNote: '',
   gameStatus: '',
   private: false,
   rating: 0,
-  startDate: null,
+  startDate: undefined,
   id: '',
 };
