@@ -4,6 +4,8 @@ import { Content } from 'antd/es/layout/layout';
 import { Card, Row, theme } from 'antd';
 import GamesListLoading from './GamesListLoading';
 import MemoedGameCard from './GameCard';
+import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
+import MemoizedList from './List';
 
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
@@ -94,31 +96,30 @@ export default function GamesList() {
 
   return (
     <Content aria-label={`view-${homeSearchState.view}`}>
-      {/* {homeSearchState.view === 'grid' ? ( */}
-      <Card title="All Games" headStyle={{ color: 'rgb(100, 115,128)' }}>
-        <Row
-          gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            xl: 32,
-          }}
-        >
-          {data.status === 'success' &&
-            data.games.length > 0 &&
-            data.games.map((game) => {
-              return (
-                <MemoedGameCard
-                  isAdded={false}
-                  key={`grid-${game.id}`}
-                  game={game}
-                  colorBgContainer={colorBgContainer}
-                  // openGameListEditor={memorizedOpenGameListEditor}
-                />
-              );
-            })}
-
-          {/* TODO: SEARCH BAR MAY TRIGGER SECOND FETCH
+      {homeSearchState.view === 'grid' ? (
+        <Card title="All Games" headStyle={{ color: 'rgb(100, 115,128)' }}>
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              xl: 32,
+            }}
+          >
+            {data.status === 'success' &&
+              data.games.length > 0 &&
+              data.games.map((game) => {
+                return (
+                  <MemoedGameCard
+                    isAdded={false}
+                    key={`grid-${game.id}`}
+                    game={game}
+                    colorBgContainer={colorBgContainer}
+                    // openGameListEditor={memorizedOpenGameListEditor}
+                  />
+                );
+              })}
+            {/* TODO: SEARCH BAR MAY TRIGGER SECOND FETCH
             {games.length > 0 ? (
               <InView
                 style={{ visibility: 'hidden' }}
@@ -133,22 +134,22 @@ export default function GamesList() {
                 INVIEW
               </InView>
             ) : null} */}
-        </Row>
-      </Card>
-      {/* ) : (
+          </Row>
+        </Card>
+      ) : (
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
-            {games.length > 0
-              ? games.map((game) => (
-                  <List
+            {data.status === 'success' && data.games.length > 0
+              ? data.games.map((game) => (
+                  <MemoizedList
                     key={`list-${game.id}`}
                     game={game}
                     colorBgContainer={colorBgContainer}
                   />
                 ))
               : null}
-            {games.length > 0 ? (
+            {/* {games.length > 0 ? (
               <InView
                 style={{ visibility: 'hidden' }}
                 onChange={async (inView) => {
@@ -161,10 +162,10 @@ export default function GamesList() {
               >
                 INVIEW
               </InView>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
-      )} */}
+      )}
       {/* <ListEditor
         userGameLoading={userGameLoading}
         open={open}
