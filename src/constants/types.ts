@@ -105,6 +105,7 @@ export type Game = {
   name?: string;
   avgScore?: number;
   imageURL?: string;
+  bannerURL?: string;
   releaseDate?: Date;
   platforms?: string[];
   genres?: string[];
@@ -112,6 +113,10 @@ export type Game = {
 };
 
 export type RequiredGame = Required<Game>;
+
+export type RequiredGameWithIsAdded = RequiredGame & {
+  isGameAdded?: boolean;
+};
 
 export type ListsOrderType = keyof Omit<
   UserGamesByStatus,

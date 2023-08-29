@@ -1,6 +1,6 @@
 import { useAppSelector } from '@app/hooks';
 import { setInitialState } from '@features/userGamesListSlice';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import type { ListsOrderType, RequiredGame } from '@constants/types';
 import useGetUserGames from '@services/usergames/useGetUserGames';
@@ -25,14 +25,21 @@ function UserGameList() {
 
   // Initialize the listsOrder, selectedLists, and localListOrder in redux toolkit
   useEffect(() => {
-    if (userGames?.data.data.userGamesByStatus.listsOrder) {
+    if (userGames?.data.data.userGamesByStatus?.listsOrder) {
       dispatch(
         setInitialState(
-          userGames?.data.data.userGamesByStatus.listsOrder.split(',')
+          userGames?.data.data.userGamesByStatus?.listsOrder.split(',')
         )
       );
     }
-  }, [dispatch]);
+  }, []);
+
+  const listToDisplay = useMemo(() => {
+    if (selectedList === 'all') {
+      return listOrder;
+    }
+    return [selectedList];
+  }, [listOrder, selectedList]);
 
   if (userDataIsLoading || !userGames?.data.data.userGamesByStatus) {
     return <div>Loading...</div>;
@@ -42,29 +49,17 @@ function UserGameList() {
     <div className={styles.mainContainer}>
       <FilterColumn />
       <div>
-        {selectedList === 'all' ? (
-          listOrder.map((list) => {
-            return (
-              <UserGamesTable
-                key={list}
-                gamesData={
-                  userGames?.data.data.userGamesByStatus[list] as RequiredGame[]
-                }
-                title={list[0].toUpperCase() + list.slice(1)}
-              />
-            );
-          })
-        ) : (
-          <UserGamesTable
-            key={selectedList}
-            gamesData={
-              userGames?.data.data.userGamesByStatus[
-                selectedList as ListsOrderType
-              ] as RequiredGame[]
-            }
-            title={selectedList[0].toUpperCase() + selectedList.slice(1)}
-          />
-        )}
+        {listToDisplay.map((list) => {
+          return (
+            <UserGamesTable
+              key={list}
+              gamesData={
+                userGames?.data.data.userGamesByStatus[list] as RequiredGame[]
+              }
+              title={list[0].toUpperCase() + list.slice(1)}
+            />
+          );
+        })}
       </div>
     </div>
   );
