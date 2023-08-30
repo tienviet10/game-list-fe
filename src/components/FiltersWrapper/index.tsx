@@ -24,6 +24,7 @@ import useGetFilters from '@services/game/useGetFilters';
 import { useAppSelector } from '@app/hooks';
 import { range } from '@utils/utils';
 import { clearCategory, setHomeFilter, toggleItem } from '@app/store';
+import DebouncedSelectField from '@components/DebouncedInputField';
 import { SelectFilterFieldType } from './types';
 import { MemoizedExclusionFiltersList } from './ExclusionFiltersList';
 
@@ -165,14 +166,14 @@ export default function FiltersWrapper() {
         >
           <div>
             <h3 className={filterFieldStyles.h3FilterFieldTitle}>Search</h3>
-            <Input
-              allowClear
+            <DebouncedSelectField
               className={styles.cascaderStyle}
               size="middle"
               prefix={<SearchOutlined />}
-              value={homeGameFilters.search}
-              onChange={(e) => {
-                dispatch(setHomeFilter({ search: e.target.value }));
+              allowClear
+              delay={600}
+              onDebounceChange={(e) => {
+                dispatch(setHomeFilter({ search: e }));
               }}
             />
           </div>
