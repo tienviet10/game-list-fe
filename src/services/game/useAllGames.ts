@@ -1,5 +1,5 @@
 import { CustomAxiosResponse, ErrorResponse, Game } from '@constants/types';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
 import { useAppSelector } from '@/app/hooks';
 
@@ -24,35 +24,41 @@ type GamesResponse = {
   games: Game[];
 };
 
-export default function useAllGames(
-  limitParam: number = 20,
-  offsetParam: number = 0
-): GetGamesHook {
-  // const [tempSearch, setTempSearch] = useState<string | undefined>('');
-
-  const { genres, tags, platforms, sortBy, year } = useAppSelector(
+export default function useAllGames(limitParam: number = 20): GetGamesHook {
+  const { genres, tags, platforms, search, sortBy, year } = useAppSelector(
     (state) => state.homeGameFilters
   );
 
-  const { data, status, error } = useQuery<
-    CustomAxiosResponse<GamesResponse>,
-    ErrorResponse
-  >({
+  const {
+    data,
+    fetchNextPage,
+    status,
+    error,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery<CustomAxiosResponse<GamesResponse>, ErrorResponse>({
     queryKey: [
       'Games',
       genres.included,
       tags.included,
       platforms.included,
       year,
+      search,
       genres.excluded,
       tags.excluded,
       platforms.excluded,
       sortBy,
       limitParam,
-      offsetParam,
     ],
-    queryFn: () =>
-      client.post('/games', {
+    getNextPageParam: (lastPage) => {
+      if (!lastPage || lastPage.data.data.games.length === 0) {
+        return undefined;
+      }
+      return limitParam;
+    },
+    queryFn: async ({ pageParam = 0 }) => {
+      return client.post('/games', {
         genres: genres.included,
         tags: tags.included,
         platforms: platforms.included,
@@ -61,13 +67,16 @@ export default function useAllGames(
         excludedTags: tags.excluded,
         excludedPlatforms: platforms.excluded,
         sortBy,
-        search: undefined, // TODO: Implement
+        search,
         limit: limitParam,
-        offset: offsetParam,
-      }),
+        offset: pageParam,
+      });
+    },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  // function fetchMore(amount: number) {}
 
   if (status === 'loading') {
     return {
@@ -88,6 +97,10 @@ export default function useAllGames(
   return {
     status: 'success',
     error: null,
-    games: data.data.data.games,
+    data,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    fetchNextPage,
   };
 }
