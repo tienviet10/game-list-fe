@@ -19,21 +19,21 @@ export default function GamesList() {
   const [testCounter, setTestCounter] = useState(0);
   console.log('useAllGames', data);
 
-  // // States for modal to edit list
+  // States for modal to edit list
   // const { userGameLoading, fetchUserGame } = useUserGameById();
-  // const [open, setOpen] = useState(false);
-  // const [selectedGame, setSelectedGame] = useState<
-  //   GameDataType | undefined | RequiredGameWithIsAdded
-  // >();
+  const [open, setOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<
+    GameDataType | undefined | RequiredGameWithIsAdded
+  >();
 
-  // const memorizedOpenGameListEditor = useCallback(
-  //   async (game: GameDataType) => {
-  //     setSelectedGame(game);
-  //     setOpen(true);
-  //   },
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   []
-  // );
+  const memorizedOpenGameListEditor = useCallback(
+    async (game: GameDataType) => {
+      setSelectedGame(game);
+      setOpen(true);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const onFetchMore = async () => {
     console.log('fetch more');
@@ -105,7 +105,7 @@ export default function GamesList() {
                     key={`grid-${game.id}`}
                     game={game}
                     colorBgContainer={colorBgContainer}
-                    // openGameListEditor={memorizedOpenGameListEditor}
+                    openGameListEditor={memorizedOpenGameListEditor}
                   />
                 );
               });
@@ -149,14 +149,14 @@ export default function GamesList() {
           </div>
         </div>
       )}
-      {/* <ListEditor
+      <ListEditor
         userGameLoading={false}
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
         isGameAdded={false}
         setSelectedGame={setSelectedGame}
-      /> */}
+      />
     </Content>
   );
 }
