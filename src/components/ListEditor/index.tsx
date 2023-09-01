@@ -13,11 +13,11 @@ import type { ListEditorType } from '@components/ListEditor/types';
 // import useAddRemoveLike from '@services/like/useAddRemoveLike';
 // import useRemoveModalHook from '@hooks/useRemoveModalHook';
 // import { StatusType } from '@services/userGames/useAddDeleteGame';
-// import useEditUserGame from '@services/userGames/useEditUserGame';
 import useNotification from '@hooks/useNotification';
 import CustomButton from '@components/CustomButton';
 import CustomSelect from '@components/CustomSelect';
-import { setUserGameReducer } from '@/features/userGameSlice';
+import useEditUserGame from '@services/usergames/useEditUserGame';
+import { setUserGameReducer } from '@features/userGameSlice';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -91,7 +91,7 @@ function ListEditorTemp({
   //   selectedStatus as StatusType
   // );
 
-  // const { editUserGame } = useEditUserGame();
+  const { editUserGame } = useEditUserGame();
   // const { addLike, removeLike } = useAddRemoveLike();
 
   if (userGameLoading) {
@@ -125,12 +125,13 @@ function ListEditorTemp({
       warning('Please login to add or edit your GameList');
       return;
     }
-    // const { id, ...newUserGame } = userGame;
-    // const response = await editUserGame({
-    //   ...newUserGame,
-    //   gameId: game.id,
-    // });
-    // setSelectedGame(response.userGame?.game as GameType);
+    const { id, private: isPrivate, ...newUserGame } = userGame;
+    editUserGame({
+      ...newUserGame,
+      isPrivate,
+      gameId: game.id,
+    });
+    // setSelectedGame(userGameResponseData?.data.data as GameType);
     info(`Edit game ${game.name} successfully`);
     setOpen(false);
   };
