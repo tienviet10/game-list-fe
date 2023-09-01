@@ -20,7 +20,6 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
   const { userGameDataIsLoading } = useGetUserGameState(chosenGame?.id);
 
   const handleClick = async (game: GameDataType) => {
-    console.log('game', game);
     setChosenGame(game);
     setOpen(true);
   };
