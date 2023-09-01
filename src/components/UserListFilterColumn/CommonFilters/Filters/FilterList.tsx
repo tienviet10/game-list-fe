@@ -7,6 +7,7 @@ import { setUserGameFilters } from '@app/store';
 import styles from './FilterListWrapperStyle.module.scss';
 
 // TODO: Move into separate component
+// TODO: Fix types of this component
 type ArrayOnly<T> = T extends any[] ? T : never;
 
 type SelectFilterFieldType<T> =
@@ -34,7 +35,12 @@ function SelectFilterField<T>({
   ...rest
 }: PropsWithChildren<SelectFilterFieldType<T>>) {
   const optionsMemo = useMemo(() => {
-    return options.map((s) => {
+    const tempOptions = [];
+    if (options) {
+      tempOptions.push(...options);
+    }
+
+    return tempOptions.map((s) => {
       return (
         <Select.Option key={s} value={s}>
           <div className={styles.option} data-testid={`option-${s}`}>
