@@ -1,39 +1,60 @@
 import { CustomAxiosResponse, ErrorResponse, Game } from '@constants/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import client from '@utils/authApi';
 import { useAppSelector } from '@/app/hooks';
 
-type GetGamesHook =
+type BaseGetGamesHook =
   | {
       status: 'loading';
       error: null;
-      games: null;
+      data: null;
     }
   | {
       status: 'success';
       error: null;
-      games: Game[];
+      data: InfiniteData<CustomAxiosResponse<GamesResponse>>;
+      fetchNextPage: (
+        options?: FetchNextPageOptions | undefined
+      ) => Promise<
+        InfiniteQueryObserverResult<
+          CustomAxiosResponse<GamesResponse>,
+          ErrorResponse
+        >
+      >;
     }
   | {
       status: 'error';
       error: ErrorResponse;
-      games: null;
+      data: null;
     };
+
+type GetGamesHookResult = BaseGetGamesHook & {
+  hasNextPage: boolean | undefined;
+  isFetching: boolean;
+  isFetchingNextPage: boolean;
+};
 
 type GamesResponse = {
   games: Game[];
 };
 
-export default function useAllGames(limitParam: number = 20): GetGamesHook {
+export default function useAllGames(
+  limitParam: number = 20
+): GetGamesHookResult {
   const { genres, tags, platforms, search, sortBy, year } = useAppSelector(
     (state) => state.homeGameFilters
   );
 
   const {
     data,
-    fetchNextPage,
     status,
     error,
+    fetchNextPage,
     hasNextPage,
     isFetching,
     isFetchingNextPage,
@@ -82,7 +103,10 @@ export default function useAllGames(limitParam: number = 20): GetGamesHook {
     return {
       status: 'loading',
       error: null,
-      games: null,
+      data: null,
+      hasNextPage,
+      isFetching,
+      isFetchingNextPage,
     };
   }
 
@@ -90,7 +114,10 @@ export default function useAllGames(limitParam: number = 20): GetGamesHook {
     return {
       status: 'error',
       error,
-      games: null,
+      data: null,
+      hasNextPage,
+      isFetching,
+      isFetchingNextPage,
     };
   }
 

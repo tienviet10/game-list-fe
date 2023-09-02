@@ -12,12 +12,13 @@ import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import MemoizedList from './List';
 import InView from './InView';
 
+// The amount of games to request from the server. This is used for infinite scrolling. When the user scrolls down enough and needs to fetch more games,
+// This value will be the amount of games we fetch.
+const DEFAULT_FETCH_AMOUNT = 20;
+
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
-  const data = useAllGames();
-
-  const [testCounter, setTestCounter] = useState(0);
-  console.log('useAllGames', data);
+  const data = useAllGames(DEFAULT_FETCH_AMOUNT);
 
   // States for modal to edit list
   // const { userGameLoading, fetchUserGame } = useUserGameById();
@@ -25,54 +26,32 @@ export default function GamesList() {
   const [selectedGame, setSelectedGame] = useState<
     GameDataType | undefined | RequiredGameWithIsAdded
   >();
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
   const memorizedOpenGameListEditor = useCallback(
     async (game: GameDataType) => {
       setSelectedGame(game);
       setOpen(true);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  const onFetchMore = async () => {
-    console.log('fetch more');
-
-    // hasNextPage,
-    // isFetching,
-    // isFetchingNextPage,
-    // fetchNextPage,
-    // await data.fetchNextPage(i);
-    console.log(data.isFetching);
-    console.log('asd  = ', data.data.pages.length * 20);
-    data.fetchNextPage({
-      pageParam: data.data.pages.length * 20,
-      cancelRefetch: false,
-    });
-    setTestCounter((prev) => prev + 20);
-    // setTestCounter(testCounter + 20);
-    // await fetchMore({
-    //   variables: {
-    //     limit: 20,
-    //     offset: cardsLength,
-    //   },
-    //   updateQuery: (prev, { fetchMoreResult }) => {
-    //     if (!fetchMoreResult) return prev;
-    //     return {
-    //       ...prev,
-    //       allGames: [...prev.allGames, ...fetchMoreResult.allGames],
-    //     };
-    //   },
-    // });
+  const fetchNextPage = async () => {
+    if (
+      data.status === 'success' &&
+      (!data.isFetching || !data.isFetchingNextPage) &&
+      data.hasNextPage
+    ) {
+      data.fetchNextPage({
+        pageParam: data.data.pages.length * DEFAULT_FETCH_AMOUNT,
+        cancelRefetch: false,
+      });
+    }
   };
 
-  const onInViewChange = async () => {
-    if (data.hasNextPage) await onFetchMore();
-  };
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  console.log('useAllGames', data);
 
   // TODO: Add Loading component
   if (data.status === 'loading') {
@@ -84,7 +63,6 @@ export default function GamesList() {
     return <div>Error here</div>;
   }
 
-  console.log(data);
   return (
     <Content aria-label={`view-${homeSearchState.view}`}>
       {homeSearchState.view === 'grid' ? (
@@ -110,25 +88,13 @@ export default function GamesList() {
                 );
               });
             })}
-            {/* {data.games.map((game) => {
-              return (
-                <MemoedGameCard
-                  isAdded={false}
-                  key={`grid-${game.id}`}
-                  game={game}
-                  colorBgContainer={colorBgContainer}
-                  // openGameListEditor={memorizedOpenGameListEditor}
-                />
-              );
-            })} */}
-
             {/* TODO: Move this if statement up, stop checking for null every time */}
             {/* {data.status === 'success' && data.games.length > 0 && (
               <InView
                 onChange={async () => onFetchMore(data.games.length || 0)}
               />
             )} */}
-            <InView onChange={onInViewChange} />
+            <InView onChange={fetchNextPage} />
           </Row>
         </Card>
       ) : (
@@ -144,8 +110,19 @@ export default function GamesList() {
                   />
                 ))
               : null} */}
-            <div>games loaded</div>
-            <InView onChange={onInViewChange} />
+            {data.data.pages.map((page) => {
+              return page.data.data.games.map((game) => {
+                return (
+                  <MemoizedList
+                    key={`list-${game.id}`}
+                    game={game}
+                    colorBgContainer={colorBgContainer}
+                  />
+                );
+              });
+            })}
+
+            <InView onChange={fetchNextPage} />
           </div>
         </div>
       )}
