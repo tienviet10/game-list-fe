@@ -1,4 +1,4 @@
-import { CustomAxiosResponse, ErrorResponse } from '@constants/types';
+import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
 import { useMutation } from '@tanstack/react-query';
 import client from '@utils/authApi';
 
@@ -12,10 +12,14 @@ type EditUserGameParams = {
   startDate?: string;
 };
 
-type EditUserGameResponse = Omit<EditUserGameParams, 'gameId'> & {
+type EditUserGameType = Omit<EditUserGameParams, 'gameId'> & {
   id: number;
   createdAt: string;
   updatedAt: string;
+};
+
+type EditUserGameResponse = {
+  userGame: EditUserGameType;
 };
 
 const useEditUserGame = () => {

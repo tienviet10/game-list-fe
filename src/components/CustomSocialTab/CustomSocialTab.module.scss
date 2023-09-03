@@ -1,0 +1,19 @@
+@use '../../styles/colors.scss' as colors;
+
+
+.link {
+  color: colors.$color-text-lighter;
+  cursor: pointer;
+  border-radius: 3px;
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+.selected {
+  background: rgba(colors.$color-foreground, 0.8);
+  color: colors.$color-text;
+  font-weight: 700;
+}

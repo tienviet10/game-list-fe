@@ -9,7 +9,7 @@ import type {
 import styles from '@components/GamesListTable/Desktop/UserGameListDesktop.module.scss';
 import CustomTag from '@components/CustomTag';
 import ListEditor from '@components/ListEditor';
-import { RequiredGameWithIsAdded } from '@constants/types';
+import type { RequiredGameWithIsAdded } from '@constants/types';
 import useGetUserGameState from '@services/usergames/useGetUserGameState';
 
 function UserGameListDesktop({ data }: UserGameListDataType) {
