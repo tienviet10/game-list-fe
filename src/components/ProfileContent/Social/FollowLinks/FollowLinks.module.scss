@@ -7,15 +7,6 @@
     color: colors.$color-text-lighter;
     margin-bottom: 10px;
   }
-  .link {
-    color: colors.$color-text-lighter;
-    cursor: pointer;
-    border-radius: 3px;
-    display: block;
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-    padding: 5px 10px;
-  }
 
   .selected {
     background: rgba(colors.$color-foreground, 0.8);
