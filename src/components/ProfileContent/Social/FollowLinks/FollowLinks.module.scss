@@ -1,0 +1,16 @@
+@use '../../../../styles/colors.scss' as colors;
+
+.followLinksContainer {
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  .linksHeader {
+    color: colors.$color-text-lighter;
+    margin-bottom: 10px;
+  }
+
+  .selected {
+    background: rgba(colors.$color-foreground, 0.8);
+    color: colors.$color-text;
+    font-weight: 700;
+  }
+}
