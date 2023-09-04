@@ -8,6 +8,14 @@ import {
 import client from '@utils/authApi';
 import { useAppSelector } from '@/app/hooks';
 
+type GamesResponse = {
+  games: Game[];
+};
+
+type GamesResponseWithOffset = CustomAxiosResponse<GamesResponse> & {
+  offsetPage: number;
+};
+
 type BaseGetGamesHook =
   | {
       status: 'loading';
@@ -17,14 +25,11 @@ type BaseGetGamesHook =
   | {
       status: 'success';
       error: null;
-      data: InfiniteData<CustomAxiosResponse<GamesResponse>>;
+      data: InfiniteData<GamesResponseWithOffset>;
       fetchNextPage: (
         options?: FetchNextPageOptions | undefined
       ) => Promise<
-        InfiniteQueryObserverResult<
-          CustomAxiosResponse<GamesResponse>,
-          ErrorResponse
-        >
+        InfiniteQueryObserverResult<GamesResponseWithOffset, ErrorResponse>
       >;
     }
   | {
@@ -37,10 +42,6 @@ type GetGamesHookResult = BaseGetGamesHook & {
   hasNextPage: boolean | undefined;
   isFetching: boolean;
   isFetchingNextPage: boolean;
-};
-
-type GamesResponse = {
-  games: Game[];
 };
 
 export default function useAllGames(
@@ -58,7 +59,7 @@ export default function useAllGames(
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-  } = useInfiniteQuery<CustomAxiosResponse<GamesResponse>, ErrorResponse>({
+  } = useInfiniteQuery<GamesResponseWithOffset, ErrorResponse>({
     queryKey: [
       'Games',
       genres.included,
@@ -72,7 +73,6 @@ export default function useAllGames(
       sortBy,
       limitParam,
     ],
-
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage && lastPage.data.data.games.length === 0) {
         return undefined;
