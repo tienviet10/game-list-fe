@@ -74,6 +74,9 @@ export default function useAllGames(
     ],
 
     getNextPageParam: (lastPage, allPages) => {
+      if (lastPage && lastPage.data.data.games.length === 0) {
+        return undefined;
+      }
       const totalPages = allPages.length;
       const actualPage = lastPage.offsetPage / limitParam;
       const res = actualPage < totalPages ? actualPage + 1 : undefined;
