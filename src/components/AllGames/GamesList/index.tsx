@@ -44,12 +44,9 @@ export default function GamesList() {
       (!data.isFetching || !data.isFetchingNextPage) &&
       data.hasNextPage
     ) {
-      // console.log('data.data.pages.length  = ', data.data.pages.length);
       await data.fetchNextPage();
     }
   };
-
-  // console.log('useAllGames', data);
 
   // TODO: Add Loading component
   if (data.status === 'loading') {
@@ -86,12 +83,6 @@ export default function GamesList() {
                 );
               });
             })}
-            {/* TODO: Move this if statement up, stop checking for null every time */}
-            {/* {data.status === 'success' && data.games.length > 0 && (
-              <InView
-                onChange={async () => onFetchMore(data.games.length || 0)}
-              />
-            )} * */}
             <InView onChange={fetchNextPage} />
           </Row>
         </Card>
@@ -99,15 +90,6 @@ export default function GamesList() {
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>
           <div className={styles.allListDivider}>
-            {/* {data.status === 'success' && data.games.length > 0
-              ? data.games.map((game) => (
-                  <MemoizedList
-                    key={`list-${game.id}`}
-                    game={game}
-                    colorBgContainer={colorBgContainer}
-                  />
-                ))
-              : null} */}
             {data.data.pages.map((page) => {
               return page.data.data.games.map((game) => {
                 return (
