@@ -72,14 +72,16 @@ export default function useAllGames(
       sortBy,
       limitParam,
     ],
-    getNextPageParam: (lastPage) => {
-      if (!lastPage || lastPage.data.data.games.length === 0) {
-        return undefined;
-      }
-      return limitParam;
+
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPages = allPages.length;
+      const actualPage = lastPage.offsetPage / limitParam;
+      const res = actualPage < totalPages ? actualPage + 1 : undefined;
+      return res;
     },
     queryFn: async ({ pageParam = 0 }) => {
-      return client.post('/games', {
+      const offset = pageParam * limitParam;
+      const result = await client.post('/games', {
         genres: genres.included,
         tags: tags.included,
         platforms: platforms.included,
@@ -90,14 +92,18 @@ export default function useAllGames(
         sortBy,
         search,
         limit: limitParam,
-        offset: pageParam,
+        offset,
       });
+
+      return {
+        ...result,
+        offsetPage: offset,
+      };
     },
+    refetchOnReconnect: false,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-
-  // function fetchMore(amount: number) {}
 
   if (status === 'loading') {
     return {

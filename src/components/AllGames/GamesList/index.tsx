@@ -44,14 +44,12 @@ export default function GamesList() {
       (!data.isFetching || !data.isFetchingNextPage) &&
       data.hasNextPage
     ) {
-      data.fetchNextPage({
-        pageParam: data.data.pages.length * DEFAULT_FETCH_AMOUNT,
-        cancelRefetch: false,
-      });
+      // console.log('data.data.pages.length  = ', data.data.pages.length);
+      await data.fetchNextPage();
     }
   };
 
-  console.log('useAllGames', data);
+  // console.log('useAllGames', data);
 
   // TODO: Add Loading component
   if (data.status === 'loading') {
@@ -93,7 +91,7 @@ export default function GamesList() {
               <InView
                 onChange={async () => onFetchMore(data.games.length || 0)}
               />
-            )} */}
+            )} * */}
             <InView onChange={fetchNextPage} />
           </Row>
         </Card>
