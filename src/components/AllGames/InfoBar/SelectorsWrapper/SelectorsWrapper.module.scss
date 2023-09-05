@@ -1,0 +1,105 @@
+@use '../../../../styles/colors.scss' as colors;
+@use '../../../../styles/mixin.scss' as mixin;
+
+.selectorsContainer {
+  display: flex;
+  align-items: center;
+  background-color: colors.$color-background;
+  .sortSelector {
+    border-right: solid 1px rgb(201, 215, 227);
+    padding-right: 10px;
+    margin-right: 12px;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    user-select: none;
+    :hover {
+      // color: rgb(116, 136, 153);
+      color: colors.$color-icon-hover;
+
+      transform: scale(1.05);
+      transition: transform 0.5s ease;
+    }
+
+    span {
+      color: colors.$color-text-light;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding-left: 8px;
+      white-space: nowrap;
+      transition: color 0.3s ease;
+      background-color: colors.$color-background;
+
+      @include mixin.phoneSmall {
+        font-size: 0.7rem;
+      }
+    }
+
+    :global(span.anticon) {
+      color: rgb(173, 192, 210);
+      font-size: 1.5rem;
+      margin-top: -0.05em;
+      svg {
+        width: 0.625em;
+        overflow: visible;
+        overflow-clip-margin: content-box;
+        height: 1em;
+        vertical-align: -0.125em;
+        transition: color 0.3s ease;
+      }
+      :hover {
+        color: colors.$color-icon-hover;
+        // color: rgb(116, 136, 153);
+        transform: scale(1.07);
+        transition: transform 0.3s ease;
+      }
+    }
+  }
+
+  .wrapper {
+    align-items: center;
+    cursor: pointer;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    & .selectorIcon {
+      cursor: pointer;
+      color: colors.$color-icon;
+      transition: color 0.3s ease;
+      font-size: 1.8rem;
+
+      @include mixin.phoneSmall {
+        font-size: 1.4rem;
+      }
+      svg {
+        width: 0.625em;
+        overflow: visible;
+        overflow-clip-margin: content-box;
+        height: 1em;
+        vertical-align: -0.125em;
+        transition: color 0.3s ease;
+      }
+    }
+
+    & .selected {
+      color: colors.$color-icon-selected;
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+    :hover {
+      color: colors.$color-icon-hover;
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+  }
+}
+
+:global(.ant-dropdown) {
+  :global(.ant-dropdown-menu) {
+    :global(.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child) {
+      padding: 0px;
+      margin: 6px;
+    }
+  }
+}

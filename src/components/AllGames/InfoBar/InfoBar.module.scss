@@ -1,0 +1,22 @@
+@use '../../../styles/mixin.scss' as mixin;
+@use '../../../styles/colors.scss' as colors;
+
+.infoBarContainer {
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto -webkit-min-content;
+  grid-template-columns: auto min-content;
+  margin-bottom: 25px;
+  position: relative;
+  background-color: colors.$color-background;
+
+  @include mixin.loginTablet {
+    padding: 0 20px;
+  }
+
+  @include mixin.phoneSmall {
+    padding: 0 10px;
+    display: block;
+    margin-bottom: 8px;
+  }
+}

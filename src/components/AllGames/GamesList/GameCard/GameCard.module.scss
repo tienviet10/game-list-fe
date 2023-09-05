@@ -1,0 +1,69 @@
+.colGameCardContainer {
+  position: relative;
+  margin-bottom: 8px;
+  min-height: 200px;
+
+  animation: showAnimation 0.3s linear;
+  @keyframes showAnimation {
+    0% {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    60% {
+      opacity: 1;
+    }
+    100% {
+      transform: none;
+    }
+  }
+
+  // animation: fadeAnimation 0.3s ease;
+
+  .buttonGameHoverShow {
+    position: absolute;
+    bottom: 14px;
+    right: 12px;
+    // transition: opacity 0.3s ease;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out,
+      background 0.2s ease-in-out;
+  }
+  &:hover .buttonGameHoverShow {
+    transform: scale(1.1) !important;
+    opacity: 1;
+  }
+
+  & .cardGameContainer {
+    box-shadow: none;
+    transition: box-shadow 0.3s ease-in-out;
+    &:hover {
+      box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+        0 3px 6px 0px rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+
+      .metaGameDescription {
+        & div {
+          & div {
+            color: var(--hover-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(span.anticon-smile),
+:global(span.anticon-frown),
+:global(span.anticon-meh) {
+  position: absolute;
+  top: 20%;
+  left: 80%;
+  font-size: 2rem;
+}
+
+:global(main.ant-layout-content) {
+  :global(.ant-card-bordered.ant-card) {
+    background: none;
+  }
+}
