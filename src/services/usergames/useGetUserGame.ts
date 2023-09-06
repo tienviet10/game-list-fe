@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
 import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
 
-type UserGamesByID = {
+type UserGamesByGameID = {
   id: number;
   gameStatus: string;
   startDate: string;
@@ -15,12 +15,12 @@ type UserGamesByID = {
 };
 
 type UserGameType = {
-  userGame: UserGamesByID;
+  userGame: UserGamesByGameID;
 };
 
-const useGetUserGame = (userGameId: number | undefined) => {
+const useGetUserGame = (gameId: number | undefined) => {
   const getGame = async (): Promise<CustomAxiosResponse<UserGameType>> => {
-    return client.get(`/api/v1/usergames/${userGameId}`);
+    return client.get(`/api/v1/usergames/${gameId}`);
   };
 
   const {
@@ -28,9 +28,9 @@ const useGetUserGame = (userGameId: number | undefined) => {
     isInitialLoading: userGameDataIsLoading,
     refetch: getUserGame,
   } = useQuery<CustomAxiosResponse<UserGameType>, ErrorResponse>({
-    queryKey: ['userGame', userGameId],
+    queryKey: ['userGame', gameId],
     queryFn: getGame,
-    enabled: !!userGameId,
+    enabled: !!gameId,
   });
 
   return {
