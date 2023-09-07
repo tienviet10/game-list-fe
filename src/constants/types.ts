@@ -158,8 +158,8 @@ export type UserGamesByStatus = {
   planningCount: number;
   dropped: RequiredGame[];
   droppedCount: number;
-  inactive: RequiredGame[];
-  inactiveCount: number;
+  justAdded: RequiredGame[];
+  justAddedCount: number;
   totalCount: number;
   listsOrder: string;
 };
