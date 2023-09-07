@@ -46,6 +46,11 @@ function AvailableLists() {
         value: 'dropped',
         count: userGames?.data.data.userGamesByStatus?.droppedCount ?? 0,
       },
+      {
+        name: 'JustAdded',
+        value: 'justAdded',
+        count: userGames?.data.data.userGamesByStatus?.justAddedCount ?? 0,
+      },
     ];
 
     const newArray = listOrder.listOrder
@@ -64,6 +69,7 @@ function AvailableLists() {
     userGames?.data.data.userGamesByStatus?.pausedCount,
     userGames?.data.data.userGamesByStatus?.planningCount,
     userGames?.data.data.userGamesByStatus?.playingCount,
+    userGames?.data.data.userGamesByStatus?.justAddedCount,
     listOrder.listOrder,
   ]);
 

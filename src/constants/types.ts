@@ -41,7 +41,8 @@ export type ListTypes =
   | 'playing'
   | 'paused'
   | 'completed'
-  | 'dropped';
+  | 'dropped'
+  | 'justAdded';
 
 export type SelectedListTypes = ListTypes | 'all';
 
@@ -145,6 +146,7 @@ export type ListsOrderType = keyof Omit<
   | 'completedCount'
   | 'playingCount'
   | 'planningCount'
+  | 'justAddedCount'
 >;
 
 export type UserGamesByStatus = {

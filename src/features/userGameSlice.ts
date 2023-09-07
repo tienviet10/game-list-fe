@@ -15,9 +15,9 @@ export const userGameSlice = createSlice({
       if (type === 'gameStatus') {
         if (payload === 'Inactive') {
           state.id = '';
-          state.gameStatus = '';
+          state.gameStatus = null;
           state.gameNote = '';
-          state.rating = 0;
+          state.rating = null;
           state.private = false;
           state.completedDate = undefined;
           state.startDate = undefined;
@@ -47,9 +47,9 @@ export const userGameSlice = createSlice({
 
         if (gameStatus === 'Inactive') {
           state.id = '';
-          state.gameStatus = '';
+          state.gameStatus = null;
           state.gameNote = '';
-          state.rating = 0;
+          state.rating = null;
           state.private = false;
           state.completedDate = undefined;
           state.startDate = undefined;

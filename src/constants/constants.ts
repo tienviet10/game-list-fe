@@ -47,6 +47,10 @@ export const USER_LISTS = [
     id: 'dropped',
     content: 'Dropped',
   },
+  {
+    id: 'justAdded',
+    content: 'Just Added',
+  },
 ];
 
 export const INITIAL_USER_GAME_LISTS = {
@@ -56,6 +60,7 @@ export const INITIAL_USER_GAME_LISTS = {
     'paused',
     'completed',
     'dropped',
+    'justAdded',
   ] as ListsOrderType[],
   localListOrder: [
     'planning',
@@ -63,6 +68,7 @@ export const INITIAL_USER_GAME_LISTS = {
     'paused',
     'completed',
     'dropped',
+    'justAdded',
   ] as ListsOrderType[],
 };
 
@@ -71,7 +77,7 @@ export const INITIAL_USER_GAME_BY_ID_STATE = {
   gameNote: '',
   gameStatus: '',
   private: false,
-  rating: 0,
+  rating: null,
   startDate: undefined,
   id: '',
 };
