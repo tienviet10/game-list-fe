@@ -71,7 +71,7 @@ export const INITIAL_USER_GAME_BY_ID_STATE = {
   gameNote: '',
   gameStatus: '',
   private: false,
-  rating: 0,
+  rating: null,
   startDate: undefined,
   id: '',
 };

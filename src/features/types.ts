@@ -46,7 +46,7 @@ export type InitialStateUserGameType = {
   gameStatus: string;
   startDate: string | undefined;
   private: boolean;
-  rating: number;
+  rating: number | null;
   id: string;
 };
 
