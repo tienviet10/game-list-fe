@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 import { GameDataType } from '@components/GamesListTable/types';
 import { RequiredGameWithIsAdded } from '@constants/types';
 import ListEditor from '@components/ListEditor';
+import useGetUserGameState from '@/services/usergames/useGetUserGameState';
 import GamesListLoading from './GamesListLoading';
 import MemoedGameCard from './GameCard';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
@@ -26,6 +27,8 @@ export default function GamesList() {
   const [selectedGame, setSelectedGame] = useState<
     GameDataType | undefined | RequiredGameWithIsAdded
   >();
+
+  const { userGameDataIsLoading } = useGetUserGameState(selectedGame?.id);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -33,6 +36,7 @@ export default function GamesList() {
   const memorizedOpenGameListEditor = useCallback(
     async (game: GameDataType) => {
       setSelectedGame(game);
+      console.log('game', game);
       setOpen(true);
     },
     []
@@ -74,7 +78,6 @@ export default function GamesList() {
               return page.data.data.games.map((game) => {
                 return (
                   <MemoedGameCard
-                    isAdded={false}
                     key={`grid-${game.id}`}
                     game={game}
                     colorBgContainer={colorBgContainer}
@@ -107,11 +110,11 @@ export default function GamesList() {
         </div>
       )}
       <ListEditor
-        userGameLoading={false}
+        userGameLoading={userGameDataIsLoading}
         open={open}
         setOpen={setOpen}
         game={selectedGame as GameDataType}
-        isGameAdded={false}
+        isGameAdded={selectedGame?.gameAdded as boolean}
         setSelectedGame={setSelectedGame}
       />
     </Content>

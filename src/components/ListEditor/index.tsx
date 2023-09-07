@@ -103,7 +103,7 @@ function ListEditorTemp({
       warning('Please login to add or edit your GameList');
       return;
     }
-    if (!game?.isGameLiked) {
+    if (!game?.gameLiked) {
       // const response = await addLike(
       //   game.id,
       //   game.__typename as string
@@ -138,7 +138,7 @@ function ListEditorTemp({
 
   const onPressDelete = () => {
     // showRemoveConfirm(game, 'game', setOpen);
-    setSelectedGame({ ...game, isGameAdded: false });
+    setSelectedGame({ ...game, gameAdded: false });
   };
 
   const handleChoicesChange = <Type extends ChoicesType['type']>(
@@ -196,7 +196,7 @@ function ListEditorTemp({
           <div className={styles.contentFavourite}>
             <CustomButton
               icon={
-                game?.isGameLiked ? (
+                game?.gameLiked ? (
                   <HeartFilled style={{ color: 'hotpink' }} />
                 ) : (
                   <HeartOutlined />

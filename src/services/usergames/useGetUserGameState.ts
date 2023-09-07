@@ -5,18 +5,18 @@ import { setUserGameReducer } from '@features/userGameSlice';
 import { INITIAL_USER_GAME_BY_ID_STATE } from '@constants/constants';
 import useGetUserGame from './useGetUserGame';
 
-const useGetUserGameState = (userGameId: number | undefined) => {
+const useGetUserGameState = (gameId: number | undefined) => {
   const dispatch = useDispatch();
   const userState = useAppSelector((state) => state.user);
   const { userGame, userGameDataIsLoading, getUserGame } =
-    useGetUserGame(userGameId);
+    useGetUserGame(gameId);
 
   useEffect(() => {
     if (userGame?.data.data && userState.user.id !== '') {
       dispatch(
         setUserGameReducer({
           type: 'userGame',
-          payload: userGame?.data.data,
+          payload: userGame?.data.data.userGame,
         })
       );
     } else {
