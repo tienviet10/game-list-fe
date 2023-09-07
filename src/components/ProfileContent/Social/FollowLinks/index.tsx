@@ -2,29 +2,28 @@ import React from 'react';
 import CustomSocialTab from '@components/CustomSocialTab';
 import styles from './FollowLinks.module.scss';
 
+type FollowLinksProps = 'Followings' | 'Followers';
+
+const tabs: FollowLinksProps[] = ['Followings', 'Followers'];
+
 function FollowLinks({
   selectedFilter,
   setSelectedFilter,
 }: {
-  selectedFilter: 'Followings' | 'Followers';
-  setSelectedFilter: React.Dispatch<
-    React.SetStateAction<'Followings' | 'Followers'>
-  >;
+  selectedFilter: FollowLinksProps;
+  setSelectedFilter: React.Dispatch<React.SetStateAction<FollowLinksProps>>;
 }) {
   return (
     <div>
       <div className={styles.followLinksContainer}>
         <div className={styles.linksHeader}>Social</div>
-        <CustomSocialTab
-          text="Followings"
-          onPress={() => setSelectedFilter('Followings')}
-          activeStyle={selectedFilter === 'Followings' ? styles.selected : ''}
-        />
-        <CustomSocialTab
-          text="Followers"
-          onPress={() => setSelectedFilter('Followers')}
-          activeStyle={selectedFilter === 'Followers' ? styles.selected : ''}
-        />
+        {tabs.map((tab) => (
+          <CustomSocialTab
+            text={tab}
+            onPress={() => setSelectedFilter(tab)}
+            activeStyle={selectedFilter === tab ? styles.selected : ''}
+          />
+        ))}
       </div>
     </div>
   );

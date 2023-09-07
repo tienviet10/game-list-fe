@@ -18,7 +18,7 @@ function UserGameList() {
   );
 
   const { userGames, userDataIsLoading, getUserGames } = useGetUserGames();
-
+  console.log('userGames', userGames);
   useEffect(() => {
     getUserGames();
   }, [getUserGames]);
@@ -45,11 +45,17 @@ function UserGameList() {
     return <div>Loading...</div>;
   }
 
+  console.log('listToDisplay', listToDisplay);
+
   return (
     <div className={styles.mainContainer}>
       <FilterColumn />
       <div>
         {listToDisplay.map((list) => {
+          console.log(
+            'userGames?.data.data.userGamesByStatus[list]',
+            userGames?.data?.data?.userGamesByStatus[list]
+          );
           return (
             <UserGamesTable
               key={list}
