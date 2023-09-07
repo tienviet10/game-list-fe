@@ -20,9 +20,6 @@ function Follows({
   followers: UserType[];
   selectedFilter: string;
 }) {
-  // const { handleRemoveFollow, contextHolder: handleRemoveFollowContextHolder } =
-  //   useAddRemoveFollowCustomHook();
-
   const { handleRemoveFollow, contextHolder: handleRemoveFollowContextHolder } =
     useHandleAddRemoveFollow();
 
