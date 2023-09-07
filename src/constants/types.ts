@@ -67,17 +67,17 @@ export type UserGameFilters = {
 export type Game = {
   id: number;
   name: string;
-  summary: string;
-  screenshots?: string;
-  cover?: string;
+  description: string;
+  bannerURL?: string;
+  imageURL?: string;
   genres: string[];
   platforms: string[];
   tags: string[];
-  total_rating?: number;
-  total_rating_count?: number;
-  first_release_date: Date;
-  isGameLiked: boolean;
-  isGameAdded: boolean;
+  avgScore?: number;
+  totalRating?: number;
+  releaseDate: Date;
+  gameLiked: boolean;
+  gameAdded: boolean;
 };
 
 type ErrorDetails = {
@@ -116,22 +116,23 @@ export interface UserData {
 
 export declare type ArrayElementType<T> = T extends (infer E)[] ? E : T;
 
-export type Game = {
-  id?: number;
-  name?: string;
-  avgScore?: number;
-  imageURL?: string;
-  bannerURL?: string;
-  releaseDate?: Date;
-  platforms?: string[];
-  genres?: string[];
-  tags?: string[];
-};
+// export type Game = {
+//   id?: number;
+//   name?: string;
+//   avgScore?: number;
+//   imageURL?: string;
+//   bannerURL?: string;
+//   releaseDate?: Date;
+//   platforms?: string[];
+//   genres?: string[];
+//   tags?: string[];
+// };
 
 export type RequiredGame = Required<Game>;
 
 export type RequiredGameWithIsAdded = RequiredGame & {
-  isGameAdded?: boolean;
+  gameAdded?: boolean;
+  imageURL?: string;
 };
 
 export type ListsOrderType = keyof Omit<

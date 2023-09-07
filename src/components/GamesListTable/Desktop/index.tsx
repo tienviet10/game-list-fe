@@ -97,7 +97,7 @@ function UserGameListDesktop({ data }: UserGameListDataType) {
     <>
       <Table className={styles.Table} columns={columns} dataSource={data} />
       <ListEditor
-        isGameAdded={chosenGame?.isGameAdded}
+        isGameAdded={chosenGame?.gameAdded}
         userGameLoading={userGameDataIsLoading}
         open={open}
         setOpen={setOpen}

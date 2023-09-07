@@ -8,7 +8,6 @@ import type { GameCardType } from '@/components/AllGames/GamesList/types';
 import getRatingIcon from '@/utils/getRatingIcon';
 
 function NeedMemoedGameCard({
-  isAdded,
   game,
   colorBgContainer,
   openGameListEditor,
@@ -95,13 +94,13 @@ function NeedMemoedGameCard({
                   }
                 }}
                 size="middle"
-                type="default"
+                type="link"
                 className={styles.buttonGameHoverShow}
                 style={{
                   color: `${data}`,
                 }}
                 icon={
-                  isAdded ? (
+                  game.gameAdded ? (
                     <EditOutlined
                       style={{
                         fontSize: '14px',
