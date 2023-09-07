@@ -28,7 +28,12 @@ const useEditUserGame = () => {
   const loginUser = async (
     params: EditUserGameParams
   ): Promise<CustomAxiosResponse<EditUserGameResponse>> => {
-    return client.post(`/api/v1/usergames`, params);
+    const { gameStatus } = params;
+    const postParams = { ...params };
+    if (gameStatus === '') {
+      postParams.gameStatus = 'JustAdded';
+    }
+    return client.post(`/api/v1/usergames`, postParams);
   };
 
   const {

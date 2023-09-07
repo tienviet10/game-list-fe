@@ -5,7 +5,7 @@ import {
   setListOrder,
 } from '@features/userGamesListSlice';
 // import useEditListsOrder from '@services/user/useEditListsOrder';
-import { useAppSelector, useAppDispatch } from '@app/hooks';
+import { useAppDispatch } from '@app/hooks';
 import ReorderLists from '@components/UserListFilterColumn/Desktop/ReorderLists';
 import AvailableLists from '@components/UserListFilterColumn/Desktop/AvailableLists';
 import styles from './ListsWrapperStyle.module.scss';
