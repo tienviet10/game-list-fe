@@ -36,7 +36,6 @@ export default function GamesList() {
   const memorizedOpenGameListEditor = useCallback(
     async (game: GameDataType) => {
       setSelectedGame(game);
-      console.log('game', game);
       setOpen(true);
     },
     []

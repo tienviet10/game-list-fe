@@ -129,7 +129,9 @@ function ListEditorTemp({
     editUserGame({
       ...newUserGame,
       isPrivate,
-      gameId: game.id,
+      game: {
+        id: game.id,
+      },
     });
     // setSelectedGame(userGameResponseData?.data.data as GameType);
     info(`Edit game ${game.name} successfully`);
