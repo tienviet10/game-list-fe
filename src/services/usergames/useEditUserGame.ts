@@ -6,7 +6,7 @@ type EditUserGameParams = {
   game: {
     id: number;
   };
-  gameStatus?: string;
+  gameStatus?: string | null;
   gameNote?: string;
   isPrivate?: boolean;
   rating?: number | null;
@@ -25,7 +25,18 @@ type EditUserGameResponse = {
 };
 
 const useEditUserGame = () => {
-  const loginUser = async (
+  const editExistedUserGame = async (
+    params: EditUserGameParams
+  ): Promise<CustomAxiosResponse<EditUserGameResponse>> => {
+    const { gameStatus } = params;
+    const postParams = { ...params };
+    if (gameStatus === '') {
+      postParams.gameStatus = 'JustAdded';
+    }
+    return client.put(`/api/v1/usergames`, postParams);
+  };
+
+  const createNewUserGame = async (
     params: EditUserGameParams
   ): Promise<CustomAxiosResponse<EditUserGameResponse>> => {
     const { gameStatus } = params;
@@ -46,10 +57,20 @@ const useEditUserGame = () => {
     ErrorResponse,
     EditUserGameParams
   >({
-    mutationFn: loginUser,
+    mutationFn: editExistedUserGame,
+  });
+
+  const { mutate: createUserGame, data: newUserGameResponseData } = useMutation<
+    CustomAxiosResponse<EditUserGameResponse>,
+    ErrorResponse,
+    EditUserGameParams
+  >({
+    mutationFn: createNewUserGame,
   });
 
   return {
+    createUserGame,
+    newUserGameResponseData,
     editUserGame,
     userGameResponseData,
     usergameDataError,

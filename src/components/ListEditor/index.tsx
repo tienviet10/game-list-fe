@@ -91,7 +91,7 @@ function ListEditorTemp({
   //   selectedStatus as StatusType
   // );
 
-  const { editUserGame } = useEditUserGame();
+  const { editUserGame, createUserGame } = useEditUserGame();
   // const { addLike, removeLike } = useAddRemoveLike();
 
   if (userGameLoading) {
@@ -126,13 +126,25 @@ function ListEditorTemp({
       return;
     }
     const { id, private: isPrivate, ...newUserGame } = userGame;
-    editUserGame({
-      ...newUserGame,
-      isPrivate,
-      game: {
-        id: game.id,
-      },
-    });
+    if (game.gameAdded) {
+      await editUserGame({
+        ...newUserGame,
+        isPrivate,
+        game: {
+          id: game.id,
+        },
+      });
+    } else {
+      console.log('gameID ', game.id);
+      await createUserGame({
+        ...newUserGame,
+        isPrivate,
+        game: {
+          id: game.id,
+        },
+      });
+    }
+
     // setSelectedGame(userGameResponseData?.data.data as GameType);
     info(`Edit game ${game.name} successfully`);
     setOpen(false);
@@ -220,7 +232,7 @@ function ListEditorTemp({
               <CustomSelect
                 title="Status"
                 optionsList={statusOptions}
-                selectedChoice={selectedStatus}
+                selectedChoice={selectedStatus as string}
                 onPress={(value) =>
                   handleChoicesChange('gameStatus', value as string)
                 }
@@ -233,7 +245,7 @@ function ListEditorTemp({
               <CustomSelect
                 title="Score"
                 optionsList={scoreOptions}
-                selectedChoice={selectedRating}
+                selectedChoice={selectedRating as number}
                 onPress={(value) =>
                   handleChoicesChange('rating', value as number)
                 }
