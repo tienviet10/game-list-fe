@@ -14,7 +14,7 @@ type EditUserGameParams = {
   startDate?: string;
 };
 
-type EditUserGameType = Omit<EditUserGameParams, 'gameId'> & {
+type EditUserGameType = Omit<EditUserGameParams, 'game'> & {
   id: number;
   createdAt: string;
   updatedAt: string;
