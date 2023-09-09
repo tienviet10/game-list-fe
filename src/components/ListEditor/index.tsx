@@ -133,9 +133,7 @@ function ListEditorTemp({
         {
           ...newUserGame,
           isPrivate,
-          game: {
-            id: game.id,
-          },
+          gameId: game.id,
         },
         {
           onSuccess() {
@@ -148,9 +146,7 @@ function ListEditorTemp({
         {
           ...newUserGame,
           isPrivate,
-          game: {
-            id: game.id,
-          },
+          gameId: game.id,
         },
         {
           onSuccess() {

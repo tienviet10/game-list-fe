@@ -3,9 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import client from '@utils/authApi';
 
 type EditUserGameParams = {
-  game: {
-    id: number;
-  };
+  gameId: number;
   gameStatus?: string | null;
   gameNote?: string;
   isPrivate?: boolean;
@@ -14,7 +12,7 @@ type EditUserGameParams = {
   startDate?: string;
 };
 
-type EditUserGameType = Omit<EditUserGameParams, 'game'> & {
+type EditUserGameType = Omit<EditUserGameParams, 'gameId'> & {
   id: number;
   createdAt: string;
   updatedAt: string;
@@ -29,11 +27,11 @@ const useEditUserGame = () => {
     params: EditUserGameParams
   ): Promise<CustomAxiosResponse<EditUserGameResponse>> => {
     const { gameStatus } = params;
-    const postParams = { ...params };
+    const putParams = { ...params };
     if (gameStatus === '') {
-      postParams.gameStatus = 'JustAdded';
+      putParams.gameStatus = 'JustAdded';
     }
-    return client.put(`/api/v1/usergames`, postParams);
+    return client.put(`/api/v1/usergames`, putParams);
   };
 
   const createNewUserGame = async (
