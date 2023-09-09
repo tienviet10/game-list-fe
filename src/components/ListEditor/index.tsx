@@ -18,6 +18,7 @@ import CustomButton from '@components/CustomButton';
 import CustomSelect from '@components/CustomSelect';
 import useEditUserGame from '@services/usergames/useEditUserGame';
 import { setUserGameReducer } from '@features/userGameSlice';
+import useRemoveUserGame from '@services/usergames/useRemoveUserGame';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -92,6 +93,7 @@ function ListEditorTemp({
   // );
 
   const { editUserGame, createUserGame } = useEditUserGame();
+  const { removeUserGameMutation } = useRemoveUserGame();
   // const { addLike, removeLike } = useAddRemoveLike();
 
   if (userGameLoading) {
@@ -127,31 +129,50 @@ function ListEditorTemp({
     }
     const { id, private: isPrivate, ...newUserGame } = userGame;
     if (game.gameAdded) {
-      await editUserGame({
-        ...newUserGame,
-        isPrivate,
-        game: {
-          id: game.id,
+      editUserGame(
+        {
+          ...newUserGame,
+          isPrivate,
+          game: {
+            id: game.id,
+          },
         },
-      });
+        {
+          onSuccess() {
+            info(`Edit game ${game.name} successfully`);
+          },
+        }
+      );
     } else {
-      console.log('gameID ', game.id);
-      await createUserGame({
-        ...newUserGame,
-        isPrivate,
-        game: {
-          id: game.id,
+      createUserGame(
+        {
+          ...newUserGame,
+          isPrivate,
+          game: {
+            id: game.id,
+          },
         },
-      });
+        {
+          onSuccess() {
+            info(`Add game ${game.name} successfully`);
+          },
+        }
+      );
     }
 
     // setSelectedGame(userGameResponseData?.data.data as GameType);
-    info(`Edit game ${game.name} successfully`);
+
     setOpen(false);
   };
 
-  const onPressDelete = () => {
+  const onPressDelete = async () => {
     // showRemoveConfirm(game, 'game', setOpen);
+    removeUserGameMutation(game.id, {
+      onSuccess() {
+        info(`Delete game ${game.name} successfully`);
+        setOpen(false);
+      },
+    });
     setSelectedGame({ ...game, gameAdded: false });
   };
 
@@ -220,7 +241,12 @@ function ListEditorTemp({
             />
           </div>
           <div className={styles.contentSave}>
-            <CustomButton text="Save" onPress={onPressSave} />
+            <CustomButton
+              text="Save"
+              onPress={async () => {
+                await onPressSave();
+              }}
+            />
           </div>
         </div>
       </div>
