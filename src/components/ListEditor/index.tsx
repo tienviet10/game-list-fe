@@ -1,6 +1,7 @@
 import { Modal, Checkbox } from 'antd';
 import { HeartOutlined, HeartFilled, CloseOutlined } from '@ant-design/icons';
 import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import type {
   DropDownOption,
@@ -78,6 +79,7 @@ function ListEditorTemp({
   const userGame = useAppSelector((state) => state.userGame);
   const userState = useAppSelector((state) => state.user);
   const { contextHolder, info, warning } = useNotification();
+  const queryClient = useQueryClient();
 
   const {
     gameStatus: selectedStatus,
@@ -138,6 +140,7 @@ function ListEditorTemp({
         {
           onSuccess() {
             info(`Edit game ${game.name} successfully`);
+            queryClient.invalidateQueries(['Games']);
           },
         }
       );
@@ -151,6 +154,7 @@ function ListEditorTemp({
         {
           onSuccess() {
             info(`Add game ${game.name} successfully`);
+            queryClient.invalidateQueries(['Games']);
           },
         }
       );
