@@ -82,7 +82,7 @@ export default function useAllGames(
       const res = actualPage < totalPages ? actualPage + 1 : undefined;
       return res;
     },
-    queryFn: async ({ pageParam = 0 }) => {
+    queryFn: async ({ pageParam = 0, queryKey }) => {
       const offset = pageParam * limitParam;
       const result = await client.post('/games', {
         genres: genres.included,
@@ -97,6 +97,8 @@ export default function useAllGames(
         limit: limitParam,
         offset,
       });
+
+      console.log(queryKey);
 
       return {
         ...result,

@@ -138,8 +138,12 @@ function ListEditorTemp({
           gameId: game.id,
         },
         {
-          onSuccess() {
+          onSuccess(data) {
             info(`Edit game ${game.name} successfully`);
+            queryClient.setQueriesData(['Games'], (oldData) => {
+              console.log('oldData', oldData);
+              console.log(data);
+            });
             queryClient.invalidateQueries(['Games']);
           },
         }
@@ -152,9 +156,14 @@ function ListEditorTemp({
           gameId: game.id,
         },
         {
-          onSuccess() {
+          onSuccess(data) {
             info(`Add game ${game.name} successfully`);
+            queryClient.setQueriesData(['Games'], (oldData) => {
+              console.log('oldData', oldData);
+              console.log(data);
+            });
             queryClient.invalidateQueries(['Games']);
+            setSelectedGame({ ...game, gameAdded: true });
           },
         }
       );
@@ -168,8 +177,13 @@ function ListEditorTemp({
   const onPressDelete = async () => {
     // showRemoveConfirm(game, 'game', setOpen);
     removeUserGameMutation(game.id, {
-      onSuccess() {
+      onSuccess(data) {
         info(`Delete game ${game.name} successfully`);
+        queryClient.setQueriesData(['Games'], (oldData) => {
+          console.log('oldData', oldData);
+          console.log(data);
+        });
+        queryClient.invalidateQueries(['Games']);
         setOpen(false);
       },
     });
