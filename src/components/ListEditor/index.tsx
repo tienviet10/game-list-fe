@@ -18,6 +18,7 @@ import CustomButton from '@components/CustomButton';
 import CustomSelect from '@components/CustomSelect';
 import useEditUserGame from '@services/usergames/useEditUserGame';
 import { setUserGameReducer } from '@features/userGameSlice';
+import useRemoveUserGame from '@services/usergames/useRemoveUserGame';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -91,7 +92,8 @@ function ListEditorTemp({
   //   selectedStatus as StatusType
   // );
 
-  const { editUserGame } = useEditUserGame();
+  const { editUserGame, createUserGame } = useEditUserGame();
+  const { removeUserGameMutation } = useRemoveUserGame();
   // const { addLike, removeLike } = useAddRemoveLike();
 
   if (userGameLoading) {
@@ -126,20 +128,47 @@ function ListEditorTemp({
       return;
     }
     const { id, private: isPrivate, ...newUserGame } = userGame;
-    editUserGame({
-      ...newUserGame,
-      isPrivate,
-      game: {
-        id: game.id,
-      },
-    });
+    if (game.gameAdded) {
+      editUserGame(
+        {
+          ...newUserGame,
+          isPrivate,
+          gameId: game.id,
+        },
+        {
+          onSuccess() {
+            info(`Edit game ${game.name} successfully`);
+          },
+        }
+      );
+    } else {
+      createUserGame(
+        {
+          ...newUserGame,
+          isPrivate,
+          gameId: game.id,
+        },
+        {
+          onSuccess() {
+            info(`Add game ${game.name} successfully`);
+          },
+        }
+      );
+    }
+
     // setSelectedGame(userGameResponseData?.data.data as GameType);
-    info(`Edit game ${game.name} successfully`);
+
     setOpen(false);
   };
 
-  const onPressDelete = () => {
+  const onPressDelete = async () => {
     // showRemoveConfirm(game, 'game', setOpen);
+    removeUserGameMutation(game.id, {
+      onSuccess() {
+        info(`Delete game ${game.name} successfully`);
+        setOpen(false);
+      },
+    });
     setSelectedGame({ ...game, gameAdded: false });
   };
 
@@ -208,7 +237,12 @@ function ListEditorTemp({
             />
           </div>
           <div className={styles.contentSave}>
-            <CustomButton text="Save" onPress={onPressSave} />
+            <CustomButton
+              text="Save"
+              onPress={async () => {
+                await onPressSave();
+              }}
+            />
           </div>
         </div>
       </div>
@@ -220,7 +254,7 @@ function ListEditorTemp({
               <CustomSelect
                 title="Status"
                 optionsList={statusOptions}
-                selectedChoice={selectedStatus}
+                selectedChoice={selectedStatus as string}
                 onPress={(value) =>
                   handleChoicesChange('gameStatus', value as string)
                 }
@@ -233,7 +267,7 @@ function ListEditorTemp({
               <CustomSelect
                 title="Score"
                 optionsList={scoreOptions}
-                selectedChoice={selectedRating}
+                selectedChoice={selectedRating as number}
                 onPress={(value) =>
                   handleChoicesChange('rating', value as number)
                 }
