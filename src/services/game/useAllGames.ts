@@ -77,13 +77,15 @@ export default function useAllGames(
       if (lastPage && lastPage.data.data.games.length === 0) {
         return undefined;
       }
+
       const totalPages = allPages.length;
       const actualPage = lastPage.offsetPage / limitParam;
-      const res = actualPage < totalPages ? actualPage + 1 : undefined;
-      return res;
+      const nextPage = actualPage < totalPages ? actualPage + 1 : undefined;
+      return nextPage;
     },
     queryFn: async ({ pageParam = 0 }) => {
       const offset = pageParam * limitParam;
+
       const result = await client.post('/games', {
         genres: genres.included,
         tags: tags.included,

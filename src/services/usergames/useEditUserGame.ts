@@ -28,7 +28,7 @@ const useEditUserGame = () => {
   ): Promise<CustomAxiosResponse<EditUserGameResponse>> => {
     const { gameStatus } = params;
     const putParams = { ...params };
-    if (gameStatus === '') {
+    if (gameStatus?.trim() === '' || !gameStatus) {
       putParams.gameStatus = 'JustAdded';
     }
     return client.put(`/api/v1/usergames`, putParams);
@@ -38,8 +38,9 @@ const useEditUserGame = () => {
     params: EditUserGameParams
   ): Promise<CustomAxiosResponse<EditUserGameResponse>> => {
     const { gameStatus } = params;
+
     const postParams = { ...params };
-    if (gameStatus === '') {
+    if (gameStatus?.trim() === '' || !gameStatus) {
       postParams.gameStatus = 'JustAdded';
     }
     return client.post(`/api/v1/usergames`, postParams);

@@ -1,6 +1,7 @@
 import { Modal, Checkbox } from 'antd';
 import { HeartOutlined, HeartFilled, CloseOutlined } from '@ant-design/icons';
 import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import type {
   DropDownOption,
@@ -19,6 +20,7 @@ import CustomSelect from '@components/CustomSelect';
 import useEditUserGame from '@services/usergames/useEditUserGame';
 import { setUserGameReducer } from '@features/userGameSlice';
 import useRemoveUserGame from '@services/usergames/useRemoveUserGame';
+import useUpdateCache, { OldDataType } from '@hooks/useUpdateCache';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -78,6 +80,8 @@ function ListEditorTemp({
   const userGame = useAppSelector((state) => state.userGame);
   const userState = useAppSelector((state) => state.user);
   const { contextHolder, info, warning } = useNotification();
+  const queryClient = useQueryClient();
+  const { updateGameById } = useUpdateCache();
 
   const {
     gameStatus: selectedStatus,
@@ -151,6 +155,17 @@ function ListEditorTemp({
         {
           onSuccess() {
             info(`Add game ${game.name} successfully`);
+            queryClient.setQueriesData(
+              ['Games'],
+              (oldData: OldDataType | undefined) => {
+                if (!oldData) {
+                  return oldData;
+                }
+                return updateGameById(oldData, game.id, game.gameLiked, true);
+              }
+            );
+
+            setSelectedGame({ ...game, gameAdded: true });
           },
         }
       );
@@ -166,10 +181,19 @@ function ListEditorTemp({
     removeUserGameMutation(game.id, {
       onSuccess() {
         info(`Delete game ${game.name} successfully`);
+        queryClient.setQueriesData(
+          ['Games'],
+          (oldData: OldDataType | undefined) => {
+            if (!oldData) {
+              return oldData;
+            }
+            return updateGameById(oldData, game.id, game.gameLiked, false);
+          }
+        );
         setOpen(false);
       },
     });
-    setSelectedGame({ ...game, gameAdded: false });
+    // setSelectedGame({ ...game, gameAdded: false });
   };
 
   const handleChoicesChange = <Type extends ChoicesType['type']>(
