@@ -20,7 +20,7 @@ import CustomSelect from '@components/CustomSelect';
 import useEditUserGame from '@services/usergames/useEditUserGame';
 import { setUserGameReducer } from '@features/userGameSlice';
 import useRemoveUserGame from '@services/usergames/useRemoveUserGame';
-import useUpdateCache from '@hooks/useUpdateCache';
+import useUpdateCache, { OldDataType } from '@hooks/useUpdateCache';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -155,18 +155,16 @@ function ListEditorTemp({
         {
           onSuccess() {
             info(`Add game ${game.name} successfully`);
-            queryClient.setQueriesData(['Games'], (oldData) => {
-              const updatedGames = updateGameById(
-                oldData,
-                game.id,
-                game.gameLiked,
-                true
-              );
+            queryClient.setQueriesData(
+              ['Games'],
+              (oldData: OldDataType | undefined) => {
+                if (!oldData) {
+                  return oldData;
+                }
+                return updateGameById(oldData, game.id, game.gameLiked, true);
+              }
+            );
 
-              return updatedGames;
-            });
-
-            // queryClient.invalidateQueries(['Games']);
             setSelectedGame({ ...game, gameAdded: true });
           },
         }
@@ -183,10 +181,15 @@ function ListEditorTemp({
     removeUserGameMutation(game.id, {
       onSuccess() {
         info(`Delete game ${game.name} successfully`);
-        queryClient.setQueriesData(['Games'], (oldData) => {
-          return updateGameById(oldData, game.id, game.gameLiked, false);
-          // queryClient.invalidateQueries(['Games']);
-        });
+        queryClient.setQueriesData(
+          ['Games'],
+          (oldData: OldDataType | undefined) => {
+            if (!oldData) {
+              return oldData;
+            }
+            return updateGameById(oldData, game.id, game.gameLiked, false);
+          }
+        );
         setOpen(false);
       },
     });
