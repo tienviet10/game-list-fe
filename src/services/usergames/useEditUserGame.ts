@@ -43,7 +43,6 @@ const useEditUserGame = () => {
     if (gameStatus?.trim() === '' || !gameStatus) {
       postParams.gameStatus = 'JustAdded';
     }
-
     return client.post(`/api/v1/usergames`, postParams);
   };
 

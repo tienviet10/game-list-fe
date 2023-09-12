@@ -20,6 +20,7 @@ import CustomSelect from '@components/CustomSelect';
 import useEditUserGame from '@services/usergames/useEditUserGame';
 import { setUserGameReducer } from '@features/userGameSlice';
 import useRemoveUserGame from '@services/usergames/useRemoveUserGame';
+import useUpdateCache from '@hooks/useUpdateCache';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -80,6 +81,7 @@ function ListEditorTemp({
   const userState = useAppSelector((state) => state.user);
   const { contextHolder, info, warning } = useNotification();
   const queryClient = useQueryClient();
+  const { updateGameById } = useUpdateCache();
 
   const {
     gameStatus: selectedStatus,
@@ -138,13 +140,8 @@ function ListEditorTemp({
           gameId: game.id,
         },
         {
-          onSuccess(data) {
+          onSuccess() {
             info(`Edit game ${game.name} successfully`);
-            queryClient.setQueriesData(['Games'], (oldData) => {
-              console.log('oldData', oldData);
-              console.log(data);
-            });
-            queryClient.invalidateQueries(['Games']);
           },
         }
       );
@@ -156,13 +153,20 @@ function ListEditorTemp({
           gameId: game.id,
         },
         {
-          onSuccess(data) {
+          onSuccess() {
             info(`Add game ${game.name} successfully`);
             queryClient.setQueriesData(['Games'], (oldData) => {
-              console.log('oldData', oldData);
-              console.log(data);
+              const updatedGames = updateGameById(
+                oldData,
+                game.id,
+                game.gameLiked,
+                true
+              );
+
+              return updatedGames;
             });
-            queryClient.invalidateQueries(['Games']);
+
+            // queryClient.invalidateQueries(['Games']);
             setSelectedGame({ ...game, gameAdded: true });
           },
         }
@@ -177,17 +181,16 @@ function ListEditorTemp({
   const onPressDelete = async () => {
     // showRemoveConfirm(game, 'game', setOpen);
     removeUserGameMutation(game.id, {
-      onSuccess(data) {
+      onSuccess() {
         info(`Delete game ${game.name} successfully`);
         queryClient.setQueriesData(['Games'], (oldData) => {
-          console.log('oldData', oldData);
-          console.log(data);
+          return updateGameById(oldData, game.id, game.gameLiked, false);
+          // queryClient.invalidateQueries(['Games']);
         });
-        queryClient.invalidateQueries(['Games']);
         setOpen(false);
       },
     });
-    setSelectedGame({ ...game, gameAdded: false });
+    // setSelectedGame({ ...game, gameAdded: false });
   };
 
   const handleChoicesChange = <Type extends ChoicesType['type']>(
