@@ -1,0 +1,9 @@
+@use '../../../../styles/mixin.scss' as mixin;
+
+.sideSectionContainer {
+  font-family: 'Josefin Sans', sans-serif;
+
+  @include mixin.loginTablet {
+    display: none;
+  }
+}
