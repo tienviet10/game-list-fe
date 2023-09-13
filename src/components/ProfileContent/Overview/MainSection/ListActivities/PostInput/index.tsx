@@ -3,6 +3,7 @@ import { Button } from 'antd';
 
 import { CustomButton } from '@components/CustomButton';
 import styles from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
+import { usePosts } from '@services/post/usePosts';
 import useNotification from '@/hooks/useNotification';
 
 type PostInputProps = {
