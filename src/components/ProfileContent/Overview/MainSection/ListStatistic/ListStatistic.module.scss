@@ -1,0 +1,21 @@
+@use '../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../styles/colors.scss' as variables;
+
+.statisticContainer {
+  background-color: variables.$color-foreground;
+  margin-left: auto;
+  border-radius: 5px;
+  padding-top: 10px;
+  margin-bottom: 25px;
+  div {
+    div {
+      :global(div.ant-statistic-title) {
+        font-size: 14px;
+        color: variables.$color-text;
+        @include mixin.phoneSmall {
+          font-size: 8px;
+        }
+      }
+    }
+  }
+}

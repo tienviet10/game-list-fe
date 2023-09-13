@@ -1,0 +1,46 @@
+@use '../../../../../../styles/colors.scss' as variables;
+
+.postInputContainer {
+  font-family: 'Josefin Sans', sans-serif;
+
+  margin-bottom: 20px;
+
+  &:focus-within {
+    & > .postConfirmContainer {
+      display: flex;
+    }
+  }
+  & > .postTextarea {
+    font-family: 'Josefin Sans', sans-serif;
+    border-style: none;
+    min-height: 36px;
+    height: 36px;
+    font-size: 0.7rem;
+    padding: 8px 15px;
+    resize: none;
+    background: variables.$color-foreground;
+    border: 0;
+    color: variables.$color-text;
+    outline: 0;
+    transition: 0.2s;
+    display: block;
+    width: 94%;
+    margin: 0px auto 10px auto;
+    line-height: 1.5;
+    &:focus {
+      box-shadow: 0 0 0 2px variables.$color-blue;
+      border-radius: 4px;
+    }
+  }
+
+  & > .postConfirmContainer {
+    display: none;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 60px;
+
+    & > button {
+      margin: 0px 10px;
+    }
+  }
+}
