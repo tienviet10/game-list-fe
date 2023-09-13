@@ -1,0 +1,188 @@
+@use '../../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../../styles/colors.scss' as variables;
+
+.activitiesUpdatesContainer {
+  font-family: 'Josefin Sans', sans-serif;
+
+  @include mixin.desktopUltroLarge {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .postActivity {
+    @include mixin.desktopUltroLarge {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+
+  .activity {
+    margin-bottom: 20px;
+    min-height: 0px;
+
+    .activityContent {
+      background: variables.$color-foreground;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      .activityInfo {
+        display: grid;
+        grid-template-columns: 60px auto;
+        height: 100%;
+        min-height: 70px;
+        & > a {
+          text-decoration: none;
+          transition: 0.15s;
+          outline: 0;
+          background-position: 50%;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        .activityInfoText {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          line-height: 1.4;
+          min-height: 80px;
+          font-size: 14px;
+          padding:
+            5px,
+            -1px;
+          padding-right: 100px;
+          color: variables.$color-text;
+          div {
+            padding: 0 16px;
+            a {
+              text-decoration: none;
+              transition: 0.15s;
+              outline: 0;
+              color: variables.$color-blue;
+              font-weight: 600;
+              &:hover {
+                color: variables.$color-blue-dim;
+              }
+            }
+          }
+          span {
+            margin-left: 8px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .time {
+        color: variables.$color-text-lighter;
+        font-size: 12px;
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        font-weight: 800;
+      }
+      .actions {
+        font-size: 14px;
+        bottom: 12px;
+        color: variables.$color-blue-dim;
+        position: absolute;
+        right: 12px;
+
+        .liked {
+          color: variables.$color-red;
+
+          &:hover {
+            transform: scale(1.07);
+            color: variables.$color-peach;
+          }
+        }
+        .notLiked {
+          color: variables.$color-blue-dim;
+          &:hover {
+            transform: scale(1.07);
+            color: variables.$color-peach;
+          }
+        }
+        .likeCount {
+          color: variables.$color-red;
+          margin-right: 10px;
+          font-size: 12px;
+        }
+        .zeroCount {
+          opacity: 0;
+        }
+
+        > div {
+          cursor: pointer;
+          display: inline-block;
+          padding-left: 5px;
+          transition: 0.2s;
+          margin-right: 7px;
+        }
+      }
+    }
+
+    .replyContainer {
+      .activityReply {
+        margin: 20px;
+        .replyList {
+          background: variables.$color-foreground;
+          border-radius: 3px;
+          font-size: 14px;
+          margin-bottom: 15px;
+          padding: 14px;
+          padding-bottom: 4px;
+          position: relative;
+
+          .replyAvatar {
+            display: flex;
+            align-items: center;
+            & > a {
+              display: inline-block;
+              height: 40px;
+              line-height: 40px;
+              margin-left: 12px;
+              vertical-align: top;
+              color: variables.$color-blue;
+              text-decoration: none;
+              transition: 0.15s;
+              outline: 0;
+            }
+            .replyActions {
+              color: variables.$color-text-lighter;
+              font-size: 12px;
+              font-weight: 700;
+              position: absolute;
+              right: 12px;
+              top: 12px;
+              .time {
+                display: inline-block;
+              }
+              .replyRemove {
+                cursor: pointer;
+                padding-left: 5px;
+                margin-right: 10px;
+                color: variables.$color-blue-dim;
+                display: none;
+                transition: display 0.2s;
+              }
+            }
+          }
+          .replyBody {
+            & > div {
+              color: variables.$color-text;
+              line-height: 1.4;
+              margin-bottom: 14px;
+              margin-top: 14px;
+              max-height: 560px;
+              overflow: hidden;
+              overflow-wrap: break-word;
+              word-break: break-word;
+            }
+          }
+          &:hover .replyAvatar > .replyActions > .replyRemoveVisible {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}

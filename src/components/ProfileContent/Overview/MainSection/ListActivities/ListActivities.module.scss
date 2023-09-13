@@ -1,0 +1,27 @@
+@use '../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../styles/colors.scss' as variables;
+
+.listActivitiesContainer {
+  font-family: 'Josefin Sans', sans-serif;
+
+  .title {
+    margin-bottom: 10px;
+    padding-left: 12px;
+    color: variables.$color-text;
+
+    & > :global(.ant-dropdown-trigger) {
+      float: right;
+      color: variables.$color-text-lighter;
+    }
+  }
+}
+
+:global(.dropdownFilter) {
+  & > ul {
+    & > li {
+      & > span {
+        color: variables.$color-text;
+      }
+    }
+  }
+}
