@@ -8,6 +8,8 @@ import type {
   QueryObserverResult,
   RefetchOptions,
 } from '@tanstack/react-query';
+import styles from '@components/ProfileContent/Overview/MainSection/MainSection.module.scss';
+import ListStatistic from '@components/ProfileContent/Overview/MainSection/ListStatistic';
 
 type UserGamesType = {
   userGamesByStatus: UserGamesByStatus;
@@ -26,7 +28,20 @@ function MainSection({
     QueryObserverResult<CustomAxiosResponse<UserGamesType>, ErrorResponse>
   >;
 }) {
-  return <div>MainSection</div>;
+  if (userDataIsLoading) return <div>Loading...</div>;
+  return (
+    <div className={styles.mainSection}>
+      <ListStatistic userGames={userGames} />
+      {/* <ListActivities
+        fetchLimitation={5}
+        socials={socials}
+        loading={loadingSocials}
+        refetch={refetch}
+        fetchMore={fetchMore}
+        type="private"
+      /> */}
+    </div>
+  );
 }
 
 export default MainSection;
