@@ -9,6 +9,7 @@ import type {
   RefetchOptions,
 } from '@tanstack/react-query';
 import ListCards from '@components/ProfileContent/Overview/SideSection/ListCards';
+import styles from '@components/ProfileContent/Overview/Overview.module.scss';
 
 type UserGamesType = {
   userGamesByStatus: UserGamesByStatus;
@@ -56,7 +57,12 @@ function SideSection({
     return res;
   };
 
-  return <div>SideSection</div>;
+  return (
+    <div className={styles.sideSectionContainer}>
+      {userDataIsLoading && <div>Loading...</div>}
+      {userGames && !userDataIsLoading && gamesExtractor(userGames)}
+    </div>
+  );
 }
 
 export default SideSection;

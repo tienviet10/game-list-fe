@@ -1,0 +1,49 @@
+@use '../../../../../styles/mixin.scss' as mixin;
+@use '../../../../../styles/colors.scss' as variables;
+.listContainer {
+  margin-top: 30px;
+  h2 {
+    margin-bottom: 10px;
+    padding-left: 12px;
+    color: variables.$color-text;
+    align-items: flex-end;
+    display: flex;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  .listCards {
+    display: block;
+    margin-bottom: 25px;
+    padding: 20px;
+    padding-bottom: 0;
+    padding-right: 0;
+    background-color: variables.$color-foreground;
+    border-radius: 4px;
+    @include mixin.desktopLarge {
+      padding: 17px;
+      padding-bottom: 4px;
+      padding-right: 0;
+    }
+    .listCard {
+      margin-bottom: 20px;
+      margin-right: 21px;
+      border-radius: 4px;
+      @include mixin.desktopLarge {
+        margin-bottom: 12px;
+        margin-right: 17px;
+      }
+      img {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        display: inline-block;
+        height: 115px;
+        position: relative;
+        width: 85px;
+      }
+    }
+  }
+}

@@ -17,19 +17,16 @@ function Overview() {
 
   return (
     <div className={styles.overview}>
-      <div>
-        Overview
-        <SideSection
-          userGames={userGames?.data.data.userGamesByStatus}
-          userDataIsLoading={userDataIsLoading}
-          getUserGames={getUserGames}
-        />
-        <MainSection
-          userGames={userGames?.data.data.userGamesByStatus}
-          userDataIsLoading={userDataIsLoading}
-          getUserGames={getUserGames}
-        />
-      </div>
+      <SideSection
+        userGames={userGames?.data.data.userGamesByStatus}
+        userDataIsLoading={userDataIsLoading}
+        getUserGames={getUserGames}
+      />
+      <MainSection
+        userGames={userGames?.data.data.userGamesByStatus}
+        userDataIsLoading={userDataIsLoading}
+        getUserGames={getUserGames}
+      />
     </div>
   );
 }
