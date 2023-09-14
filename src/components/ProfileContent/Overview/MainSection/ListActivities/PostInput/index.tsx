@@ -1,7 +1,6 @@
 import { useEffect, useRef, memo } from 'react';
-import { Button } from 'antd';
 
-import { CustomButton } from '@components/CustomButton';
+import CustomButton from '@components/CustomButton';
 import styles from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
 import { usePosts } from '@services/post/usePosts';
 import useNotification from '@/hooks/useNotification';
@@ -24,6 +23,8 @@ function PostInput({
   commentId,
 }: PostInputProps) {
   const postRef = useRef<HTMLTextAreaElement>(null);
+
+  const { createPostMutation } = usePosts();
 
   const { success, contextHolder, warning } = useNotification();
 
@@ -49,46 +50,52 @@ function PostInput({
         }}
       />
       <div className={styles.postConfirmContainer}>
-        <Button
-          onClick={() => {
+        <CustomButton
+          text="Cancel"
+          buttonType="default"
+          textType="secondary"
+          onPress={() => {
             if (setComment) {
               setComment('');
             } else if (setPost) {
               setPost('');
             }
           }}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="primary"
-          onClick={async () => {
-            // if (setPost && createPost && post) {
-            //   const response = await createPost(post);
-            //   if (response?.post && response?.errors?.length === 0) {
-            //     success(`You have posted successfully.`);
-            //     setPost('');
-            //   } else {
-            //     warning(`Can not post. ${response.errors}!`);
-            //   }
-            // } else if (setComment && comment && commentId && commentType) {
-            //   const response = await addComment(
-            //     commentId,
-            //     commentType,
-            //     comment
-            //   );
-            //   if (response?.comment && response?.errors?.length === 0) {
-            //     success(`Your comment about has been posted successfully.`);
-            //   } else {
-            //     warning(`Can not post comment. ${response.errors}!`);
-            //   }
-            //   setComment('');
-            // }
-            setPost ? setPost('') : setComment('');
+        />
+        <CustomButton
+          buttonType="primary"
+          text={setPost ? 'Post' : 'Comment'}
+          onPress={async () => {
+            if (setPost && createPostMutation && post) {
+              createPostMutation(
+                { text: post },
+                {
+                  onSuccess: () => {
+                    success(`You have posted successfully.`);
+                    setPost('');
+                  },
+                  onError: (error) => {
+                    warning(`Can not post. ${error.message}!`);
+                  },
+                }
+              );
+            } else if (setComment && comment && commentId && commentType) {
+              // const response = await addComment(
+              //   commentId,
+              //   commentType,
+              //   comment
+              // );
+              // if (response?.comment && response?.errors?.length === 0) {
+              //   success(`Your comment about has been posted successfully.`);
+              // } else {
+              //   warning(`Can not post comment. ${response.errors}!`);
+              // }
+              setComment('');
+            } else if (setPost && !post) {
+              warning(`Please write something to post.`);
+            }
           }}
-        >
-          {setPost ? 'Post' : 'Comment'}
-        </Button>
+        />
       </div>
       {contextHolder}
     </div>
