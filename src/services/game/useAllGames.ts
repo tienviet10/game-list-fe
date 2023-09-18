@@ -12,8 +12,8 @@ type GamesResponse = {
   games: Game[];
 };
 
-type GamesResponseWithOffset = CustomAxiosResponse<GamesResponse> & {
-  offsetPage: number;
+type GamesResponseWithLastEntry = CustomAxiosResponse<GamesResponse> & {
+  lastEntry: Game | undefined;
 };
 
 type BaseGetGamesHook =
@@ -25,11 +25,11 @@ type BaseGetGamesHook =
   | {
       status: 'success';
       error: null;
-      data: InfiniteData<GamesResponseWithOffset>;
+      data: InfiniteData<GamesResponseWithLastEntry>;
       fetchNextPage: (
         options?: FetchNextPageOptions | undefined
       ) => Promise<
-        InfiniteQueryObserverResult<GamesResponseWithOffset, ErrorResponse>
+        InfiniteQueryObserverResult<GamesResponseWithLastEntry, ErrorResponse>
       >;
     }
   | {
@@ -44,7 +44,7 @@ type GetGamesHookResult = BaseGetGamesHook & {
   isFetchingNextPage: boolean;
 };
 
-function lastEntry(arr: unknown[]) {
+function lastElement(arr: Game[]) {
   if (!arr || !Array.isArray(arr) || arr.length === 0) return undefined;
   return arr[arr.length - 1];
 }
@@ -64,7 +64,7 @@ export default function useAllGames(
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-  } = useInfiniteQuery<GamesResponseWithOffset, ErrorResponse>({
+  } = useInfiniteQuery<GamesResponseWithLastEntry, ErrorResponse>({
     queryKey: [
       'Games',
       genres.included,
@@ -85,25 +85,17 @@ export default function useAllGames(
     // then were at the end of the list. The problem with this approach is that we can't change the fetch limit once it's set. Otherwise we might
     // think that were at the end of the list when were not.
     // TODO: --- We would need to store the last fetch limit as well
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       if (lastPage && lastPage.data.data.games.length === 0) {
         return undefined;
       }
 
-      console.log('last page: ', lastPage);
-      console.log('allPages: ', allPages);
-
-      // const totalPages = allPages.length;
-      // const actualPage = lastPage.offsetPage / limitParam;
-      // const nextPage = actualPage < totalPages ? actualPage + 1 : undefined;
-      // const nextPage = actualPage < totalPages ? actualPage + 1 : undefined;
       const { lastEntry } = lastPage;
       return lastEntry || undefined;
     },
-    queryFn: async ({ pageParam }) => {
-      // pageParam is null for the first fetch
-      const offset = pageParam * limitParam;
 
+    // pageParam is null for the first fetch (initial load), and will eventually be undefined when it has to fetch the next page.
+    queryFn: async ({ pageParam }) => {
       const result = await client.post('/games', {
         genres: genres.included,
         tags: tags.included,
@@ -129,9 +121,9 @@ export default function useAllGames(
 
       return {
         ...result,
-        lastEntry: lastEntry(result.data.data.games),
-        fetchAmount: 1,
-        offsetPage: offset,
+        lastEntry: lastElement(result.data.data.games),
+        fetchAmount: 1, // TODO: Track fetch amount?
+        offsetPage: 1,
       };
     },
     refetchOnReconnect: false,
