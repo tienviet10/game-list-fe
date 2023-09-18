@@ -44,6 +44,11 @@ type GetGamesHookResult = BaseGetGamesHook & {
   isFetchingNextPage: boolean;
 };
 
+function lastEntry(arr: unknown[]) {
+  if (!arr || !Array.isArray(arr) || arr.length === 0) return undefined;
+  return arr[arr.length - 1];
+}
+
 export default function useAllGames(
   limitParam: number = 20
 ): GetGamesHookResult {
@@ -73,17 +78,30 @@ export default function useAllGames(
       sortBy,
       limitParam,
     ],
+
+    // Since we aren't using offset based pagination, there isn't any way to tell if were on the last page or not. Thus we have to fetch one more time and
+    // see if the result we get back doesn't contain any games. If it doesn't, we know thats the end.
+    // One way to check if were at the end of the list is to check if the newly returned page of pages is equal to the fetch amount, if it's not,
+    // then were at the end of the list. The problem with this approach is that we can't change the fetch limit once it's set. Otherwise we might
+    // think that were at the end of the list when were not.
+    // TODO: --- We would need to store the last fetch limit as well
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage && lastPage.data.data.games.length === 0) {
         return undefined;
       }
 
-      const totalPages = allPages.length;
-      const actualPage = lastPage.offsetPage / limitParam;
-      const nextPage = actualPage < totalPages ? actualPage + 1 : undefined;
-      return nextPage;
+      console.log('last page: ', lastPage);
+      console.log('allPages: ', allPages);
+
+      // const totalPages = allPages.length;
+      // const actualPage = lastPage.offsetPage / limitParam;
+      // const nextPage = actualPage < totalPages ? actualPage + 1 : undefined;
+      // const nextPage = actualPage < totalPages ? actualPage + 1 : undefined;
+      const { lastEntry } = lastPage;
+      return lastEntry || undefined;
     },
-    queryFn: async ({ pageParam = 0 }) => {
+    queryFn: async ({ pageParam }) => {
+      // pageParam is null for the first fetch
       const offset = pageParam * limitParam;
 
       const result = await client.post('/games', {
@@ -97,11 +115,22 @@ export default function useAllGames(
         sortBy,
         search,
         limit: limitParam,
-        offset,
+        gameQueryPaginationOptions: !pageParam
+          ? undefined
+          : {
+              lastId: pageParam.id,
+              lastName: pageParam.name,
+              lastReleaseDateEpoch:
+                new Date(pageParam.releaseDate).getTime() / 1000,
+              lastAverageScore: pageParam.avgScore,
+              lastTotalRating: pageParam.totalRating,
+            },
       });
 
       return {
         ...result,
+        lastEntry: lastEntry(result.data.data.games),
+        fetchAmount: 1,
         offsetPage: offset,
       };
     },
