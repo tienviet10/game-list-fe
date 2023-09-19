@@ -119,11 +119,10 @@ export default function useAllGames(
             },
       });
 
+      // TODO: Track fetch amount?
       return {
         ...result,
         lastEntry: lastElement(result.data.data.games),
-        fetchAmount: 1, // TODO: Track fetch amount?
-        offsetPage: 1,
       };
     },
     refetchOnReconnect: false,
