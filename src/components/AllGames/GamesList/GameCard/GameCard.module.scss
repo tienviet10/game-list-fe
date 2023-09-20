@@ -53,6 +53,11 @@
   }
 }
 
+.loadingCardRoot {
+  height: 100%;
+  display: flex !important;
+}
+
 :global(span.anticon-smile),
 :global(span.anticon-frown),
 :global(span.anticon-meh) {
