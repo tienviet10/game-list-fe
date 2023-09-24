@@ -1,0 +1,34 @@
+@use '../../../../../../../../styles/colors.scss' as variables;
+@use '../../../../../../../../styles/mixin.scss' as mixin;
+
+.postActivityContainer {
+  padding: 20px;
+  font-size: 14px;
+  color: variables.$color-text;
+  .postActivityHeader {
+    display: flex;
+    align-items: center;
+    & > a {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 12px;
+      vertical-align: top;
+      color: variables.$color-blue;
+      text-decoration: none;
+      transition: 0.15s;
+      outline: 0;
+    }
+  }
+  .postActivityBody {
+    line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    & > div {
+      margin-bottom: 14px;
+      margin-top: 14px;
+      max-height: 560px;
+      overflow: hidden;
+    }
+  }
+}
