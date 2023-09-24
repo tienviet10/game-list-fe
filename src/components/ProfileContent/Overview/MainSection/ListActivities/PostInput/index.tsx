@@ -9,7 +9,7 @@ type PostInputProps = {
   comment?: string;
   setComment?: React.Dispatch<React.SetStateAction<string>>;
   commentType?: string;
-  commentId?: string;
+  commentId?: number;
   setPost?: React.Dispatch<React.SetStateAction<string>>;
   post?: string;
 };

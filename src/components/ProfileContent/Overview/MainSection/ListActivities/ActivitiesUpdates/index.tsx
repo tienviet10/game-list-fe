@@ -33,13 +33,13 @@ export default function ActivitiesUpdates({
 }) {
   const userState = useAppSelector((state) => state.user.user);
 
-  const { id: tempId } = userState;
-  const currentUserId = parseInt(tempId, 10);
+  const { username } = userState;
+
   const memoizedActivities = useMemo(() => {
     return [...socials].map((activity) => {
       const { daysElapsed, hoursElapsed } = getTimeElapsed(activity.createdAt);
       const isCurrentLiked = activity.likes.some(
-        (like) => like.user.id === currentUserId
+        (like) => like.user.username === username
       );
       return (
         <ActivityCard
@@ -48,13 +48,13 @@ export default function ActivitiesUpdates({
           activity={activity}
           daysElapsed={daysElapsed}
           hoursElapsed={hoursElapsed}
-          currentUserId={currentUserId}
+          username={username}
           // addLike={addLike}
           // removeLike={removeLike}
         />
       );
     });
-  }, [socials, currentUserId]);
+  }, [socials, username]);
 
   return (
     <div className={styles.activitiesUpdatesContainer}>

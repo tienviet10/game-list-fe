@@ -5,10 +5,10 @@ import styles from '@/components/ProfileContent/Overview/MainSection/ListActivit
 
 export default function PostActivity({
   post,
-  currentUserId,
+  username,
 }: {
   post: PostsDTOResponse;
-  currentUserId: number;
+  username: string;
 }) {
   // const { handleAddFollow, contextHolder: handleFollowContextHolder } =
   //   useAddRemoveFollowCustomHook();
@@ -20,12 +20,12 @@ export default function PostActivity({
           src={post.user.userPicture}
           size={50}
           onClick={async () => {
-            if (post.user.id && post.user.id !== currentUserId) {
+            if (post.user.username && post.user.username !== username) {
               // await handleAddFollow(post);
               console.log('Add follow');
             }
           }}
-          style={{ cursor: `${post.user.id !== currentUserId && 'pointer'}` }}
+          style={{ cursor: `${post.user.username !== username && 'pointer'}` }}
         />
         {post.user.username && (
           <a

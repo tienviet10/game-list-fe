@@ -5,7 +5,7 @@ import { DownOutlined } from '@ant-design/icons';
 
 import usePostsAndStatusUpdates from '@services/InteractiveEntity/usePostsAndStatusUpdates';
 import CustomSelect from '@components/CustomSelect';
-import PostInput from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput';
+import MemoizedPostInput from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput';
 import ActivitiesUpdates from '@components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import styles from '@components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
@@ -79,7 +79,7 @@ export default function ListActivities() {
           </Space>
         </Dropdown>
       </h2>
-      <PostInput post={post} setPost={setPost} />
+      <MemoizedPostInput post={post} setPost={setPost} />
       <ActivitiesUpdates
         // fetchLimitation={fetchLimitation}
         socials={socialDataArray}

@@ -6,16 +6,16 @@ import styles from '@/components/ProfileContent/Overview/MainSection/ListActivit
 
 export default function StatusUpdateActivity({
   statusUpdate,
-  currentUserId,
+  username,
 }: {
   statusUpdate: StatusUpdatesDTOResponse;
-  currentUserId: number;
+  username: string;
 }) {
   // const { handleAddFollow, contextHolder: handleFollowContextHolder } =
   //   useAddRemoveFollowCustomHook();
 
   const name =
-    statusUpdate.userGame.user.id === currentUserId
+    statusUpdate.userGame.user.username === username
       ? 'You'
       : statusUpdate.userGame.user.username;
 
@@ -63,7 +63,7 @@ export default function StatusUpdateActivity({
         <Avatar
           style={{
             cursor: `${
-              statusUpdate.userGame.user.id !== currentUserId
+              statusUpdate.userGame.user.username !== username
                 ? 'pointer'
                 : 'default'
             }`,
@@ -72,8 +72,8 @@ export default function StatusUpdateActivity({
           icon={<UserOutlined />}
           onClick={async () => {
             if (
-              statusUpdate.userGame.user.id &&
-              statusUpdate.userGame.user.id !== currentUserId
+              statusUpdate.userGame.user.username &&
+              statusUpdate.userGame.user.username !== username
             ) {
               // await handleAddFollow(statusUpdate);
               console.log('add follow');

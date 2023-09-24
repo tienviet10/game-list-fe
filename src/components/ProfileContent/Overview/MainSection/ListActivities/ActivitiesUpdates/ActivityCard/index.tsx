@@ -8,13 +8,14 @@ import {
   UserOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { Avatar, Button, Popover } from 'antd';
+import { Avatar, Popover } from 'antd';
 import type {
   LikeDTO,
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
 } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
 import getTimeElapsed from '@utils/getTimeElapsed';
+import CustomButton from '@components/CustomButton';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
@@ -25,13 +26,13 @@ export default function ActivityCard({
   activity,
   daysElapsed,
   hoursElapsed,
-  currentUserId,
+  username,
 }: {
   isCurrentLiked: boolean;
   activity: PostsDTOResponse | StatusUpdatesDTOResponse;
   daysElapsed: number;
   hoursElapsed: number;
-  currentUserId: number;
+  username: string;
 }) {
   const likedAvatar = (likedUsers: LikeDTO[]) => {
     return (
@@ -64,14 +65,11 @@ export default function ActivityCard({
     >
       <div className={styles.activityContent}>
         {'userGame' in activity && (
-          <StatusUpdateActivity
-            statusUpdate={activity}
-            currentUserId={currentUserId}
-          />
+          <StatusUpdateActivity statusUpdate={activity} username={username} />
         )}
 
         {'text' in activity && (
-          <PostActivity post={activity} currentUserId={currentUserId} />
+          <PostActivity post={activity} username={username} />
         )}
         <div className={styles.time}>
           {daysElapsed > 0 ? `${daysElapsed} days` : `${hoursElapsed} hours`}{' '}
@@ -90,9 +88,9 @@ export default function ActivityCard({
               paddingTop: '0px',
             }}
           >
-            <Button
-              type="ghost"
-              onClick={async () => {
+            <CustomButton
+              buttonType="link"
+              onPress={async () => {
                 if (isCurrentLiked) {
                   // await removeLike(activity.id, activity.__typename as string);
                   console.log('remove like');
@@ -162,8 +160,8 @@ export default function ActivityCard({
                     size={50}
                     onClick={async () => {
                       if (
-                        comment.user.id &&
-                        comment.user.id !== currentUserId
+                        comment.user.username &&
+                        comment.user.username !== username
                       ) {
                         // await handleAddFollow(comment);
                         console.log('add follow');
@@ -171,7 +169,7 @@ export default function ActivityCard({
                     }}
                     style={{
                       cursor: `${
-                        comment.user.id !== currentUserId && 'pointer'
+                        comment.user.username !== username && 'pointer'
                       }`,
                     }}
                   />
@@ -187,13 +185,13 @@ export default function ActivityCard({
                   <div className={styles.replyActions}>
                     <EditOutlined
                       className={`${styles.replyRemove} ${
-                        comment.user.id === currentUserId &&
+                        comment.user.username === username &&
                         styles.replyRemoveVisible
                       }`}
                       onClick={async () => {
                         if (
                           comment.user.id &&
-                          comment.user.id === currentUserId
+                          comment.user.username === username
                         ) {
                           // await handleEditComment(comment);
                           console.log('edit your comment');
@@ -202,13 +200,13 @@ export default function ActivityCard({
                     />
                     <CloseOutlined
                       className={`${styles.replyRemove} ${
-                        comment.user.id === currentUserId &&
+                        comment.user.username === username &&
                         styles.replyRemoveVisible
                       }`}
                       onClick={async () => {
                         if (
-                          comment.user.id &&
-                          comment.user.id === currentUserId
+                          comment.user.username &&
+                          comment.user.username === username
                         ) {
                           // await handleRemoveComment(comment);
                           console.log('remove your comment');
