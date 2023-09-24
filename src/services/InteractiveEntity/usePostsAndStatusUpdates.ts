@@ -2,7 +2,7 @@ import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
 import { useQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
 
-type UserBasicDTO = {
+export type UserBasicDTO = {
   id: number;
   username: string;
   userPicture: string;
@@ -19,9 +19,10 @@ type GameBasicDTO = {
 type UserGameBasicDTO = {
   id: number;
   game: GameBasicDTO;
+  user: UserBasicDTO;
 };
 
-type LikeDTO = {
+export type LikeDTO = {
   id: number;
   user: UserBasicDTO;
   updatedAt: string;

@@ -57,9 +57,21 @@ export default function ActivitiesUpdates({
   }, [socials, currentUserId]);
 
   return (
-    <div>
-      <h1>ActivitiesUpdates</h1>
-      <ActivityCard />
+    <div className={styles.activitiesUpdatesContainer}>
+      {socials.length > 0 && memoizedActivities}
+      <InView
+        style={{
+          height: '100px',
+        }}
+        as="div"
+        onChange={async (inView) => {
+          // const socialsLength = socials.length;
+          if (inView) {
+            // await onFetchMore(socialsLength);
+            console.log('the end');
+          }
+        }}
+      />
     </div>
   );
 }
