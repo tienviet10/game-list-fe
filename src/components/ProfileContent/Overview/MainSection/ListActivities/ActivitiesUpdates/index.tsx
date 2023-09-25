@@ -4,6 +4,8 @@ import {
   RefetchOptions,
   RefetchQueryFilters,
   QueryObserverResult,
+  FetchNextPageOptions,
+  InfiniteQueryObserverResult,
 } from '@tanstack/react-query';
 
 import getTimeElapsed from '@utils/getTimeElapsed';
@@ -20,7 +22,11 @@ import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListA
 export default function ActivitiesUpdates({
   socials,
   getPostsAndStatusUpdates,
+  fetchMore,
 }: {
+  fetchMore: (
+    options?: FetchNextPageOptions | undefined
+  ) => Promise<InfiniteQueryObserverResult<any, unknown>>;
   socials: (PostsDTOResponse | StatusUpdatesDTOResponse)[];
   getPostsAndStatusUpdates: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined

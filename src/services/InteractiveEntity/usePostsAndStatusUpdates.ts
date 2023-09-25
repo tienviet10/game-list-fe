@@ -1,6 +1,14 @@
 import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
-import { useQuery } from '@tanstack/react-query';
+import {
+  useQuery,
+  useQueryClient,
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import client from '@utils/authApi';
+import { AxiosResponse } from 'axios';
 
 export type UserBasicDTO = {
   id: number;
@@ -57,47 +65,122 @@ export type StatusUpdatesDTOResponse = {
   comments: CommentDTO[];
 };
 
-export type PostsAndStatusUpdatesResponse = {
-  postsAndStatusUpdates: {
-    posts: PostsDTOResponse[];
-    statusUpdates: StatusUpdatesDTOResponse[];
-  };
+export type PostsAndStatusUpdatesData = {
+  posts: PostsDTOResponse[];
+  statusUpdates: StatusUpdatesDTOResponse[];
+  lastPostOrStatusUpdateId: number;
 };
 
+type PostsAndStatusUpdatesWithLastIdResponse = {
+  pageParams: number[];
+  pages: PostsAndStatusUpdatesData[];
+};
+
+// export type PostsAndStatusUpdatesResponse = {
+//   pageParams: number[];
+//   pages: CustomAxiosResponse<PostsAndStatusUpdatesData>[];
+// };
+
 const usePostsAndStatusUpdates = () => {
-  const getSocial = async (): Promise<
-    CustomAxiosResponse<PostsAndStatusUpdatesResponse>
-  > => {
-    return client.get(`/api/v1/interactive-entities/user-social`);
+  const queryClient = useQueryClient();
+  const limitParam = 20;
+  const getSocial = async ({ lastCursor = 0 }) => {
+    if (!lastCursor) {
+      const res = await client.get(
+        `/api/v1/interactive-entities/user-social/first-page?limit=${limitParam}`
+      );
+
+      console.log('res', res.data);
+
+      return res.data;
+    }
+    const res = await client.get(
+      `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`
+    );
+
+    return res.data;
   };
+
+  // const {
+  //   data: postsAndStatusUpdates,
+  //   isInitialLoading: postsAndStatusUpdatesIsLoading,
+  //   refetch: getPostsAndStatusUpdates,
+  // } = useQuery<
+  //   CustomAxiosResponse<PostsAndStatusUpdatesResponse>,
+  //   ErrorResponse
+  // >({
+  //   queryKey: ['postsAndStatusUpdates'],
+  //   queryFn: getSocial,
+  // });
 
   const {
+    status,
     data: postsAndStatusUpdates,
-    isInitialLoading: postsAndStatusUpdatesIsLoading,
+    error,
+    isLoading: postsAndStatusUpdatesIsLoading,
     refetch: getPostsAndStatusUpdates,
-  } = useQuery<
-    CustomAxiosResponse<PostsAndStatusUpdatesResponse>,
-    ErrorResponse
-  >({
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ['postsAndStatusUpdates'],
-    queryFn: getSocial,
+    queryFn: ({ pageParam = 0 }) => getSocial({ lastCursor: pageParam }),
+    getNextPageParam: (lastPage, pages) => {
+      console.log('lastPage in getNextPageParam', lastPage);
+      console.log('pages in getNextPageParam', pages);
+
+      // if (
+      //   lastPage &&
+      //   lastPage.data.data.pages[lastPage.data.data.pages.length - 1].data.data
+      //     .posts.length === 0
+      // ) {
+      //   return undefined;
+      // }
+      // const { lastPostOrStatusUpdateId } =
+      //   lastPage.data.data.pages[pages.length - 1].data.data;
+      // return lastPostOrStatusUpdateId || undefined;
+      return (
+        lastPage?.data?.postsAndStatusUpdates?.lastPostOrStatusUpdateId ||
+        undefined
+      );
+    },
   });
 
-  const socialData = postsAndStatusUpdates?.data.data.postsAndStatusUpdates;
+  console.log('postsAndStatusUpdates', postsAndStatusUpdates);
 
-  const { posts, statusUpdates } = socialData || {
-    posts: [],
-    statusUpdates: [],
-  };
+  let socialDataArray: {
+    posts: PostsDTOResponse[];
+    statusUpdates: StatusUpdatesDTOResponse[];
+  } = { posts: [], statusUpdates: [] };
 
-  const socialDataArray = [...posts, ...statusUpdates].sort((a, b) => {
+  socialDataArray = (postsAndStatusUpdates?.pages || []).reduce(
+    (acc, curr) => {
+      const { posts, statusUpdates } = curr.data.postsAndStatusUpdates;
+      return {
+        posts: [...acc.posts, ...posts],
+        statusUpdates: [...acc.statusUpdates, ...statusUpdates],
+      };
+    },
+    { posts: [], statusUpdates: [] }
+  );
+
+  console.log('socialDataArray', socialDataArray);
+
+  const { posts, statusUpdates } = socialDataArray;
+
+  const socialDataSorted = [...posts, ...statusUpdates].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
+  console.log('socialDataSorted', socialDataSorted);
+
   return {
-    socialDataArray,
+    socialDataSorted,
     postsAndStatusUpdates,
     postsAndStatusUpdatesIsLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     getPostsAndStatusUpdates,
   };
 };

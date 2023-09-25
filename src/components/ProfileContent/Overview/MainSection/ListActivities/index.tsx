@@ -16,9 +16,12 @@ export default function ListActivities() {
   const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
 
   const {
-    socialDataArray,
+    socialDataSorted,
     postsAndStatusUpdates,
     postsAndStatusUpdatesIsLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
     getPostsAndStatusUpdates,
   } = usePostsAndStatusUpdates();
 
@@ -37,7 +40,7 @@ export default function ListActivities() {
       key: '0',
     },
     {
-      label: 'List',
+      label: 'Statuses',
       key: '1',
     },
     {
@@ -46,7 +49,7 @@ export default function ListActivities() {
     },
   ];
 
-  if (postsAndStatusUpdatesIsLoading) {
+  if (postsAndStatusUpdatesIsLoading || isFetchingNextPage) {
     return (
       <div className={styles.listActivitiesContainer}>
         <h2 className={styles.title}>Activities</h2>
@@ -62,7 +65,7 @@ export default function ListActivities() {
     );
   }
 
-  console.log('socialDataArray', socialDataArray);
+  console.log('socialDataArray', socialDataSorted);
 
   return (
     <div className={styles.listActivitiesContainer}>
@@ -82,11 +85,21 @@ export default function ListActivities() {
       <MemoizedPostInput post={post} setPost={setPost} />
       <ActivitiesUpdates
         // fetchLimitation={fetchLimitation}
-        socials={socialDataArray}
+        socials={socialDataSorted}
         getPostsAndStatusUpdates={getPostsAndStatusUpdates}
-        // fetchMore={fetchMore}
+        fetchMore={fetchNextPage}
         // type={type}
       />
+      {isFetchingNextPage
+        ? Array.from({ length: 10 }, (_, index) => (
+            <Skeleton
+              avatar
+              active
+              key={index}
+              style={{ margin: '25px auto 25px auto' }}
+            />
+          ))
+        : null}
     </div>
   );
 }
