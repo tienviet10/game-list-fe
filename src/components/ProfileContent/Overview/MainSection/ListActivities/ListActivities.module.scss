@@ -12,6 +12,7 @@
     & > :global(.ant-dropdown-trigger) {
       float: right;
       color: variables.$color-text-lighter;
+      cursor: pointer;
     }
   }
 }

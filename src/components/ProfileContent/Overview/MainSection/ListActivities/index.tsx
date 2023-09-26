@@ -4,7 +4,6 @@ import { Dropdown, Space, Skeleton } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 import usePostsAndStatusUpdates from '@services/InteractiveEntity/usePostsAndStatusUpdates';
-import CustomSelect from '@components/CustomSelect';
 import MemoizedPostInput from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput';
 import ActivitiesUpdates from '@components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
@@ -16,9 +15,11 @@ export default function ListActivities() {
   const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
 
   const {
-    socialDataArray,
-    postsAndStatusUpdates,
+    socialDataSorted,
     postsAndStatusUpdatesIsLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
     getPostsAndStatusUpdates,
   } = usePostsAndStatusUpdates();
 
@@ -37,7 +38,7 @@ export default function ListActivities() {
       key: '0',
     },
     {
-      label: 'List',
+      label: 'Statuses',
       key: '1',
     },
     {
@@ -62,8 +63,6 @@ export default function ListActivities() {
     );
   }
 
-  console.log('socialDataArray', socialDataArray);
-
   return (
     <div className={styles.listActivitiesContainer}>
       <h2 className={styles.title}>
@@ -81,10 +80,10 @@ export default function ListActivities() {
       </h2>
       <MemoizedPostInput post={post} setPost={setPost} />
       <ActivitiesUpdates
-        // fetchLimitation={fetchLimitation}
-        socials={socialDataArray}
-        getPostsAndStatusUpdates={getPostsAndStatusUpdates}
-        // fetchMore={fetchMore}
+        socials={socialDataSorted}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchMore={fetchNextPage}
+        hasNextPage={hasNextPage}
         // type={type}
       />
     </div>
