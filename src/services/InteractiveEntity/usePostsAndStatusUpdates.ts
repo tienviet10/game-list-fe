@@ -1,14 +1,6 @@
-import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
-import {
-  useQuery,
-  useQueryClient,
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  useInfiniteQuery,
-} from '@tanstack/react-query';
+import type { ErrorResponse } from '@constants/types';
+import { useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
-import { AxiosResponse } from 'axios';
 
 export type UserBasicDTO = {
   id: number;
@@ -60,7 +52,6 @@ export type StatusUpdatesDTOResponse = {
   gameStatus: string;
   createdAt: string;
   userGame: UserGameBasicDTO;
-
   likes: LikeDTO[];
   comments: CommentDTO[];
 };
@@ -71,21 +62,24 @@ export type PostsAndStatusUpdatesData = {
   lastPostOrStatusUpdateId: number;
 };
 
-type PostsAndStatusUpdatesWithLastIdResponse = {
+export type PostsAndStatusUpdatesResponse = {
+  data: { postsAndStatusUpdates: PostsAndStatusUpdatesData };
+  message: string;
+  status: string;
+  statusCode: number;
+  timestamp: string;
+};
+
+type PostsAndStatusUpdatesInPages = {
   pageParams: number[];
   pages: PostsAndStatusUpdatesData[];
 };
-
-// export type PostsAndStatusUpdatesResponse = {
-//   pageParams: number[];
-//   pages: CustomAxiosResponse<PostsAndStatusUpdatesData>[];
-// };
 
 const usePostsAndStatusUpdates = () => {
   const queryClient = useQueryClient();
   const limitParam = 20;
   const getSocial = async ({ lastCursor = 0 }) => {
-    if (!lastCursor) {
+    if (lastCursor === 0) {
       const res = await client.get(
         `/api/v1/interactive-entities/user-social/first-page?limit=${limitParam}`
       );
@@ -94,51 +88,34 @@ const usePostsAndStatusUpdates = () => {
 
       return res.data;
     }
-    const res = await client.get(
-      `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`
-    );
+    if (lastCursor) {
+      const res = await client.get(
+        `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`
+      );
 
-    return res.data;
+      return res.data;
+    }
+    return null;
   };
-
-  // const {
-  //   data: postsAndStatusUpdates,
-  //   isInitialLoading: postsAndStatusUpdatesIsLoading,
-  //   refetch: getPostsAndStatusUpdates,
-  // } = useQuery<
-  //   CustomAxiosResponse<PostsAndStatusUpdatesResponse>,
-  //   ErrorResponse
-  // >({
-  //   queryKey: ['postsAndStatusUpdates'],
-  //   queryFn: getSocial,
-  // });
-
   const {
-    status,
     data: postsAndStatusUpdates,
-    error,
     isLoading: postsAndStatusUpdatesIsLoading,
     refetch: getPostsAndStatusUpdates,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery({
+  } = useInfiniteQuery<PostsAndStatusUpdatesResponse, ErrorResponse>({
     queryKey: ['postsAndStatusUpdates'],
     queryFn: ({ pageParam = 0 }) => getSocial({ lastCursor: pageParam }),
     getNextPageParam: (lastPage, pages) => {
-      console.log('lastPage in getNextPageParam', lastPage);
-      console.log('pages in getNextPageParam', pages);
+      const postLength = lastPage?.data?.postsAndStatusUpdates?.posts.length;
+      const statusLength =
+        lastPage?.data?.postsAndStatusUpdates?.statusUpdates.length;
 
-      // if (
-      //   lastPage &&
-      //   lastPage.data.data.pages[lastPage.data.data.pages.length - 1].data.data
-      //     .posts.length === 0
-      // ) {
-      //   return undefined;
-      // }
-      // const { lastPostOrStatusUpdateId } =
-      //   lastPage.data.data.pages[pages.length - 1].data.data;
-      // return lastPostOrStatusUpdateId || undefined;
+      if (postLength + statusLength < limitParam) {
+        return undefined;
+      }
+
       return (
         lastPage?.data?.postsAndStatusUpdates?.lastPostOrStatusUpdateId ||
         undefined
@@ -148,12 +125,10 @@ const usePostsAndStatusUpdates = () => {
 
   console.log('postsAndStatusUpdates', postsAndStatusUpdates);
 
-  let socialDataArray: {
+  const socialData: {
     posts: PostsDTOResponse[];
     statusUpdates: StatusUpdatesDTOResponse[];
-  } = { posts: [], statusUpdates: [] };
-
-  socialDataArray = (postsAndStatusUpdates?.pages || []).reduce(
+  } = (postsAndStatusUpdates?.pages || []).reduce(
     (acc, curr) => {
       const { posts, statusUpdates } = curr.data.postsAndStatusUpdates;
       return {
@@ -161,18 +136,17 @@ const usePostsAndStatusUpdates = () => {
         statusUpdates: [...acc.statusUpdates, ...statusUpdates],
       };
     },
-    { posts: [], statusUpdates: [] }
+    { posts: [], statusUpdates: [] } as {
+      posts: PostsDTOResponse[];
+      statusUpdates: StatusUpdatesDTOResponse[];
+    }
   );
 
-  console.log('socialDataArray', socialDataArray);
-
-  const { posts, statusUpdates } = socialDataArray;
+  const { posts, statusUpdates } = socialData;
 
   const socialDataSorted = [...posts, ...statusUpdates].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
-
-  console.log('socialDataSorted', socialDataSorted);
 
   return {
     socialDataSorted,

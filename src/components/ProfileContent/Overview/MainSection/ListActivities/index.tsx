@@ -4,7 +4,6 @@ import { Dropdown, Space, Skeleton } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 import usePostsAndStatusUpdates from '@services/InteractiveEntity/usePostsAndStatusUpdates';
-import CustomSelect from '@components/CustomSelect';
 import MemoizedPostInput from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput';
 import ActivitiesUpdates from '@components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
@@ -17,7 +16,6 @@ export default function ListActivities() {
 
   const {
     socialDataSorted,
-    postsAndStatusUpdates,
     postsAndStatusUpdatesIsLoading,
     hasNextPage,
     fetchNextPage,
@@ -49,7 +47,7 @@ export default function ListActivities() {
     },
   ];
 
-  if (postsAndStatusUpdatesIsLoading || isFetchingNextPage) {
+  if (postsAndStatusUpdatesIsLoading) {
     return (
       <div className={styles.listActivitiesContainer}>
         <h2 className={styles.title}>Activities</h2>
@@ -64,8 +62,6 @@ export default function ListActivities() {
       </div>
     );
   }
-
-  console.log('socialDataArray', socialDataSorted);
 
   return (
     <div className={styles.listActivitiesContainer}>
@@ -84,22 +80,12 @@ export default function ListActivities() {
       </h2>
       <MemoizedPostInput post={post} setPost={setPost} />
       <ActivitiesUpdates
-        // fetchLimitation={fetchLimitation}
         socials={socialDataSorted}
-        getPostsAndStatusUpdates={getPostsAndStatusUpdates}
+        isFetchingNextPage={isFetchingNextPage}
         fetchMore={fetchNextPage}
+        hasNextPage={hasNextPage}
         // type={type}
       />
-      {isFetchingNextPage
-        ? Array.from({ length: 10 }, (_, index) => (
-            <Skeleton
-              avatar
-              active
-              key={index}
-              style={{ margin: '25px auto 25px auto' }}
-            />
-          ))
-        : null}
     </div>
   );
 }

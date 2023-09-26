@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import MemoizedPostInput from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput';
-import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 
 function CommentInputWrapper({
   commentType,
