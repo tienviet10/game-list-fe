@@ -1,5 +1,5 @@
 import type { ErrorResponse } from '@constants/types';
-import { useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
 
 export type UserBasicDTO = {
@@ -70,21 +70,13 @@ export type PostsAndStatusUpdatesResponse = {
   timestamp: string;
 };
 
-type PostsAndStatusUpdatesInPages = {
-  pageParams: number[];
-  pages: PostsAndStatusUpdatesData[];
-};
-
 const usePostsAndStatusUpdates = () => {
-  const queryClient = useQueryClient();
   const limitParam = 20;
   const getSocial = async ({ lastCursor = 0 }) => {
     if (lastCursor === 0) {
       const res = await client.get(
         `/api/v1/interactive-entities/user-social/first-page?limit=${limitParam}`
       );
-
-      console.log('res', res.data);
 
       return res.data;
     }
@@ -107,7 +99,7 @@ const usePostsAndStatusUpdates = () => {
   } = useInfiniteQuery<PostsAndStatusUpdatesResponse, ErrorResponse>({
     queryKey: ['postsAndStatusUpdates'],
     queryFn: ({ pageParam = 0 }) => getSocial({ lastCursor: pageParam }),
-    getNextPageParam: (lastPage, pages) => {
+    getNextPageParam: (lastPage) => {
       const postLength = lastPage?.data?.postsAndStatusUpdates?.posts.length;
       const statusLength =
         lastPage?.data?.postsAndStatusUpdates?.statusUpdates.length;
@@ -122,8 +114,6 @@ const usePostsAndStatusUpdates = () => {
       );
     },
   });
-
-  console.log('postsAndStatusUpdates', postsAndStatusUpdates);
 
   const socialData: {
     posts: PostsDTOResponse[];

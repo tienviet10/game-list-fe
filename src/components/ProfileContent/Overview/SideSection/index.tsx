@@ -5,10 +5,8 @@ import styles from '@components/ProfileContent/Overview/Overview.module.scss';
 
 function SideSection({
   userGames,
-  userDataIsLoading,
 }: {
   userGames: UserGamesByStatus | undefined;
-  userDataIsLoading: boolean;
 }) {
   const gamesExtractor = (gamesObjData: UserGamesByStatus) => {
     const res: JSX.Element[] = [];
@@ -41,8 +39,7 @@ function SideSection({
 
   return (
     <div className={styles.sideSectionContainer}>
-      {userDataIsLoading && <div>Loading...</div>}
-      {userGames && !userDataIsLoading && gamesExtractor(userGames)}
+      {userGames && gamesExtractor(userGames)}
     </div>
   );
 }

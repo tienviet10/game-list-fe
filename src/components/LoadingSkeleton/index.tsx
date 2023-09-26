@@ -1,7 +1,7 @@
 import type Icon from '@ant-design/icons';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
-import { Avatar, List, Skeleton, Switch } from 'antd';
+import React from 'react';
+import { Avatar, List, Skeleton } from 'antd';
 
 interface IconTextProps {
   icon: typeof Icon;
@@ -27,70 +27,57 @@ function IconText({ icon, text }: IconTextProps) {
   );
 }
 
-function LoadingSkeleton() {
-  const [loading, setLoading] = useState(true);
-
-  const onChange = (checked: boolean) => {
-    setLoading(!checked);
-  };
-
+function LoadingSkeleton({ loading }: { loading: boolean }) {
   return (
-    <>
-      <Switch
-        checked={!loading}
-        onChange={onChange}
-        style={{ marginBottom: 16 }}
-      />
-      <List
-        itemLayout="vertical"
-        size="large"
-        dataSource={listData}
-        renderItem={(item) => (
-          <List.Item
-            key={item.title}
-            actions={
-              !loading
-                ? [
-                    <IconText
-                      icon={StarOutlined}
-                      text="156"
-                      key="list-vertical-star-o"
-                    />,
-                    <IconText
-                      icon={LikeOutlined}
-                      text="156"
-                      key="list-vertical-like-o"
-                    />,
-                    <IconText
-                      icon={MessageOutlined}
-                      text="2"
-                      key="list-vertical-message"
-                    />,
-                  ]
-                : undefined
-            }
-            extra={
-              !loading && (
-                <img
-                  width={272}
-                  alt="logo"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                />
-              )
-            }
-          >
-            <Skeleton loading={loading} active avatar>
-              <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
-                title={<a href={item.href}>{item.title}</a>}
-                description={item.description}
+    <List
+      itemLayout="vertical"
+      size="large"
+      dataSource={listData}
+      renderItem={(item) => (
+        <List.Item
+          key={item.title}
+          actions={
+            !loading
+              ? [
+                  <IconText
+                    icon={StarOutlined}
+                    text="156"
+                    key="list-vertical-star-o"
+                  />,
+                  <IconText
+                    icon={LikeOutlined}
+                    text="156"
+                    key="list-vertical-like-o"
+                  />,
+                  <IconText
+                    icon={MessageOutlined}
+                    text="2"
+                    key="list-vertical-message"
+                  />,
+                ]
+              : undefined
+          }
+          extra={
+            !loading && (
+              <img
+                width={272}
+                alt="logo"
+                src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
               />
-              {item.content}
-            </Skeleton>
-          </List.Item>
-        )}
-      />
-    </>
+            )
+          }
+        >
+          <Skeleton loading={loading} active avatar>
+            <List.Item.Meta
+              avatar={<Avatar src={item.avatar} />}
+              title={<a href={item.href}>{item.title}</a>}
+              description={item.description}
+            />
+            {item.content}
+          </Skeleton>
+        </List.Item>
+      )}
+    />
   );
 }
 

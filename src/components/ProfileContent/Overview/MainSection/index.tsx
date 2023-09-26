@@ -6,12 +6,9 @@ import ListActivities from '@components/ProfileContent/Overview/MainSection/List
 
 function MainSection({
   userGames,
-  userDataIsLoading, // getUserGames,
 }: {
   userGames: UserGamesByStatus | undefined;
-  userDataIsLoading: boolean;
 }) {
-  if (userDataIsLoading) return <div>Loading...</div>;
   return (
     <div className={styles.mainSection}>
       <ListStatistic userGames={userGames} />

@@ -22,20 +22,14 @@ function Overview() {
   if (userDataIsLoading)
     return (
       <div className={styles.overviewLoadingContainer}>
-        <LoadingSkeleton />
+        <LoadingSkeleton loading={userDataIsLoading} />
       </div>
     );
 
   return (
     <div className={styles.overview}>
-      <SideSection
-        userGames={userGames?.data.data.userGamesByStatus}
-        userDataIsLoading={userDataIsLoading}
-      />
-      <MainSection
-        userGames={userGames?.data.data.userGamesByStatus}
-        userDataIsLoading={userDataIsLoading}
-      />
+      <SideSection userGames={userGames?.data.data.userGamesByStatus} />
+      <MainSection userGames={userGames?.data.data.userGamesByStatus} />
     </div>
   );
 }

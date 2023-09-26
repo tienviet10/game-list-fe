@@ -1,7 +1,7 @@
 import { Button, Typography } from 'antd';
 import { ButtonHTMLType, ButtonType } from 'antd/es/button';
 import { BaseType } from 'antd/es/typography/Base';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import styles from './Button.module.scss';
 
 type TextSizeWeight =
@@ -64,6 +64,8 @@ function CustomButton({
     []
   );
 
+  const buttonRef = useRef(null);
+
   const textSizes = useMemo(() => {
     switch (textSize) {
       case 'bookSm':
@@ -114,6 +116,7 @@ function CustomButton({
       className={`${presetStyles[preset].button} ${buttonStyle}`}
       onClick={onPress}
       icon={icon}
+      ref={buttonRef}
     >
       {text ? (
         <Text
