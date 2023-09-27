@@ -1,7 +1,7 @@
 .colGameCardContainer {
   position: relative;
   margin-bottom: 8px;
-  min-height: 200px;
+  min-height: 320px;
 
   animation: showAnimation 0.3s linear;
   @keyframes showAnimation {
@@ -56,6 +56,7 @@
 .loadingCardRoot {
   height: 100%;
   display: flex !important;
+  // padding: '24px 24px 24px 10px';
 }
 
 :global(span.anticon-smile),

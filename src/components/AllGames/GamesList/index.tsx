@@ -1,17 +1,20 @@
 import { useAppSelector } from '@app/hooks';
 import useAllGames from '@services/game/useAllGames';
 import { Content } from 'antd/es/layout/layout';
-import { Card, Row, theme } from 'antd';
-import { useCallback, useState } from 'react';
+import { Card, Grid, Row, theme } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
 import { GameDataType } from '@components/GamesListTable/types';
 import { RequiredGameWithIsAdded } from '@constants/types';
 import ListEditor from '@components/ListEditor';
 import useGetUserGameState from '@/services/usergames/useGetUserGameState';
-import GamesListLoading from './GamesListLoading';
-import MemoedGameCard from './GameCard';
+import GamesListLoading from './LoadingGameCard';
 import styles from '@/components/AllGames/GamesList/GamesList.module.scss';
 import MemoizedList from './List';
 import InView from './InView';
+import MemoedGameCard from './GameCard';
+import LoadingGamesView from './LoadingGameCard/LoadingGamesView';
+
+const { useBreakpoint } = Grid;
 
 // The amount of games to request from the server. This is used for infinite scrolling. When the user scrolls down enough and needs to fetch more games,
 // This value will be the amount of games we fetch.
@@ -20,6 +23,7 @@ const DEFAULT_FETCH_AMOUNT = 20;
 export default function GamesList() {
   const homeSearchState = useAppSelector((state) => state.homeSearch);
   const data = useAllGames(DEFAULT_FETCH_AMOUNT);
+  const screens = useBreakpoint();
 
   // States for modal to edit list
   // const { userGameLoading, fetchUserGame } = useUserGameById();
@@ -32,6 +36,21 @@ export default function GamesList() {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const loadingAmount = useMemo(() => {
+    if (screens.lg) {
+      return 12;
+    }
+    if (screens.md) {
+      return 8;
+    }
+
+    if (screens.sm) {
+      return 6;
+    }
+
+    return 12;
+  }, [screens]);
 
   const memorizedOpenGameListEditor = useCallback(
     async (game: GameDataType) => {
@@ -61,19 +80,32 @@ export default function GamesList() {
     return <div>Error here</div>;
   }
 
+  console.log('screens', screens);
   return (
     <Content aria-label={`view-${homeSearchState.view}`}>
       {homeSearchState.view === 'grid' ? (
-        <Card title="All Games" headStyle={{ color: 'rgb(100, 115,128)' }}>
-          <Row
-            gutter={{
-              xs: 8,
-              sm: 16,
-              md: 24,
-              xl: 32,
-            }}
-          >
-            {data.data.pages.map((page) => {
+        <Row
+          gutter={{
+            xs: 16,
+            sm: 16,
+            md: 24,
+            xl: 32,
+          }}
+        >
+          {/* {data.status === 'loading' && (
+
+              )} */}
+          {/* <GamesListLoading /> */}
+
+          {/* {screens.xs && <LoadingGamesView amount={1} />}
+          {screens.sm && <LoadingGamesView amount={2} />}
+          {screens.md && <LoadingGamesView amount={3} />}
+          {screens.lg && <LoadingGamesView amount={4} />}
+          {screens.xl && <LoadingGamesView amount={5} />}
+          {screens.xxl && <LoadingGamesView amount={6} />} */}
+
+          {data.status === 'success' &&
+            data.data.pages.map((page) => {
               return page.data.data.games.map((game) => {
                 return (
                   <MemoedGameCard
@@ -85,9 +117,11 @@ export default function GamesList() {
                 );
               });
             })}
-            <InView onChange={fetchNextPage} />
-          </Row>
-        </Card>
+          {(data.isFetching || data.isFetchingNextPage) && (
+            <LoadingGamesView amount={loadingAmount} />
+          )}
+          <InView onChange={fetchNextPage} />
+        </Row>
       ) : (
         <div className={styles.allListContainer}>
           <div className={styles.allListTitle}>All Games</div>

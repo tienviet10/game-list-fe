@@ -15,12 +15,15 @@ export default function GamesListLoading() {
         rootClassName={styles.loadingCardRoot}
         style={{
           width: '100%',
-          // height: '50px',
           height: '100%',
           minHeight: '180px',
           display: 'flex',
           minWidth: '0px',
         }}
+        // bodyStyle={{
+        //   padding: '24px 24px 24px 10px',
+        //   backgroundColor: colorBgContainer,
+        // }}
       />
     </Col>
   );
