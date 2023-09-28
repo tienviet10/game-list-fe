@@ -73,8 +73,6 @@ export type PostsAndStatusUpdatesResponse = {
 const usePostsAndStatusUpdates = () => {
   const limitParam = 20;
   const getSocial = async ({ lastCursor = 0 }) => {
-    console.log('lastCursor', lastCursor);
-
     const res = await client.get(
       `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`
     );
@@ -106,8 +104,6 @@ const usePostsAndStatusUpdates = () => {
       );
     },
   });
-
-  console.log('postsAndStatusUpdates', postsAndStatusUpdates);
 
   const socialData: {
     posts: PostsDTOResponse[];
