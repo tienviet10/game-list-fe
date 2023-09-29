@@ -14,6 +14,7 @@ import type {
 } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
 import { useAppSelector } from '@app/hooks';
 import useNotification from '@hooks/useNotification';
+import { ErrorResponse } from '@constants/types';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
 
@@ -27,7 +28,7 @@ export default function ActivitiesUpdates({
   fetchMore: (
     options?: FetchNextPageOptions | undefined
   ) => Promise<
-    InfiniteQueryObserverResult<PostsAndStatusUpdatesResponse, unknown>
+    InfiniteQueryObserverResult<PostsAndStatusUpdatesResponse, ErrorResponse>
   >;
   socials: (PostsDTOResponse | StatusUpdatesDTOResponse)[];
   hasNextPage: boolean | undefined;

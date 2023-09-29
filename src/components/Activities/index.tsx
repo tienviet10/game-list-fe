@@ -7,7 +7,7 @@ export default function Activities() {
     postsAndStatusUpdatesIsLoading,
     fetchNextPage,
     hasNextPage,
-    ifFetchingNextPage,
+    isFetchingNextPage,
     getPostsAndStatusUpdates,
   } = usePostsAndStatusUpdates('global');
 
@@ -17,7 +17,7 @@ export default function Activities() {
       postsAndStatusUpdatesIsLoading={postsAndStatusUpdatesIsLoading}
       fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
-      isFetchingNextPage={ifFetchingNextPage}
+      isFetchingNextPage={isFetchingNextPage}
       getPostsAndStatusUpdates={getPostsAndStatusUpdates}
       // fetchLimitation={15}
     />
