@@ -1,0 +1,105 @@
+@use '../../../styles/colors.scss' as variables;
+@use '../../../styles/mixin.scss' as mixin;
+
+.trendHeader {
+  margin-bottom: 10px;
+  padding-left: 12px;
+  transition: 0.2s;
+  h2 {
+    color: variables.$color-text;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+.trendBody {
+  background: variables.$color-foreground;
+  border-radius: 4px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 85px);
+  grid-template-rows: repeat(auto-fill, 115px);
+  margin-bottom: 25px;
+  min-width: 0;
+  padding: 20px;
+  width: 100%;
+
+  @include mixin.loginTablet {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+    background: 0 0;
+    padding: 0;
+  }
+
+  .trendGameCard {
+    background: variables.$color-foreground;
+    border-radius: 3px;
+    display: inline-grid;
+    grid-template-columns: 85px auto;
+    height: 115px;
+    max-height: 115px;
+    margin-right: 0;
+    margin-bottom: 0;
+    @include mixin.loginTablet {
+      margin-right: 25px;
+      max-width: 400px;
+      min-width: 250px;
+      white-space: normal;
+      width: 255px;
+    }
+
+    @include mixin.desktop {
+      position: relative;
+      width: 85px;
+    }
+
+    a {
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 3px 0 0 3px;
+      text-decoration: none;
+      transition: 0.15s;
+      outline: 0;
+    }
+    .trendContent {
+      background: variables.$color-foreground;
+      border-radius: 0 3px 3px 0;
+      padding: 12px;
+      position: relative;
+
+      @include mixin.desktop {
+        opacity: 0;
+        transition: opacity 0.3s;
+        width: 240px;
+        z-index: -1;
+        height: 100%;
+        left: 100%;
+        position: absolute;
+        top: 0;
+      }
+
+      a {
+        display: -webkit-box;
+        font-size: 0.9rem;
+        overflow: hidden;
+        word-break: break-word;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        text-decoration: none;
+        transition: 0.15s;
+        color: variables.$color-text;
+      }
+
+      .trendInfo {
+        bottom: 12px;
+        color: variables.$color-text-light;
+        font-size: 0.7rem;
+        left: 12px;
+        position: absolute;
+      }
+    }
+  }
+}

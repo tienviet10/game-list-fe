@@ -1,3 +1,4 @@
+import type { GameFiltersSortType } from '@constants/types';
 import { CustomAxiosResponse, ErrorResponse, Game } from '@constants/types';
 import {
   FetchNextPageOptions,
@@ -50,11 +51,33 @@ function lastElement(arr: Game[]) {
 }
 
 export default function useAllGames(
-  limitParam: number = 20
+  limitParam: number = 20,
+  sortBy?: GameFiltersSortType
 ): GetGamesHookResult {
-  const { genres, tags, platforms, search, sortBy, year } = useAppSelector(
-    (state) => state.homeGameFilters
-  );
+  const {
+    genres,
+    tags,
+    platforms,
+    search,
+    sortBy: sortByFromStore,
+    year,
+  } = useAppSelector((state) => state.homeGameFilters);
+
+  // Get sortBy value from params if it exists, otherwise get it from the store
+  const sortByValue = sortBy || sortByFromStore;
+  const queryKey = [
+    'Games',
+    genres.included,
+    tags.included,
+    platforms.included,
+    year,
+    search,
+    genres.excluded,
+    tags.excluded,
+    sortByValue,
+    platforms.excluded,
+    limitParam,
+  ];
 
   const {
     data,
@@ -65,19 +88,7 @@ export default function useAllGames(
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery<GamesResponseWithLastEntry, ErrorResponse>({
-    queryKey: [
-      'Games',
-      genres.included,
-      tags.included,
-      platforms.included,
-      year,
-      search,
-      genres.excluded,
-      tags.excluded,
-      platforms.excluded,
-      sortBy,
-      limitParam,
-    ],
+    queryKey,
 
     // Since we aren't using offset based pagination, there isn't any way to tell if were on the last page or not. Thus we have to fetch one more time and
     // see if the result we get back doesn't contain any games. If it doesn't, we know thats the end.
@@ -104,7 +115,7 @@ export default function useAllGames(
         excludedGenres: genres.excluded,
         excludedTags: tags.excluded,
         excludedPlatforms: platforms.excluded,
-        sortBy,
+        sortBy: sortByValue,
         search,
         limit: limitParam,
         gameQueryPaginationOptions: !pageParam

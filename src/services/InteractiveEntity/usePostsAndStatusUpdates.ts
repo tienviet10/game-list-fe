@@ -70,24 +70,17 @@ export type PostsAndStatusUpdatesResponse = {
   timestamp: string;
 };
 
-const usePostsAndStatusUpdates = () => {
+const usePostsAndStatusUpdates = (type = '') => {
   const limitParam = 20;
   const getSocial = async ({ lastCursor = 0 }) => {
-    if (lastCursor === 0) {
-      const res = await client.get(
-        `/api/v1/interactive-entities/user-social/first-page?limit=${limitParam}`
-      );
+    const getRequestUrl =
+      type === 'global'
+        ? `/api/v1/interactive-entities/forum-pageable?limit=${limitParam}&startingId=${lastCursor}`
+        : `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`;
 
-      return res.data;
-    }
-    if (lastCursor) {
-      const res = await client.get(
-        `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`
-      );
+    const res = await client.get(getRequestUrl);
 
-      return res.data;
-    }
-    return null;
+    return res.data;
   };
   const {
     data: postsAndStatusUpdates,

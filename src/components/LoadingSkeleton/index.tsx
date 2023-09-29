@@ -9,13 +9,12 @@ interface IconTextProps {
 }
 
 const listData = Array.from({ length: 3 }).map((_, i) => ({
-  href: 'https://ant.design',
-  title: `ant design part ${i + 1}`,
+  title: `Lorem Ipsum  ${i + 1}`,
   avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
   description:
-    'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    'If you use this site regularly and would like to help keep the site on the Internet, please consider ',
   content:
-    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu ',
 }));
 
 function IconText({ icon, text }: IconTextProps) {
@@ -70,7 +69,7 @@ function LoadingSkeleton({ loading }: { loading: boolean }) {
           <Skeleton loading={loading} active avatar>
             <List.Item.Meta
               avatar={<Avatar src={item.avatar} />}
-              title={<a href={item.href}>{item.title}</a>}
+              title={item.title}
               description={item.description}
             />
             {item.content}

@@ -135,6 +135,12 @@ export default function Navbar() {
                           Game List
                         </Link>
                       </li>
+
+                      <li className={styles['mobile-nav__header-drawer-item']}>
+                        <Link to="/forum" onClick={onClose}>
+                          Forum
+                        </Link>
+                      </li>
                       {!userDataIsLoading && userState?.user?.username ? (
                         <li
                           className={styles['mobile-nav__header-drawer-item']}
@@ -175,6 +181,9 @@ export default function Navbar() {
                     </li>
                     <li className={styles['desktop-nav__nav-item']}>
                       <Link to="/user-profile/game-list">Game List</Link>
+                    </li>
+                    <li className={styles['desktop-nav__nav-item']}>
+                      <Link to="/forum">Forum</Link>
                     </li>
                   </ul>
 

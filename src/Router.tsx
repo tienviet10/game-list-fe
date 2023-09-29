@@ -3,6 +3,7 @@ import Home from '@pages/Home';
 import UserProfile from '@pages/UserProfile';
 import useTokenAuth from '@hooks/useTokenAuth';
 import GameDetail from '@pages/GameDetail';
+import Forum from '@pages/Forum';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -40,6 +41,7 @@ function Router() {
           <Route path="/register" element={<Register />} />
         </>
       )}
+      <Route path="/forum" element={<Forum />} />
       <Route path="/home" element={<Home />} />
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/game-detail/:id/:name" element={<GameDetail />} />
