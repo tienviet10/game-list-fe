@@ -1,13 +1,5 @@
 import type { ErrorResponse } from '@constants/types';
-import {
-  useInfiniteQuery,
-  RefetchQueryFilters,
-  FetchNextPageOptions,
-  InfiniteQueryObserverResult,
-  RefetchOptions,
-  QueryObserverResult,
-  InfiniteData,
-} from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
 
 export type UserBasicDTO = {
@@ -77,27 +69,6 @@ export type PostsAndStatusUpdatesResponse = {
   statusCode: number;
   timestamp: string;
 };
-
-interface PostsAndStatusUpdatesHookType {
-  socialDataSorted: (PostsDTOResponse | StatusUpdatesDTOResponse)[];
-  postsAndStatusUpdates: ReturnType<typeof useInfiniteQuery>;
-  postsAndStatusUpdatesIsLoading: boolean;
-  fetchNextPage: (
-    options?: FetchNextPageOptions | undefined
-  ) => Promise<
-    InfiniteQueryObserverResult<PostsAndStatusUpdatesResponse, ErrorResponse>
-  >;
-  hasNextPage: boolean | undefined;
-  isFetchingNextPage: boolean;
-  getPostsAndStatusUpdates: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-  ) => Promise<
-    QueryObserverResult<
-      InfiniteData<PostsAndStatusUpdatesResponse>,
-      ErrorResponse
-    >
-  >;
-}
 
 const usePostsAndStatusUpdates = (type = '') => {
   const limitParam = 20;
