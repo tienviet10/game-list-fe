@@ -3,25 +3,55 @@ import type { MenuProps } from 'antd';
 import { Dropdown, Space, Skeleton } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
-import usePostsAndStatusUpdates from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+import type {
+  PostsDTOResponse,
+  StatusUpdatesDTOResponse,
+  PostsAndStatusUpdatesResponse,
+} from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+import type { ErrorResponse } from '@constants/types';
+import {
+  RefetchQueryFilters,
+  FetchNextPageOptions,
+  InfiniteQueryObserverResult,
+  RefetchOptions,
+  QueryObserverResult,
+  InfiniteData,
+} from '@tanstack/react-query';
+
 import MemoizedPostInput from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput';
 import ActivitiesUpdates from '@components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import styles from '@components/ProfileContent/Overview/MainSection/ListActivities/ListActivities.module.scss';
 
-export default function ListActivities() {
+export default function ListActivities({
+  socials,
+  postsAndStatusUpdatesIsLoading,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  getPostsAndStatusUpdates,
+}: {
+  socials: (PostsDTOResponse | StatusUpdatesDTOResponse)[];
+  postsAndStatusUpdatesIsLoading: boolean;
+  fetchNextPage: (
+    options?: FetchNextPageOptions | undefined
+  ) => Promise<
+    InfiniteQueryObserverResult<PostsAndStatusUpdatesResponse, ErrorResponse>
+  >;
+  hasNextPage: boolean | undefined;
+  isFetchingNextPage: boolean;
+  getPostsAndStatusUpdates: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<
+    QueryObserverResult<
+      InfiniteData<PostsAndStatusUpdatesResponse>,
+      ErrorResponse
+    >
+  >;
+}) {
   const dispatch = useAppDispatch();
 
   const { isUserGameEdited } = useAppSelector((state) => state.addedGames);
-
-  const {
-    socialDataSorted,
-    postsAndStatusUpdatesIsLoading,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    getPostsAndStatusUpdates,
-  } = usePostsAndStatusUpdates();
 
   const [post, setPost] = useState<string>('');
 
@@ -80,7 +110,7 @@ export default function ListActivities() {
       </h2>
       <MemoizedPostInput post={post} setPost={setPost} />
       <ActivitiesUpdates
-        socials={socialDataSorted}
+        socials={socials}
         isFetchingNextPage={isFetchingNextPage}
         fetchMore={fetchNextPage}
         hasNextPage={hasNextPage}

@@ -1,0 +1,58 @@
+@use '../../styles/colors.scss' as variables;
+@use '../../styles/mixin.scss' as mixin;
+
+.forumContainer {
+  font-size: 14px;
+  min-height: 100vh;
+  color: variables.$color-text;
+  font-family:
+    Roboto,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  margin: 0 auto;
+  min-width: 320px;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 100%;
+
+  @include mixin.phoneMini {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @include mixin.desktop {
+    max-width: 1140px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  @include mixin.desktopUltroLarge {
+    max-width: 1520px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .forum {
+    display: grid;
+    grid-column-gap: 40px;
+    grid-template-columns: auto 545px;
+    margin-top: 40px;
+    overflow: hidden;
+
+    @include mixin.loginTablet {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    @include mixin.desktopLarge {
+      grid-template-columns: auto 445px;
+    }
+  }
+}
