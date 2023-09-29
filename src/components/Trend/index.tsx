@@ -5,9 +5,8 @@ import GamesListLoading from '@components/AllGames/GamesList/GamesListLoading';
 function Trend() {
   // dispatch(setUserGameFilters({ sortBy: 'avg_score' }));
 
-  const { data, isBestFetching } = useAllGames(20, 'avg_score');
+  const { data, isFetching: isBestFetching } = useAllGames(20, 'avg_score');
   const bestGames = !isBestFetching && data?.pages[0]?.data?.data?.games;
-  !isBestFetching && console.log(bestGames);
 
   const { data: newestData, isFetching: isNewestFetching } = useAllGames(
     20,
@@ -15,7 +14,6 @@ function Trend() {
   );
   const newestGames =
     !isNewestFetching && newestData?.pages[0]?.data?.data?.games;
-  !isNewestFetching && console.log(newestGames);
 
   return (
     <div>
