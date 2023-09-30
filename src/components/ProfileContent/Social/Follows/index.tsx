@@ -26,8 +26,6 @@ function Follows({
     handleRemoveFollower,
   } = useHandleAddRemoveFollow();
 
-  console.log(followers);
-
   if (loading) {
     return <div>Loading...</div>;
   }

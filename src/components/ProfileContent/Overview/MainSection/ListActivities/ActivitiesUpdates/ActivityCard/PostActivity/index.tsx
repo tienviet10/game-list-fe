@@ -24,7 +24,6 @@ export default function PostActivity({
           onClick={async () => {
             if (post.user.username && post.user.username !== username) {
               await handleAddFollow(post.user);
-              console.log('Add follow');
             }
           }}
           style={{ cursor: `${post.user.username !== username && 'pointer'}` }}

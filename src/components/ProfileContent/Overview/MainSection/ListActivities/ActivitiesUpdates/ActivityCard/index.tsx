@@ -165,7 +165,6 @@ export default function ActivityCard({
                         comment.user.username !== username
                       ) {
                         await handleAddFollow(comment.user);
-                        console.log('add follow');
                       }
                     }}
                     style={{
