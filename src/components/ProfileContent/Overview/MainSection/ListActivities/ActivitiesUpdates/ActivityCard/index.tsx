@@ -16,11 +16,11 @@ import type {
 } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
 import getTimeElapsed from '@utils/getTimeElapsed';
 import CustomButton from '@components/CustomButton';
+import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
 import CommentInputWrapper from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/CommentInputWrapper';
-// import useAddRemoveCommentCustomHook from '@/hooks/useAddRemoveCommentCustomHook';
 
 export default function ActivityCard({
   isCurrentLiked,
@@ -54,7 +54,7 @@ export default function ActivityCard({
   //   handleEditComment,
   //   contextHolder: commentContext,
   // } = useAddRemoveCommentCustomHook();
-  // const { handleAddFollow } = useAddRemoveCommentCustomHook();
+  const { handleAddFollow } = useHandleAddRemoveFollow();
   const [isCommentVisible, setIsCommentVisible] = useState<boolean>(
     activity.comments.length > 0
   );
@@ -164,7 +164,7 @@ export default function ActivityCard({
                         comment.user.username &&
                         comment.user.username !== username
                       ) {
-                        // await handleAddFollow(comment);
+                        await handleAddFollow(comment.user);
                         console.log('add follow');
                       }
                     }}

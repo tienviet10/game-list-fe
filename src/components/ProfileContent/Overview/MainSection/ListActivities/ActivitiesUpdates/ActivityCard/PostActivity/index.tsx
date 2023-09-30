@@ -1,6 +1,7 @@
 import { Avatar } from 'antd';
 
 import { PostsDTOResponse } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity/PostActivity.module.scss';
 
 export default function PostActivity({
@@ -12,6 +13,7 @@ export default function PostActivity({
 }) {
   // const { handleAddFollow, contextHolder: handleFollowContextHolder } =
   //   useAddRemoveFollowCustomHook();
+  const { handleAddFollow, contextHolder } = useHandleAddRemoveFollow();
 
   return (
     <div className={styles.postActivityContainer}>
@@ -21,7 +23,7 @@ export default function PostActivity({
           size={50}
           onClick={async () => {
             if (post.user.username && post.user.username !== username) {
-              // await handleAddFollow(post);
+              await handleAddFollow(post.user);
               console.log('Add follow');
             }
           }}
@@ -42,7 +44,7 @@ export default function PostActivity({
           <p>{post.text}</p>
         </div>
       </div>
-      {/* {handleFollowContextHolder} */}
+      {contextHolder}
     </div>
   );
 }
