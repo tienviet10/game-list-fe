@@ -22,6 +22,7 @@ function FollowLinks({
             text={tab}
             onPress={() => setSelectedFilter(tab)}
             activeStyle={selectedFilter === tab ? styles.selected : ''}
+            key={tab}
           />
         ))}
       </div>

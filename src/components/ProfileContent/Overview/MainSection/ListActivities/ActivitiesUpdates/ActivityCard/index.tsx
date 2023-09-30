@@ -20,6 +20,7 @@ import styles from '@/components/ProfileContent/Overview/MainSection/ListActivit
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
 import CommentInputWrapper from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/CommentInputWrapper';
+// import useAddRemoveCommentCustomHook from '@/hooks/useAddRemoveCommentCustomHook';
 
 export default function ActivityCard({
   isCurrentLiked,
@@ -53,7 +54,7 @@ export default function ActivityCard({
   //   handleEditComment,
   //   contextHolder: commentContext,
   // } = useAddRemoveCommentCustomHook();
-  // const { handleAddFollow } = useAddRemoveFollowCustomHook();
+  // const { handleAddFollow } = useAddRemoveCommentCustomHook();
   const [isCommentVisible, setIsCommentVisible] = useState<boolean>(
     activity.comments.length > 0
   );

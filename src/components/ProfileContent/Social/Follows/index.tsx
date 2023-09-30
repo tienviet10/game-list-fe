@@ -20,8 +20,13 @@ function Follows({
   followers: UserType[];
   selectedFilter: string;
 }) {
-  const { handleRemoveFollow, contextHolder: handleRemoveFollowContextHolder } =
-    useHandleAddRemoveFollow();
+  const {
+    handleRemoveFollow,
+    contextHolder: handleRemoveFollowContextHolder,
+    handleRemoveFollower,
+  } = useHandleAddRemoveFollow();
+
+  console.log(followers);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,7 +46,15 @@ function Follows({
               <a href={`/user/${follow.username}/`}>{follow.username}</a>
             </div>
             <div className={styles.unfollow}>
-              <CloseOutlined onClick={() => handleRemoveFollow(follow)} />{' '}
+              <CloseOutlined
+                onClick={() => {
+                  if (selectedFilter === 'Followings') {
+                    handleRemoveFollow(follow);
+                  } else if (selectedFilter === 'Followers') {
+                    handleRemoveFollower(follow);
+                  }
+                }}
+              />{' '}
             </div>
           </div>
         ))}
