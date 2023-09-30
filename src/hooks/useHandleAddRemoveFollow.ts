@@ -20,6 +20,10 @@ const useHandleAddRemoveFollow = () => {
     removedFollowedUserData,
     removeFollowError,
     removedFollowIsError,
+    removeFollowerError,
+    removedFollowerIsError,
+    removeFollowerMutation,
+    removedFollowerUserData,
   } = useFollows();
 
   useEffect(() => {
@@ -50,6 +54,25 @@ const useHandleAddRemoveFollow = () => {
     addFollowIsError,
     success,
     warning,
+  ]);
+
+  useEffect(() => {
+    if (removeFollowerError?.response.data.message || removedFollowerIsError) {
+      warning(
+        `There is something wrong when processing remove follower ${userInfo?.username}!`
+      );
+    } else if (removedFollowerUserData?.data.data.user.username) {
+      success(
+        `You have removed ${userInfo?.username} as your follower successfully.`
+      );
+    }
+  }, [
+    removeFollowerError?.response.data.message,
+    removedFollowerIsError,
+    success,
+    warning,
+    userInfo?.username,
+    removedFollowerUserData?.data.data.user.username,
   ]);
 
   const handleAddFollow = async (
@@ -88,7 +111,28 @@ const useHandleAddRemoveFollow = () => {
     });
   };
 
-  return { handleAddFollow, contextHolder, handleRemoveFollow };
+  const handleRemoveFollower = (follower: UserType) => {
+    Modal.confirm({
+      title: `Are you sure you want to remove ${follower.username} as your follower?`,
+      content: 'They will no longer see your posts in their feed.',
+      onOk: async () => {
+        setUserInfo({
+          id: follower.id,
+          username: follower.username,
+        });
+        removeFollowerMutation({
+          userId: follower.id,
+        });
+      },
+    });
+  };
+
+  return {
+    handleAddFollow,
+    contextHolder,
+    handleRemoveFollow,
+    handleRemoveFollower,
+  };
 };
 
 export default useHandleAddRemoveFollow;
