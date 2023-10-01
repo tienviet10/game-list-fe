@@ -165,3 +165,71 @@ export type UserGamesByStatus = {
   totalCount: number;
   listsOrder: string;
 };
+
+export type UserBasicDTO = {
+  id: number;
+  username: string;
+  userPicture: string;
+  bannerPicture: string;
+};
+
+type GameBasicDTO = {
+  id: number;
+  name: string;
+  imageURL: string;
+  bannerURL: string;
+};
+
+type UserGameBasicDTO = {
+  id: number;
+  game: GameBasicDTO;
+  user: UserBasicDTO;
+};
+
+export type LikeDTO = {
+  id: number;
+  user: UserBasicDTO;
+  updatedAt: string;
+  createdAt: string;
+};
+
+type CommentDTO = {
+  id: number;
+  text: string;
+  createdAt: string;
+  user: UserBasicDTO;
+  likes: LikeDTO[];
+  comments: CommentDTO[];
+};
+
+export type PostsDTOResponse = {
+  id: number;
+  text: string;
+  createdAt: string;
+  user: UserBasicDTO;
+  likes: LikeDTO[];
+  comments: CommentDTO[];
+};
+
+export type StatusUpdatesDTOResponse = {
+  id: number;
+  gameStatus: string;
+  createdAt: string;
+  userGame: UserGameBasicDTO;
+  likes: LikeDTO[];
+  comments: CommentDTO[];
+};
+
+export type PostsAndStatusUpdatesData = {
+  posts: PostsDTOResponse[];
+  statusUpdates: StatusUpdatesDTOResponse[];
+  lastPostOrStatusUpdateId: number;
+};
+
+export type PostsAndStatusUpdatesResponse = {
+  data: { postsAndStatusUpdates: PostsAndStatusUpdatesData };
+  message: string;
+  status: string;
+  statusCode: number;
+  timestamp: string;
+};

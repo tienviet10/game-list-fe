@@ -4,11 +4,11 @@ import { Dropdown, Space, Skeleton } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 import type {
+  ErrorResponse,
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
   PostsAndStatusUpdatesResponse,
-} from '@services/InteractiveEntity/usePostsAndStatusUpdates';
-import type { ErrorResponse } from '@constants/types';
+} from '@constants/types';
 import {
   RefetchQueryFilters,
   FetchNextPageOptions,

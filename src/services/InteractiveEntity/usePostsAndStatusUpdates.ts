@@ -1,74 +1,11 @@
-import type { ErrorResponse } from '@constants/types';
+import type {
+  ErrorResponse,
+  PostsDTOResponse,
+  StatusUpdatesDTOResponse,
+  PostsAndStatusUpdatesResponse,
+} from '@constants/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import client from '@utils/authApi';
-
-export type UserBasicDTO = {
-  id: number;
-  username: string;
-  userPicture: string;
-  bannerPicture: string;
-};
-
-type GameBasicDTO = {
-  id: number;
-  name: string;
-  imageURL: string;
-  bannerURL: string;
-};
-
-type UserGameBasicDTO = {
-  id: number;
-  game: GameBasicDTO;
-  user: UserBasicDTO;
-};
-
-export type LikeDTO = {
-  id: number;
-  user: UserBasicDTO;
-  updatedAt: string;
-  createdAt: string;
-};
-
-type CommentDTO = {
-  id: number;
-  text: string;
-  createdAt: string;
-  user: UserBasicDTO;
-  likes: LikeDTO[];
-  comments: CommentDTO[];
-};
-
-export type PostsDTOResponse = {
-  id: number;
-  text: string;
-  createdAt: string;
-  user: UserBasicDTO;
-  likes: LikeDTO[];
-  comments: CommentDTO[];
-};
-
-export type StatusUpdatesDTOResponse = {
-  id: number;
-  gameStatus: string;
-  createdAt: string;
-  userGame: UserGameBasicDTO;
-  likes: LikeDTO[];
-  comments: CommentDTO[];
-};
-
-export type PostsAndStatusUpdatesData = {
-  posts: PostsDTOResponse[];
-  statusUpdates: StatusUpdatesDTOResponse[];
-  lastPostOrStatusUpdateId: number;
-};
-
-export type PostsAndStatusUpdatesResponse = {
-  data: { postsAndStatusUpdates: PostsAndStatusUpdatesData };
-  message: string;
-  status: string;
-  statusCode: number;
-  timestamp: string;
-};
 
 const usePostsAndStatusUpdates = (type = '') => {
   const limitParam = 20;
@@ -107,6 +44,8 @@ const usePostsAndStatusUpdates = (type = '') => {
       );
     },
   });
+
+  console.log(postsAndStatusUpdates);
 
   const socialData: {
     posts: PostsDTOResponse[];
