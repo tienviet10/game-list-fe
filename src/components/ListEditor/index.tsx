@@ -190,6 +190,7 @@ function ListEditorTemp({
             return updateGameById(oldData, game.id, game.gameLiked, false);
           }
         );
+        dispatch(setUserGameReducer({ type: 'reset' }));
         setOpen(false);
       },
     });
