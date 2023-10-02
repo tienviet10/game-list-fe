@@ -1,6 +1,6 @@
 import { Avatar } from 'antd';
 
-import { PostsDTOResponse } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+import { PostsDTOResponse } from '@constants/types';
 import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity/PostActivity.module.scss';
 

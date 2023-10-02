@@ -1,7 +1,5 @@
 import type {
   ErrorResponse,
-  PostsDTOResponse,
-  StatusUpdatesDTOResponse,
   PostsAndStatusUpdatesResponse,
 } from '@constants/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -45,33 +43,12 @@ const usePostsAndStatusUpdates = (type = '') => {
     },
   });
 
-  console.log(postsAndStatusUpdates);
-
-  const socialData: {
-    posts: PostsDTOResponse[];
-    statusUpdates: StatusUpdatesDTOResponse[];
-  } = (postsAndStatusUpdates?.pages || []).reduce(
-    (acc, curr) => {
-      const { posts, statusUpdates } = curr.data.postsAndStatusUpdates;
-      return {
-        posts: [...acc.posts, ...posts],
-        statusUpdates: [...acc.statusUpdates, ...statusUpdates],
-      };
-    },
-    { posts: [], statusUpdates: [] } as {
-      posts: PostsDTOResponse[];
-      statusUpdates: StatusUpdatesDTOResponse[];
-    }
+  console.log(
+    'postsAndStatusUpdayes in usePostsAndStatusUpdates: ',
+    postsAndStatusUpdates
   );
 
-  const { posts, statusUpdates } = socialData;
-
-  const socialDataSorted = [...posts, ...statusUpdates].sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
-
   return {
-    socialDataSorted,
     postsAndStatusUpdates,
     postsAndStatusUpdatesIsLoading,
     fetchNextPage,

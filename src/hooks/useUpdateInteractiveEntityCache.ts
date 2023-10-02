@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type {
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
-} from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+} from '@constants/types';
 
 export type OldPostsAndStatusUpdatesDataType = {
   pageParams: number[];
@@ -11,7 +11,7 @@ export type OldPostsAndStatusUpdatesDataType = {
 };
 
 type PostsAndStatusUpdatesPageType = {
-  data: { data: PostsAndStatusUpdatesData };
+  data: PostsAndStatusUpdatesData;
 };
 
 type PostsAndStatusUpdatesData = {
@@ -23,20 +23,23 @@ type PostsAndStatusUpdatesData = {
 };
 
 const useUpdateInteractiveEntityCache = () => {
-  const queryClient = useQueryClient();
-
   const updatePostByPost = (
-    oldData: OldPostsAndStatusUpdatesDataType,
+    oldData: OldPostsAndStatusUpdatesDataType | undefined,
     newPost: PostsDTOResponse
   ) => {
+    if (!oldData) {
+      return null;
+    }
     const { pageParams, pages } = oldData;
 
     const firstPage = pages[0];
 
-    const { posts } = firstPage.data.data.postsAndStatusUpdates;
+    console.log('firstPage', firstPage);
+
+    const { posts } = firstPage.data.postsAndStatusUpdates;
     const newPosts = [newPost, ...posts];
 
-    pages[0].data.data.postsAndStatusUpdates.posts = newPosts;
+    pages[0].data.postsAndStatusUpdates.posts = newPosts;
 
     // const newPages = pages.map((page) => {
     //   const { data } = page;
@@ -86,9 +89,8 @@ const useUpdateInteractiveEntityCache = () => {
 
     const newPages = pages.map((page) => {
       const { data } = page;
-      const { data: postsAndStatusUpdatesData } = data;
+      const { postsAndStatusUpdates } = data;
 
-      const { postsAndStatusUpdates } = postsAndStatusUpdatesData;
       const { statusUpdates } = postsAndStatusUpdates;
 
       const newStatusUpdates = statusUpdates.map((statusUpdate) => {

@@ -13,7 +13,7 @@ import type {
   LikeDTO,
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
-} from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+} from '@constants/types';
 import getTimeElapsed from '@utils/getTimeElapsed';
 import CustomButton from '@components/CustomButton';
 import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';

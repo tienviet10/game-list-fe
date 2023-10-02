@@ -4,7 +4,9 @@ import CustomButton from '@components/CustomButton';
 import styles from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
 import { usePosts } from '@services/post/usePosts';
 import { useQueryClient } from '@tanstack/react-query';
-import useUpdateInteractiveEntityCache from '@hooks/useUpdateInteractiveEntityCache';
+import useUpdateInteractiveEntityCache, {
+  OldPostsAndStatusUpdatesDataType,
+} from '@hooks/useUpdateInteractiveEntityCache';
 import useNotification from '@/hooks/useNotification';
 
 type PostInputProps = {
@@ -77,13 +79,20 @@ function PostInput({
                 { text: post },
                 {
                   onSuccess: (data) => {
-                    console.log(data);
+                    console.log('data from createPost:', data);
 
                     const { post: newPost } = data.data.data;
+                    console.log('newPost: ', newPost);
 
                     success(`You have posted successfully.`);
-                    // queryClient.setQueriesData(['postsAndStatusUpdates'],
-                    // (oldData: OldPostsAndStatusUpdatesDataType));
+                    queryClient.setQueryData(
+                      ['postsAndStatusUpdates'],
+                      (oldData: any) => {
+                        console.log('oldData in setQueriesData: ', oldData);
+                        return updatePostByPost(oldData, newPost);
+                        // return updatePostByPost(oldData, newPost);
+                      }
+                    );
                     setPost('');
                   },
                   onError: (error) => {

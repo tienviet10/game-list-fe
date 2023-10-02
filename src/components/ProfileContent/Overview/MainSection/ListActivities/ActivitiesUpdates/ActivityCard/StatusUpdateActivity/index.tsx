@@ -1,7 +1,7 @@
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
-import { StatusUpdatesDTOResponse } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+import { StatusUpdatesDTOResponse } from '@constants/types';
 import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 
