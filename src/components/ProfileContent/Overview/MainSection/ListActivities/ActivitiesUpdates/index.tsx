@@ -24,9 +24,7 @@ export default function ActivitiesUpdates({
   fetchMore,
   isFetchingNextPage,
   hasNextPage,
-  firstPostsLength,
 }: {
-  firstPostsLength: number;
   isFetchingNextPage: boolean;
   fetchMore: (
     options?: FetchNextPageOptions | undefined
@@ -42,51 +40,31 @@ export default function ActivitiesUpdates({
 
   const { username } = userState;
 
-  // const memoizedActivities = useMemo(() => {
-  //   return [...socials].map((activity) => {
-  //     const { daysElapsed, hoursElapsed } = getTimeElapsed(activity.createdAt);
-  //     const isCurrentLiked = activity.likes.some(
-  //       (like) => like.user.username === username
-  //     );
-  //     return (
-  //       <ActivityCard
-  //         isCurrentLiked={isCurrentLiked}
-  //         key={activity.id}
-  //         activity={activity}
-  //         daysElapsed={daysElapsed}
-  //         hoursElapsed={hoursElapsed}
-  //         username={username}
-  //         // addLike={addLike}
-  //         // removeLike={removeLike}
-  //       />
-  //     );
-  //   });
-  // }, [socials, username, firstPostsLength]);
+  const memoizedActivities = useMemo(() => {
+    return [...socials].map((activity) => {
+      const { daysElapsed, hoursElapsed } = getTimeElapsed(activity.createdAt);
+      const isCurrentLiked = activity.likes.some(
+        (like) => like.user.username === username
+      );
+      return (
+        <ActivityCard
+          isCurrentLiked={isCurrentLiked}
+          key={activity.id}
+          activity={activity}
+          daysElapsed={daysElapsed}
+          hoursElapsed={hoursElapsed}
+          username={username}
+          // addLike={addLike}
+          // removeLike={removeLike}
+        />
+      );
+    });
+  }, [socials, username]);
 
   return (
     <div className={styles.activitiesUpdatesContainer}>
-      {/* {socials.length > 0 && memoizedActivities} */}
-      {socials.length > 0 &&
-        [...socials].map((activity) => {
-          const { daysElapsed, hoursElapsed } = getTimeElapsed(
-            activity.createdAt
-          );
-          const isCurrentLiked = activity.likes.some(
-            (like) => like.user.username === username
-          );
-          return (
-            <ActivityCard
-              isCurrentLiked={isCurrentLiked}
-              key={activity.id}
-              activity={activity}
-              daysElapsed={daysElapsed}
-              hoursElapsed={hoursElapsed}
-              username={username}
-              // addLike={addLike}
-              // removeLike={removeLike}
-            />
-          );
-        })}
+      {socials.length > 0 && memoizedActivities}
+
       {isFetchingNextPage
         ? Array.from({ length: 10 }, (_, index) => (
             <Skeleton

@@ -30,9 +30,7 @@ export default function ListActivities({
   hasNextPage,
   isFetchingNextPage,
   getPostsAndStatusUpdates,
-  firstPostsLength,
 }: {
-  firstPostsLength: number;
   socials: (PostsDTOResponse | StatusUpdatesDTOResponse)[];
   postsAndStatusUpdatesIsLoading: boolean;
   fetchNextPage: (
@@ -116,7 +114,6 @@ export default function ListActivities({
         isFetchingNextPage={isFetchingNextPage}
         fetchMore={fetchNextPage}
         hasNextPage={hasNextPage}
-        firstPostsLength={firstPostsLength}
         // type={type}
       />
     </div>

@@ -1,5 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
-
 import type {
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
@@ -25,53 +23,71 @@ type PostsAndStatusUpdatesData = {
 const useUpdateInteractiveEntityCache = () => {
   const updatePostByPost = (
     oldData: OldPostsAndStatusUpdatesDataType | undefined,
-    newPost: PostsDTOResponse
-  ) => {
+    newPost: PostsDTOResponse,
+    updateType: 'create' | 'delete' | 'update'
+  ): OldPostsAndStatusUpdatesDataType | undefined => {
     if (!oldData) {
-      return null;
+      return undefined;
     }
     const { pageParams, pages } = oldData;
+    if (updateType === 'create') {
+      const firstPage = pages[0];
 
-    const firstPage = pages[0];
+      const { posts } = firstPage.data.postsAndStatusUpdates;
+      const newPosts = [newPost, ...posts];
 
-    console.log('firstPage', firstPage);
+      const newFistPage = {
+        ...firstPage,
+        data: {
+          ...firstPage.data,
+          postsAndStatusUpdates: {
+            ...firstPage.data.postsAndStatusUpdates,
+            posts: newPosts,
+          },
+        },
+      };
 
-    const { posts } = firstPage.data.postsAndStatusUpdates;
-    const newPosts = [newPost, ...posts];
-
-    pages[0].data.postsAndStatusUpdates.posts = newPosts;
-
-    // const newPages = pages.map((page) => {
-    //   const { data } = page;
-    //   const { data: postsAndStatusUpdatesData } = data;
-
-    //   const { postsAndStatusUpdates } = postsAndStatusUpdatesData;
-    //   const { posts } = postsAndStatusUpdates;
-
-    //   const newPosts = posts.map((post) => {
-    //     if (post.id === postId) {
-    //       return {
-    //         ...post,
-    //         postLiked: isPostLiked,
-    //         postCommented: isPostCommented,
-    //         postDeleted: isPostDeleted,
-    //       };
-    //     }
-    //     return post;
-    //   });
-    //   return {
-    //     ...page,
-    //     data: {
-    //       data: {
-    //         postsAndStatusUpdates: {
-    //           ...postsAndStatusUpdates,
-    //           posts: newPosts,
-    //         },
-    //       },
-    //     },
-    //   };
-    // });
-
+      const newPages = [newFistPage, ...pages.slice(1)];
+      return {
+        pageParams,
+        pages: newPages,
+      };
+    }
+    if (updateType === 'update') {
+      for (let i = 0; i < pages.length; i += 1) {
+        if (
+          pages[i].data.postsAndStatusUpdates.lastPostOrStatusUpdateId <=
+          newPost.id
+        ) {
+          const { posts } = pages[i].data.postsAndStatusUpdates;
+          const newPosts = posts.map((post) => {
+            if (post.id === newPost.id) {
+              return newPost;
+            }
+            return post;
+          });
+          const newPage = {
+            ...pages[i],
+            data: {
+              ...pages[i].data,
+              postsAndStatusUpdates: {
+                ...pages[i].data.postsAndStatusUpdates,
+                posts: newPosts,
+              },
+            },
+          };
+          const newPages = [
+            ...pages.slice(0, i),
+            newPage,
+            ...pages.slice(i + 1),
+          ];
+          return {
+            pageParams,
+            pages: newPages,
+          };
+        }
+      }
+    }
     return {
       pageParams,
       pages,

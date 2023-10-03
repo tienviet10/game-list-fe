@@ -3,10 +3,6 @@ import { useEffect, useRef, memo } from 'react';
 import CustomButton from '@components/CustomButton';
 import styles from '@components/ProfileContent/Overview/MainSection/ListActivities/PostInput/PostInput.module.scss';
 import { usePosts } from '@services/post/usePosts';
-import { useQueryClient } from '@tanstack/react-query';
-import useUpdateInteractiveEntityCache, {
-  OldPostsAndStatusUpdatesDataType,
-} from '@hooks/useUpdateInteractiveEntityCache';
 import useNotification from '@/hooks/useNotification';
 
 type PostInputProps = {
@@ -31,10 +27,6 @@ function PostInput({
   const { createPostMutation } = usePosts();
 
   const { success, contextHolder, warning } = useNotification();
-
-  const { updatePostByPost } = useUpdateInteractiveEntityCache();
-
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (setPost) {
@@ -78,21 +70,8 @@ function PostInput({
               createPostMutation(
                 { text: post },
                 {
-                  onSuccess: (data) => {
-                    console.log('data from createPost:', data);
-
-                    const { post: newPost } = data.data.data;
-                    console.log('newPost: ', newPost);
-
+                  onSuccess: () => {
                     success(`You have posted successfully.`);
-                    queryClient.setQueryData(
-                      ['postsAndStatusUpdates'],
-                      (oldData: any) => {
-                        console.log('oldData in setQueriesData: ', oldData);
-                        return updatePostByPost(oldData, newPost);
-                        // return updatePostByPost(oldData, newPost);
-                      }
-                    );
                     setPost('');
                   },
                   onError: (error) => {

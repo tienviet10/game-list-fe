@@ -17,7 +17,6 @@ function MainSection({
   userGames: UserGamesByStatus | undefined;
 }) {
   const {
-    postsAndStatusUpdates,
     postsAndStatusUpdatesIsLoading,
     hasNextPage,
     fetchNextPage,
@@ -35,17 +34,9 @@ function MainSection({
     'postsAndStatusUpdates',
   ]) as PostsAndStatusUpdatesType;
 
-  console.log('data', data);
-
-  const firstPostsLength = postsAndStatusUpdatesIsLoading
-    ? 0
-    : data.pages[0].data.postsAndStatusUpdates.posts.length;
-
-  console.log('firstPostsLength', firstPostsLength);
-
   useEffect(() => {
     setSocials(getSortedSocialData(data));
-  }, [data, firstPostsLength]);
+  }, [data]);
 
   // const socialDataSorted = getSortedSocialData(postsAndStatusUpdates);
   return (
@@ -53,7 +44,6 @@ function MainSection({
       <ListStatistic userGames={userGames} />
       <ListActivities
         // type="private"
-        firstPostsLength={firstPostsLength}
         socials={socials}
         postsAndStatusUpdatesIsLoading={postsAndStatusUpdatesIsLoading}
         fetchNextPage={fetchNextPage}

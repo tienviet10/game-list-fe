@@ -43,11 +43,6 @@ const usePostsAndStatusUpdates = (type = '') => {
     },
   });
 
-  console.log(
-    'postsAndStatusUpdayes in usePostsAndStatusUpdates: ',
-    postsAndStatusUpdates
-  );
-
   return {
     postsAndStatusUpdates,
     postsAndStatusUpdatesIsLoading,
