@@ -1,15 +1,18 @@
 import usePostsAndStatusUpdates from '@services/InteractiveEntity/usePostsAndStatusUpdates';
 import ListActivities from '@components/ProfileContent/Overview/MainSection/ListActivities';
+import getSortedSocialData from '@utils/getSortedSocialData';
 
 export default function Activities() {
   const {
-    socialDataSorted,
     postsAndStatusUpdatesIsLoading,
+    postsAndStatusUpdates,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     getPostsAndStatusUpdates,
   } = usePostsAndStatusUpdates('global');
+
+  const socialDataSorted = getSortedSocialData(postsAndStatusUpdates);
 
   return (
     <ListActivities

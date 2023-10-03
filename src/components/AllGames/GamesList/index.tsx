@@ -6,7 +6,6 @@ import { useCallback, useState } from 'react';
 import { GameDataType } from '@components/GamesListTable/types';
 import { RequiredGameWithIsAdded } from '@constants/types';
 import ListEditor from '@components/ListEditor';
-import LoadingSkeleton from '@components/LoadingSkeleton';
 import useGetUserGameState from '@/services/usergames/useGetUserGameState';
 import GamesListLoading from './GamesListLoading';
 import MemoedGameCard from './GameCard';

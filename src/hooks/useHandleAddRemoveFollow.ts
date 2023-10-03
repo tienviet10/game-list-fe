@@ -20,6 +20,10 @@ const useHandleAddRemoveFollow = () => {
     removedFollowedUserData,
     removeFollowError,
     removedFollowIsError,
+    removeFollowerError,
+    removedFollowerIsError,
+    removeFollowerMutation,
+    removedFollowerUserData,
   } = useFollows();
 
   useEffect(() => {
@@ -27,9 +31,10 @@ const useHandleAddRemoveFollow = () => {
       warning(
         `There is something wrong when processing unfollow ${userInfo?.username}!`
       );
-    } else if (followedUserData?.data.data.user.username) {
+    } else if (removedFollowedUserData?.data.data.user.username) {
       success(`You have unfollowed ${userInfo?.username} successfully.`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     removeFollowError?.response.data.message,
     removedFollowIsError,
@@ -42,9 +47,10 @@ const useHandleAddRemoveFollow = () => {
       warning(
         `Can not follow ${userInfo?.username}. ${addFollowError?.response.data.message}!`
       );
-    } else if (removedFollowedUserData?.data.data.user.username) {
+    } else if (followedUserData?.data.data.user.username) {
       success(`You have followed ${userInfo?.username} successfully.`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     addFollowError?.response.data.message,
     addFollowIsError,
@@ -52,21 +58,35 @@ const useHandleAddRemoveFollow = () => {
     warning,
   ]);
 
-  const handleAddFollow = async (
-    // TODO: Fix this type later
-    // commentInput: CommentType | StatusUpdateType | PostType
-    commentInput: any
-  ) => {
+  useEffect(() => {
+    if (removeFollowerError?.response.data.message || removedFollowerIsError) {
+      warning(
+        `There is something wrong when processing remove follower ${userInfo?.username}!`
+      );
+    } else if (removedFollowerUserData?.data.data.user.username) {
+      success(
+        `You have removed ${userInfo?.username} as your follower successfully.`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    removeFollowerError?.response.data.message,
+    removedFollowerIsError,
+    success,
+    warning,
+  ]);
+
+  const handleAddFollow = async (userInput: UserType) => {
     Modal.confirm({
-      title: `Are you sure you want to follow ${commentInput.user.username}?`,
-      content: 'You will see their posts in your feed.',
+      title: `Are you sure you want to follow ${userInput.username}?`,
+      content: 'You will see their posts or status in your feed.',
       onOk: async () => {
         addFollowMutation({
-          userId: commentInput.user.id,
+          userId: userInput.id,
         });
         setUserInfo({
-          id: commentInput.user.id,
-          username: commentInput.user.username,
+          id: userInput.id,
+          username: userInput.username,
         });
       },
     });
@@ -88,7 +108,28 @@ const useHandleAddRemoveFollow = () => {
     });
   };
 
-  return { handleAddFollow, contextHolder, handleRemoveFollow };
+  const handleRemoveFollower = (follower: UserType) => {
+    Modal.confirm({
+      title: `Are you sure you want to remove ${follower.username} as your follower?`,
+      content: 'They will no longer see your posts in their feed.',
+      onOk: async () => {
+        setUserInfo({
+          id: follower.id,
+          username: follower.username,
+        });
+        removeFollowerMutation({
+          userId: follower.id,
+        });
+      },
+    });
+  };
+
+  return {
+    handleAddFollow,
+    contextHolder,
+    handleRemoveFollow,
+    handleRemoveFollower,
+  };
 };
 
 export default useHandleAddRemoveFollow;

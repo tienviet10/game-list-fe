@@ -20,7 +20,7 @@ import CustomSelect from '@components/CustomSelect';
 import useEditUserGame from '@services/usergames/useEditUserGame';
 import { setUserGameReducer } from '@features/userGameSlice';
 import useRemoveUserGame from '@services/usergames/useRemoveUserGame';
-import useUpdateCache, { OldDataType } from '@hooks/useUpdateCache';
+import useUpdateGameCache, { OldGameDataType } from '@hooks/useUpdateGameCache';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import DatePickerField from '../DatePickerField';
 import TextAreaInput from '../TextAreaInput';
@@ -81,7 +81,7 @@ function ListEditorTemp({
   const userState = useAppSelector((state) => state.user);
   const { contextHolder, info, warning } = useNotification();
   const queryClient = useQueryClient();
-  const { updateGameById } = useUpdateCache();
+  const { updateGameById } = useUpdateGameCache();
 
   const {
     gameStatus: selectedStatus,
@@ -157,7 +157,7 @@ function ListEditorTemp({
             info(`Add game ${game.name} successfully`);
             queryClient.setQueriesData(
               ['Games'],
-              (oldData: OldDataType | undefined) => {
+              (oldData: OldGameDataType | undefined) => {
                 if (!oldData) {
                   return oldData;
                 }
@@ -183,13 +183,14 @@ function ListEditorTemp({
         info(`Delete game ${game.name} successfully`);
         queryClient.setQueriesData(
           ['Games'],
-          (oldData: OldDataType | undefined) => {
+          (oldData: OldGameDataType | undefined) => {
             if (!oldData) {
               return oldData;
             }
             return updateGameById(oldData, game.id, game.gameLiked, false);
           }
         );
+        dispatch(setUserGameReducer({ type: 'reset' }));
         setOpen(false);
       },
     });

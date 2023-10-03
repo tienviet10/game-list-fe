@@ -1,7 +1,8 @@
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
-import { StatusUpdatesDTOResponse } from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+import { StatusUpdatesDTOResponse } from '@constants/types';
+import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 
 export default function StatusUpdateActivity({
@@ -11,8 +12,7 @@ export default function StatusUpdateActivity({
   statusUpdate: StatusUpdatesDTOResponse;
   username: string;
 }) {
-  // const { handleAddFollow, contextHolder: handleFollowContextHolder } =
-  //   useAddRemoveFollowCustomHook();
+  const { handleAddFollow, contextHolder } = useHandleAddRemoveFollow();
 
   const name =
     statusUpdate.userGame.user.username === username
@@ -75,13 +75,12 @@ export default function StatusUpdateActivity({
               statusUpdate.userGame.user.username &&
               statusUpdate.userGame.user.username !== username
             ) {
-              // await handleAddFollow(statusUpdate);
-              console.log('add follow');
+              await handleAddFollow(statusUpdate.userGame.user);
             }
           }}
         />
       </div>
-      {/* {handleFollowContextHolder} */}
+      {contextHolder}
     </div>
   );
 }

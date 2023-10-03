@@ -1,12 +1,10 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-props-no-spreading */
 import { Input, InputProps } from 'antd';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 type DebouncedInputFieldProps = InputProps & {
   delay: number;
-  onDebounceChange: (newValue) => void;
+  onDebounceChange: (newValue: string | number) => void;
   // value: InputProps['value'];
 };
 
@@ -35,7 +33,7 @@ export default function DebouncedSelectField({
     delay
   );
 
-  const onInputChange = (e) => {
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e); // Call the original onChange
     debounced(e.target.value);
   };

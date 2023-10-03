@@ -7,14 +7,15 @@ import {
 } from '@tanstack/react-query';
 
 import getTimeElapsed from '@utils/getTimeElapsed';
-import type {
+
+import { useAppSelector } from '@app/hooks';
+import useNotification from '@hooks/useNotification';
+import {
+  ErrorResponse,
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
   PostsAndStatusUpdatesResponse,
-} from '@services/InteractiveEntity/usePostsAndStatusUpdates';
-import { useAppSelector } from '@app/hooks';
-import useNotification from '@hooks/useNotification';
-import { ErrorResponse } from '@constants/types';
+} from '@constants/types';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import ActivityCard from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard';
 
@@ -63,6 +64,7 @@ export default function ActivitiesUpdates({
   return (
     <div className={styles.activitiesUpdatesContainer}>
       {socials.length > 0 && memoizedActivities}
+
       {isFetchingNextPage
         ? Array.from({ length: 10 }, (_, index) => (
             <Skeleton

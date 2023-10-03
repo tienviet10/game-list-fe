@@ -15,14 +15,14 @@ type SelectFilterFieldType<T> =
       mode: 'multiple';
       placeholder: string;
       value: ArrayOnly<T> | undefined;
-      options: string[] | number[];
+      options: string[] | number[] | null;
       onChange: (value: T) => void;
     }
   | {
       mode: undefined;
       placeholder: string;
       value: T | undefined;
-      options: string[] | number[];
+      options: string[] | number[] | null;
       onChange: (value: T) => void;
     };
 

@@ -13,9 +13,10 @@ import type {
   LikeDTO,
   PostsDTOResponse,
   StatusUpdatesDTOResponse,
-} from '@services/InteractiveEntity/usePostsAndStatusUpdates';
+} from '@constants/types';
 import getTimeElapsed from '@utils/getTimeElapsed';
 import CustomButton from '@components/CustomButton';
+import useHandleAddRemoveFollow from '@hooks/useHandleAddRemoveFollow';
 import styles from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivitiesUpdates.module.scss';
 import StatusUpdateActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/StatusUpdateActivity';
 import PostActivity from '@/components/ProfileContent/Overview/MainSection/ListActivities/ActivitiesUpdates/ActivityCard/PostActivity';
@@ -53,7 +54,7 @@ export default function ActivityCard({
   //   handleEditComment,
   //   contextHolder: commentContext,
   // } = useAddRemoveCommentCustomHook();
-  // const { handleAddFollow } = useAddRemoveFollowCustomHook();
+  const { handleAddFollow } = useHandleAddRemoveFollow();
   const [isCommentVisible, setIsCommentVisible] = useState<boolean>(
     activity.comments.length > 0
   );
@@ -163,8 +164,7 @@ export default function ActivityCard({
                         comment.user.username &&
                         comment.user.username !== username
                       ) {
-                        // await handleAddFollow(comment);
-                        console.log('add follow');
+                        await handleAddFollow(comment.user);
                       }
                     }}
                     style={{

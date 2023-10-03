@@ -46,6 +46,12 @@ export const useFollows = () => {
     return client.delete(`/api/v1/follows/${params.userId}`);
   };
 
+  const removeFollower = async (
+    params: UserFollowId
+  ): Promise<CustomAxiosResponse<UserFollowIdResponse>> => {
+    return client.delete(`/api/v1/follows/followers/${params.userId}`);
+  };
+
   const {
     mutate: addFollowMutation,
     data: followedUserData,
@@ -86,6 +92,22 @@ export const useFollows = () => {
     },
   });
 
+  const {
+    mutate: removeFollowerMutation,
+    data: removedFollowerUserData,
+    error: removeFollowerError,
+    isError: removedFollowerIsError,
+  } = useMutation<
+    CustomAxiosResponse<UserFollowIdResponse>,
+    ErrorResponse,
+    UserFollowId
+  >({
+    mutationFn: removeFollower,
+    onSuccess: () => {
+      queryClient.fetchQuery({ queryKey: ['follows'] });
+    },
+  });
+
   return {
     addFollowMutation,
     followedUserData,
@@ -98,5 +120,9 @@ export const useFollows = () => {
     removedFollowedUserData,
     removeFollowError,
     removedFollowIsError,
+    removeFollowerMutation,
+    removedFollowerUserData,
+    removeFollowerError,
+    removedFollowerIsError,
   };
 };

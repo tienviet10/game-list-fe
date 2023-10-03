@@ -1,7 +1,7 @@
 import type { Game } from '@constants/types';
 import { useQueryClient } from '@tanstack/react-query';
 
-export type OldDataType = {
+export type OldGameDataType = {
   pageParams: number[];
   pages: GamePageType[];
 };
@@ -18,11 +18,11 @@ type GamesPageDataDataType = {
   games: Game[];
 };
 
-const useUpdateCache = () => {
+const useUpdateGameCache = () => {
   const queryClient = useQueryClient();
 
   const updateGameById = (
-    oldData: OldDataType,
+    oldData: OldGameDataType,
     gameId: number,
     isGameLiked: boolean,
     isGameAdded: boolean
@@ -75,7 +75,7 @@ const useUpdateCache = () => {
       'name',
       20,
     ]);
-    const { pages } = gameInCache as OldDataType;
+    const { pages } = gameInCache as OldGameDataType;
 
     const foundGame = pages
       .flatMap((page) => page.data.data.games)
@@ -87,4 +87,4 @@ const useUpdateCache = () => {
   return { updateGameById, getGameInCacheById };
 };
 
-export default useUpdateCache;
+export default useUpdateGameCache;

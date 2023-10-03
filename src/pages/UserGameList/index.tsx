@@ -18,7 +18,6 @@ function UserGameList() {
   );
 
   const { userGames, userDataIsLoading, getUserGames } = useGetUserGames();
-  console.log('userGames', userGames);
   useEffect(() => {
     getUserGames();
   }, [getUserGames]);

@@ -1,26 +1,27 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import client from '@utils/authApi';
-import type { CustomAxiosResponse, ErrorResponse } from '@constants/types';
+import type {
+  CustomAxiosResponse,
+  ErrorResponse,
+  PostsDTOResponse,
+} from '@constants/types';
 import { T } from 'vitest/dist/types-3c7dbfa5.js';
+import useUpdateInteractiveEntityCache, {
+  OldPostsAndStatusUpdatesDataType,
+} from '@hooks/useUpdateInteractiveEntityCache';
 
 type CreatePostParams = {
   text: string;
 };
 
-// TODO: Add type for response data Likes and Comments
-type PostType = CreatePostParams & {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  likes: string[];
-  comments: string[];
-};
-
 type CreatePostResponse = {
-  post: PostType;
+  post: PostsDTOResponse;
 };
 
 export const usePosts = () => {
+  const queryClient = useQueryClient();
+  const { updatePostByPost } = useUpdateInteractiveEntityCache();
+
   const createPost = async (
     params: CreatePostParams
   ): Promise<CustomAxiosResponse<CreatePostResponse>> => {
@@ -44,6 +45,20 @@ export const usePosts = () => {
     CreatePostParams
   >({
     mutationFn: createPost,
+    onSuccess: async (data) => {
+      const { post: newPost } = data.data.data;
+      await queryClient.cancelQueries(['postsAndStatusUpdates']);
+      queryClient.setQueryData(
+        ['postsAndStatusUpdates'],
+        (oldData: OldPostsAndStatusUpdatesDataType | undefined) => {
+          return updatePostByPost(
+            oldData as OldPostsAndStatusUpdatesDataType,
+            newPost,
+            'create'
+          );
+        }
+      );
+    },
   });
 
   const {

@@ -13,7 +13,11 @@ type FilterType = {
   render: () => JSX.Element;
 };
 
-function renderTag(tag: string, value: any, onClose: () => void) {
+function renderTag(
+  tag: string,
+  value: string | number | undefined,
+  onClose: () => void
+) {
   return (
     <Tag
       key={`${tag}-${value}`}

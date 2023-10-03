@@ -11,7 +11,6 @@ function Overview() {
 
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData(['userGames']);
-  console.log('cache in userGames: ', data);
 
   useEffect(() => {
     if (getUserGames && !data) {
