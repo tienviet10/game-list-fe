@@ -26,13 +26,13 @@ export const useAuth = () => {
   const loginUser = async (
     params: LoginParams
   ): Promise<CustomAxiosResponse<LoginResponse>> => {
-    return client.post(`/auth/login`, params);
+    return client.post(`/auth-service/auth/login`, params);
   };
 
   const signUpUser = async (
     params: SignUpParams
   ): Promise<CustomAxiosResponse<LoginResponse>> => {
-    return client.post(`/auth/register`, params);
+    return client.post(`/auth-service/auth/register`, params);
   };
 
   const {

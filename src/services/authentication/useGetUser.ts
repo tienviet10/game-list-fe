@@ -8,7 +8,7 @@ import type {
 
 const useGetUser = () => {
   const getUser = async (): Promise<CustomAxiosResponse<UserData>> => {
-    return client.get(`/api/v1/user/userinfo`);
+    return client.get(`/user-service/api/v1/user/userinfo`);
   };
 
   const {

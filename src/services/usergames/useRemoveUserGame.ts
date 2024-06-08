@@ -20,7 +20,7 @@ const useRemoveUserGame = () => {
   const removeUserGame = async (
     gameIdParam: number
   ): Promise<CustomAxiosResponse<RemoveUserGameResponse>> => {
-    return client.delete(`/api/v1/usergames/${gameIdParam}`);
+    return client.delete(`/game-service/api/v1/usergames/${gameIdParam}`);
   };
 
   const {

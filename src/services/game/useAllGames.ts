@@ -107,7 +107,7 @@ export default function useAllGames(
 
     // pageParam is null for the first fetch (initial load), and will eventually be undefined when it has to fetch the next page.
     queryFn: async ({ pageParam }) => {
-      const result = await client.post('/games', {
+      const result = await client.post('/game-service/games', {
         genres: genres.included,
         tags: tags.included,
         platforms: platforms.included,

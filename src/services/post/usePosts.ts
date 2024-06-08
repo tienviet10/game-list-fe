@@ -5,10 +5,11 @@ import type {
   ErrorResponse,
   PostsDTOResponse,
 } from '@constants/types';
-import { T } from 'vitest/dist/types-3c7dbfa5.js';
+
 import useUpdateInteractiveEntityCache, {
   OldPostsAndStatusUpdatesDataType,
 } from '@hooks/useUpdateInteractiveEntityCache';
+import { T } from 'vitest/dist/reporters-2ff87305.js';
 
 type CreatePostParams = {
   text: string;
@@ -25,13 +26,13 @@ export const usePosts = () => {
   const createPost = async (
     params: CreatePostParams
   ): Promise<CustomAxiosResponse<CreatePostResponse>> => {
-    return client.post(`/api/v1/posts`, params);
+    return client.post(`/social-service/api/v1/posts`, params);
   };
 
   const removePostById = async (
     postId: number
   ): Promise<CustomAxiosResponse<T>> => {
-    return client.delete(`/api/v1/posts/${postId}`);
+    return client.delete(`/social-service/api/v1/posts/${postId}`);
   };
 
   const {

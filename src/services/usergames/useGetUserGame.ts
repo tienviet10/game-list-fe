@@ -20,7 +20,7 @@ type UserGameType = {
 
 const useGetUserGame = (gameId: number | undefined) => {
   const getGame = async (): Promise<CustomAxiosResponse<UserGameType>> => {
-    return client.get(`/api/v1/usergames/${gameId}`);
+    return client.get(`/game-service/api/v1/usergames/${gameId}`);
   };
 
   const {

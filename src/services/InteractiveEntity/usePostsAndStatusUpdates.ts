@@ -10,8 +10,8 @@ const usePostsAndStatusUpdates = (type = '') => {
   const getSocial = async ({ lastCursor = 0 }) => {
     const getRequestUrl =
       type === 'global'
-        ? `/api/v1/interactive-entities/forum-pageable?limit=${limitParam}&startingId=${lastCursor}`
-        : `/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`;
+        ? `/social-service/api/v1/interactive-entities/forum-pageable?limit=${limitParam}&startingId=${lastCursor}`
+        : `/social-service/api/v1/interactive-entities/user-social/pageable?limit=${limitParam}&startingId=${lastCursor}`;
 
     const res = await client.get(getRequestUrl);
 

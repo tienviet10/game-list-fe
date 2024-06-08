@@ -31,7 +31,7 @@ const useEditUserGame = () => {
     if (gameStatus?.trim() === '' || !gameStatus) {
       putParams.gameStatus = 'JustAdded';
     }
-    return client.put(`/api/v1/usergames`, putParams);
+    return client.put(`/game-service/api/v1/usergames`, putParams);
   };
 
   const createNewUserGame = async (
@@ -43,7 +43,7 @@ const useEditUserGame = () => {
     if (gameStatus?.trim() === '' || !gameStatus) {
       postParams.gameStatus = 'JustAdded';
     }
-    return client.post(`/api/v1/usergames`, postParams);
+    return client.post(`/game-service/api/v1/usergames`, postParams);
   };
 
   const {

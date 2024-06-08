@@ -39,7 +39,7 @@ export default function useGetFilters(): GetFiltersHook {
     ErrorResponse
   >({
     queryKey: ['GameFilters'],
-    queryFn: () => client.get('/gamefilters'),
+    queryFn: () => client.get('/game-service/gamefilters'),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
