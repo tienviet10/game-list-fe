@@ -15,9 +15,9 @@ export default function StatusUpdateActivity({
   const { handleAddFollow, contextHolder } = useHandleAddRemoveFollow();
 
   const name =
-    statusUpdate.userGame.user.username === username
+    statusUpdate.userGame.user?.username === username
       ? 'You'
-      : statusUpdate.userGame.user.username;
+      : statusUpdate.userGame.user?.username;
 
   const verb = name === 'You' ? 'are' : 'is';
 
@@ -63,17 +63,17 @@ export default function StatusUpdateActivity({
         <Avatar
           style={{
             cursor: `${
-              statusUpdate.userGame.user.username !== username
+              statusUpdate.userGame.user?.username !== username
                 ? 'pointer'
                 : 'default'
             }`,
           }}
-          src={statusUpdate.userGame.user.userPicture}
+          src={statusUpdate.userGame.user?.userPicture}
           icon={<UserOutlined />}
           onClick={async () => {
             if (
-              statusUpdate.userGame.user.username &&
-              statusUpdate.userGame.user.username !== username
+              statusUpdate.userGame.user?.username &&
+              statusUpdate.userGame.user?.username !== username
             ) {
               await handleAddFollow(statusUpdate.userGame.user);
             }

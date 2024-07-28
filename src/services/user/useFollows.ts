@@ -33,24 +33,24 @@ export const useFollows = () => {
   const addFollow = async (
     params: UserFollowId
   ): Promise<CustomAxiosResponse<UserFollowIdResponse>> => {
-    return client.post(`/social-service/api/v1/follows/${params.userId}`);
+    return client.post(`/user-service/api/v1/user/follows/${params.userId}`);
   };
 
   const getFollows = async (): Promise<CustomAxiosResponse<FollowDataType>> => {
-    return client.get(`/social-service/api/v1/follows`);
+    return client.get(`/user-service/api/v1/user/all-follow`);
   };
 
   const removeFollow = async (
     params: UserFollowId
   ): Promise<CustomAxiosResponse<UserFollowIdResponse>> => {
-    return client.delete(`/social-service/api/v1/follows/${params.userId}`);
+    return client.delete(`/user-service/api/v1/user/unfollow/${params.userId}`);
   };
 
   const removeFollower = async (
     params: UserFollowId
   ): Promise<CustomAxiosResponse<UserFollowIdResponse>> => {
     return client.delete(
-      `/social-service/api/v1/follows/followers/${params.userId}`
+      `/user-service/api/v1/user/remove-follower/${params.userId}`
     );
   };
 

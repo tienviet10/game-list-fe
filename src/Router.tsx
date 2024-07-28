@@ -17,31 +17,37 @@ function Router() {
   return (
     <Routes>
       {userState?.user?.username ? (
-        <Route path="/user-profile">
-          <Route path="" element={<UserProfile routeName="overview" />} />
-          <Route
-            path="overview"
-            element={<UserProfile routeName="overview" />}
-          />
-          <Route
-            path="favorites"
-            element={<UserProfile routeName="favorites" />}
-          />
-          <Route
-            path="game-list"
-            element={<UserProfile routeName="gameList" />}
-          />
-          <Route path="social" element={<UserProfile routeName="social" />} />
+        <>
+          <Route path="/user-profile">
+            <Route path="" element={<UserProfile routeName="overview" />} />
+            <Route
+              path="overview"
+              element={<UserProfile routeName="overview" />}
+            />
+            <Route
+              path="favorites"
+              element={<UserProfile routeName="favorites" />}
+            />
+            <Route
+              path="game-list"
+              element={<UserProfile routeName="gameList" />}
+            />
+            <Route path="social" element={<UserProfile routeName="social" />} />
 
-          <Route path="reviews" element={<UserProfile routeName="reviews" />} />
-        </Route>
+            <Route
+              path="reviews"
+              element={<UserProfile routeName="reviews" />}
+            />
+          </Route>
+          <Route path="forum" element={<Forum />} />
+        </>
       ) : (
         <>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </>
       )}
-      <Route path="/forum" element={<Forum />} />
+
       <Route path="/home" element={<Home />} />
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/game-detail/:id/:name" element={<GameDetail />} />

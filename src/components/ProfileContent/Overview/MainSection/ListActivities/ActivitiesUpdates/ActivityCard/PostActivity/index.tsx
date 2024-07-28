@@ -19,16 +19,16 @@ export default function PostActivity({
     <div className={styles.postActivityContainer}>
       <div className={styles.postActivityHeader}>
         <Avatar
-          src={post.user.userPicture}
+          src={post?.user?.userPicture}
           size={50}
           onClick={async () => {
-            if (post.user.username && post.user.username !== username) {
+            if (post.user?.username && post.user?.username !== username) {
               await handleAddFollow(post.user);
             }
           }}
-          style={{ cursor: `${post.user.username !== username && 'pointer'}` }}
+          style={{ cursor: `${post.user?.username !== username && 'pointer'}` }}
         />
-        {post.user.username && (
+        {post.user?.username && (
           <a
             href={`/user/${post.user.username}`}
             aria-label={post.user.username}
